@@ -30,11 +30,11 @@ public class DrawingCanvas {
         System.out.println("Side length:");
         Scanner sc = new Scanner(System.in);
         int sideLength = Integer.parseInt(sc.nextLine());
-        while (sideLength <= 0 || sideLength > canvasWidth) {
+        while (sideLength <= 0 || (sideLength > canvasWidth || sideLength >canvasHeight)) {
             if (sideLength <= 0) {
                 System.out.println("Error! The side length can not be 0 or negative");
             }
-            if (sideLength > canvasWidth) {
+            if (sideLength > canvasWidth || sideLength >canvasHeight) {
                 System.out.println("Error! The side length is too long (Current canvas size is "
                         + canvasWidth + "x" + canvasHeight + "). Please try again.");
             }
