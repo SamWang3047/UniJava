@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 /**
  * COMP90041, Sem1, 2023: Assignment 1
- * @author:
+ * @author: Zhiyuan Wang
 */
 public class KinderKit {
     public static void main(String[] args) {
@@ -25,6 +25,8 @@ public class KinderKit {
             drawingOptions = Integer.parseInt(sc.nextLine());
         }
         drawingCanvas.drawing(drawingOptions);
+
+        System.out.println("Draw another triangle (Y/N)?");
 
 
     }
