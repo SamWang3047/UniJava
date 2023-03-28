@@ -12,6 +12,7 @@ public class Triangle {
         this.sideLength = sideLength;
         this.printingChar = printingChar;
         this.startPrintPointX = DEFAULT_START_PRINT_POINT;
+        this.startPrintPointY = DEFAULT_START_PRINT_POINT;
     }
 
     public void printTriangle(int canvasWidth, int canvasHeight, char backGroundChar) {
