@@ -47,7 +47,6 @@ public class KinderKit {
                 } else if (drawingOptions == 2) {
                     System.out.println("Draw another rectangle (Y/N)?");
                 } else if (drawingOptions == 3){
-                    System.out.println();
                     break;
                 }
                 drawAnotherOne = sc.nextLine().toUpperCase().charAt(0);

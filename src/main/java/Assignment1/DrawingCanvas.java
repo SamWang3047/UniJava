@@ -15,10 +15,10 @@ public class DrawingCanvas {
     public void drawOptions(int drawingOptions, Scanner sc) {
         switch (drawingOptions) {
             case 1://Draw triangles
-                drawTriangle();
+                drawTriangle(sc);
                 break;
             case 2:
-                drawRectangle();
+                drawRectangle(sc);
                 break;
             case 3:
                 updateCanvas(sc);
@@ -27,8 +27,8 @@ public class DrawingCanvas {
                 break;
         }
     }
-    public void drawTriangle() {
-        Scanner sc = new Scanner(System.in);
+    public void drawTriangle(Scanner sc) {
+
         int triSideLength = getTriSideLength(sc);
 
         System.out.println("Printing character:");
@@ -49,8 +49,7 @@ public class DrawingCanvas {
             zoomingOrMoving = sc.nextLine().toUpperCase().charAt(0);
         }
     }
-    public void drawRectangle() {
-        Scanner sc = new Scanner(System.in);
+    public void drawRectangle(Scanner sc) {
         int[] recSides = getRectangleSide(sc);
         int recWidth = recSides[0], recHeight = recSides[1];
 
@@ -110,6 +109,7 @@ public class DrawingCanvas {
         System.out.println("- Width: " + canvasWidth);
         System.out.println("- Height: " + canvasHeight);
         System.out.println("- Background character: " + backGroundChar);
+        System.out.println();
     }
     public int getTriSideLength(Scanner sc) {
         int sideLength = 0;
@@ -153,7 +153,7 @@ public class DrawingCanvas {
                 System.out.println("Error! The width can not be 0 or negative");
             }
             if (recWidth > canvasWidth) {
-                System.out.println("Error! The width is too long (Current canvas size is "
+                System.out.println("Error! The width is too large (Current canvas size is "
                         + canvasWidth + "x" + canvasHeight + "). Please try again.");
             }
             System.out.println("width:");
@@ -176,7 +176,7 @@ public class DrawingCanvas {
                 System.out.println("Error! The height can not be 0 or negative");
             }
             if (recHeight > canvasHeight) {
-                System.out.println("Error! The height is too long (Current canvas size is "
+                System.out.println("Error! The height is too large (Current canvas size is "
                         + canvasWidth + "x" + canvasHeight + "). Please try again.");
             }
             System.out.println("height:");
@@ -209,6 +209,7 @@ public class DrawingCanvas {
             System.out.println("Type I/O to zoom in/out. Use other keys to go back to the Zooming/Moving menu.");
             inOrOut = sc.nextLine().toUpperCase().charAt(0);
         }
+        triangle.printTriangle(canvasWidth,canvasHeight, backGroundChar);
     }
     public void zoom(Rectangle rectangle, Scanner sc) {
         System.out.println("Type I/O to zoom in/out. Use other keys to go back to the Zooming/Moving menu.");
@@ -237,6 +238,7 @@ public class DrawingCanvas {
             System.out.println("Type I/O to zoom in/out. Use other keys to go back to the Zooming/Moving menu.");
             inOrOut = sc.nextLine().toUpperCase().charAt(0);
         }
+        rectangle.printRectangle(canvasWidth,canvasHeight, backGroundChar);
     }
 
     public void move(Triangle triangle, Scanner sc) {
@@ -283,6 +285,7 @@ public class DrawingCanvas {
             System.out.println("Type A/S/W/Z to move left/right/up/down. Use other keys to go back to the Zooming/Moving menu.");
             direction = sc.nextLine().toUpperCase().charAt(0);
         }
+        triangle.printTriangle(canvasWidth, canvasHeight, backGroundChar);
     }
 
     public void move(Rectangle rectangle, Scanner sc) {
@@ -332,6 +335,7 @@ public class DrawingCanvas {
             System.out.println("Type A/S/W/Z to move left/right/up/down. Use other keys to go back to the Zooming/Moving menu.");
             direction = sc.nextLine().toUpperCase().charAt(0);
         }
+        rectangle.printRectangle(canvasWidth, canvasHeight, backGroundChar);
     }
 
     public int getCanvasWidth() {
