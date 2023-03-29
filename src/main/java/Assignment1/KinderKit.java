@@ -12,12 +12,21 @@ public class KinderKit {
         Scanner sc = new Scanner(System.in);
         System.out.println("----DIGITAL KINDER KIT: LET'S PLAY & LEARN----");
 
-        drawingCanvas.getCurrentCanvasDetail();
-
+        drawingCanvas.printCurrentCanvasDetails();
 
         while (true) {
             drawingCanvas.printDrawingSelection();
-            int drawingOptions = Integer.parseInt(sc.nextLine());
+            int drawingOptions = -1;
+            while (true) {
+                try {
+                    drawingOptions = Integer.parseInt(sc.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+//                e.printStackTrace();
+                    System.out.println("Invalid input!");
+                    drawingCanvas.printCurrentCanvasDetails();
+                }
+            }
             while (drawingOptions > 4 || drawingOptions < 1) {
                 System.out.println("Unsupported option. Please try again!");
                 drawingCanvas.printDrawingSelection();
@@ -30,15 +39,22 @@ public class KinderKit {
                 break;
             }
 
-            char drawAnotherTri = 'Y';
-            while (drawAnotherTri == 'Y') {
-                drawingCanvas.drawOptions(drawingOptions);
-                System.out.println("Draw another triangle (Y/N)?");
-                drawAnotherTri = sc.nextLine().toUpperCase().charAt(0);
-                while (drawAnotherTri != 'Y' && drawAnotherTri != 'N') {
+            char drawAnotherOne = 'Y';
+            while (drawAnotherOne == 'Y') {
+                drawingCanvas.drawOptions(drawingOptions, sc);
+                if (drawingOptions == 1) {
+                    System.out.println("Draw another triangle (Y/N)?");
+                } else if (drawingOptions == 2) {
+                    System.out.println("Draw another rectangle (Y/N)?");
+                } else if (drawingOptions == 3){
+                    System.out.println();
+                    break;
+                }
+                drawAnotherOne = sc.nextLine().toUpperCase().charAt(0);
+                while (drawAnotherOne != 'Y' && drawAnotherOne != 'N') {
                     System.out.println("Unsupported option. Please try again!");
                     System.out.println("Draw another triangle (Y/N)?");
-                    drawAnotherTri = sc.nextLine().toUpperCase().charAt(0);
+                    drawAnotherOne = sc.nextLine().toUpperCase().charAt(0);
                 }
             }
         }

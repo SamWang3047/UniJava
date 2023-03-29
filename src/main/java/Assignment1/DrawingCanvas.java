@@ -12,7 +12,7 @@ public class DrawingCanvas {
         canvasHeight = Integer.parseInt(args[1]);
         backGroundChar = args[2].charAt(0);
     }
-    public void drawOptions(int drawingOptions) {
+    public void drawOptions(int drawingOptions, Scanner sc) {
         switch (drawingOptions) {
             case 1://Draw triangles
                 drawTriangle();
@@ -21,6 +21,9 @@ public class DrawingCanvas {
                 drawRectangle();
                 break;
             case 3:
+                updateCanvas(sc);
+                System.out.println();
+                printCurrentCanvasDetails();
                 break;
         }
     }
@@ -69,6 +72,31 @@ public class DrawingCanvas {
             zoomingOrMoving = sc.nextLine().toUpperCase().charAt(0);
         }
     }
+
+    public void updateCanvas(Scanner sc) {
+        int updateCanvasWidth = 0;
+        int updateCanvasHeight = 0;
+        char updateCanvasChar = '`';
+        while (true) {
+            try {
+                System.out.print("Canvas width: ");
+                updateCanvasWidth = Integer.parseInt(sc.nextLine());
+                System.out.print("Canvas height: ");
+                updateCanvasHeight = Integer.parseInt(sc.nextLine());
+                System.out.print("Background character: ");
+                updateCanvasChar = sc.nextLine().charAt(0);
+                break;
+            } catch (Exception e) {
+//            e.printStackTrace();
+                System.out.println("Invalid input!");
+            }
+        }
+        canvasWidth = updateCanvasWidth;
+        canvasHeight = updateCanvasHeight;
+        backGroundChar = updateCanvasChar;
+
+        System.out.println("Drawing canvas has been updated!");
+    }
     public void printDrawingSelection() {
         System.out.println("Please select an option. Type 4 to exit.\n" +
                 "1. Draw triangles\n" +
@@ -77,15 +105,24 @@ public class DrawingCanvas {
                 "4. Exit");
     }
 
-    public void getCurrentCanvasDetail() {
+    public void printCurrentCanvasDetails() {
         System.out.println("Current drawing canvas settings:");
         System.out.println("- Width: " + canvasWidth);
         System.out.println("- Height: " + canvasHeight);
         System.out.println("- Background character: " + backGroundChar);
     }
     public int getTriSideLength(Scanner sc) {
-        System.out.println("Side length:");
-        int sideLength = Integer.parseInt(sc.nextLine());
+        int sideLength = 0;
+        while (true) {
+            try {
+                System.out.println("Side length:");
+                sideLength = Integer.parseInt(sc.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+//            e.printStackTrace();
+                System.out.println("Invalid input!");
+            }
+        }
         while (sideLength <= 0 || (sideLength > canvasWidth || sideLength >canvasHeight)) {
             if (sideLength <= 0) {
                 System.out.println("Error! The side length can not be 0 or negative");
@@ -100,8 +137,17 @@ public class DrawingCanvas {
         return sideLength;
     }
     public int[] getRectangleSide(Scanner sc) {
-        System.out.println("width:");
-        int recWidth = Integer.parseInt(sc.nextLine());
+        int recWidth = 0;
+        while (true) {
+            try {
+                System.out.println("width:");
+                recWidth = Integer.parseInt(sc.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input!");
+//            e.printStackTrace();
+            }
+        }
         while (recWidth <= 0 || (recWidth > canvasWidth)) {
             if (recWidth <= 0) {
                 System.out.println("Error! The width can not be 0 or negative");
@@ -113,8 +159,18 @@ public class DrawingCanvas {
             System.out.println("width:");
             recWidth = Integer.parseInt(sc.nextLine());
         }
-        System.out.println("height:");
-        int recHeight = Integer.parseInt(sc.nextLine());
+
+        int recHeight = 0;
+        while (true) {
+            try {
+                System.out.println("height:");
+                recHeight = Integer.parseInt(sc.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input!");
+//            e.printStackTrace();
+            }
+        }
         while (recHeight <= 0 || (recHeight > canvasHeight)) {
             if (recHeight <= 0) {
                 System.out.println("Error! The height can not be 0 or negative");
