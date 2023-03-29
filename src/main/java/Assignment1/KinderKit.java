@@ -14,31 +14,34 @@ public class KinderKit {
 
         drawingCanvas.getCurrentCanvasDetail();
 
-        drawingCanvas.printDrawingSelection();
-        int drawingOptions = Integer.parseInt(sc.nextLine());
-        while (drawingOptions > 4 || drawingOptions < 1) {
-            System.out.println("Unsupported option. Please try again!");
-            drawingCanvas.printDrawingSelection();
-            drawingOptions = Integer.parseInt(sc.nextLine());
-        }
 
-        char drawAnotherTri = 'Y';
-        while (drawAnotherTri == 'Y') {
-            drawingCanvas.drawOptions(drawingOptions);
-            System.out.println("Draw another triangle (Y/N)?");
-            drawAnotherTri = sc.nextLine().toUpperCase().charAt(0);
-            while (drawAnotherTri != 'Y' && drawAnotherTri != 'N') {
+        while (true) {
+            drawingCanvas.printDrawingSelection();
+            int drawingOptions = Integer.parseInt(sc.nextLine());
+            while (drawingOptions > 4 || drawingOptions < 1) {
                 System.out.println("Unsupported option. Please try again!");
+                drawingCanvas.printDrawingSelection();
+                drawingOptions = Integer.parseInt(sc.nextLine());
+            }
+
+            //Quit the program
+            if (drawingOptions == 4) {
+                System.out.println("Goodbye! We hope you had fun :)");
+                break;
+            }
+
+            char drawAnotherTri = 'Y';
+            while (drawAnotherTri == 'Y') {
+                drawingCanvas.drawOptions(drawingOptions);
                 System.out.println("Draw another triangle (Y/N)?");
                 drawAnotherTri = sc.nextLine().toUpperCase().charAt(0);
+                while (drawAnotherTri != 'Y' && drawAnotherTri != 'N') {
+                    System.out.println("Unsupported option. Please try again!");
+                    System.out.println("Draw another triangle (Y/N)?");
+                    drawAnotherTri = sc.nextLine().toUpperCase().charAt(0);
+                }
             }
         }
-
-
-
-
-
-
 
     }
 }
