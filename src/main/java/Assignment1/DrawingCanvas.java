@@ -3,6 +3,10 @@ package Assignment1;
 import java.util.Scanner;
 
 public class DrawingCanvas {
+    private static final String[][] DEFAULT = {{"triangle", "rectangle"},
+                                               {"height", "width"},
+                                               {"large", "long"},
+                                               {"Side length", "side length"}};
     private int canvasWidth;
     private int canvasHeight;
     private char backGroundChar;
@@ -28,48 +32,27 @@ public class DrawingCanvas {
         }
     }
     public void drawTriangle(Scanner sc) {
-
         int triSideLength = getTriSideLength(sc);
 
         System.out.println("Printing character:");
         char printingChar = sc.nextLine().charAt(0);
+
         Triangle triangle = new Triangle(triSideLength, printingChar);
         triangle.printTriangle(canvasWidth, canvasHeight, backGroundChar);
 
-        System.out.println("Type Z/M for zooming/moving. Use other keys to quit the Zooming/Moving mode.");
-        char zoomingOrMoving = sc.nextLine().toUpperCase().charAt(0);
-        while (zoomingOrMoving == 'Z' || zoomingOrMoving == 'M') {
-            triangle.printTriangle(canvasWidth, canvasHeight, backGroundChar);
-            if (zoomingOrMoving == 'Z') {
-                zoom(triangle, sc);
-            } else {
-                move(triangle, sc);
-            }
-            System.out.println("Type Z/M for zooming/moving. Use other keys to quit the Zooming/Moving mode.");
-            zoomingOrMoving = sc.nextLine().toUpperCase().charAt(0);
-        }
+        zoomOrMoving(triangle, sc);
     }
     public void drawRectangle(Scanner sc) {
-        int[] recSides = getRectangleSide(sc);
-        int recWidth = recSides[0], recHeight = recSides[1];
+//        int[] recSides = getRectangleSide(sc);
+        int recWidth = getRectangleSide(sc, 1);
+        int recHeight = getRectangleSide(sc, 0);
 
         System.out.println("Printing character:");
         char printingChar = sc.nextLine().charAt(0);
         Rectangle rectangle = new Rectangle(recWidth, recHeight, printingChar);
         rectangle.printRectangle(canvasWidth, canvasHeight, backGroundChar);
 
-        System.out.println("Type Z/M for zooming/moving. Use other keys to quit the Zooming/Moving mode.");
-        char zoomingOrMoving = sc.nextLine().toUpperCase().charAt(0);
-        while (zoomingOrMoving == 'Z' || zoomingOrMoving == 'M') {
-            rectangle.printRectangle(canvasWidth, canvasHeight, backGroundChar);
-            if (zoomingOrMoving == 'Z') {
-                zoom(rectangle, sc);
-            } else {
-                move(rectangle, sc);
-            }
-            System.out.println("Type Z/M for zooming/moving. Use other keys to quit the Zooming/Moving mode.");
-            zoomingOrMoving = sc.nextLine().toUpperCase().charAt(0);
-        }
+        zoomOrMoving(rectangle, sc);
     }
 
     public void updateCanvas(Scanner sc) {
@@ -111,6 +94,7 @@ public class DrawingCanvas {
         System.out.println("- Background character: " + backGroundChar);
         System.out.println();
     }
+
     public int getTriSideLength(Scanner sc) {
         int sideLength = 0;
         while (true) {
@@ -123,7 +107,8 @@ public class DrawingCanvas {
                 System.out.println("Invalid input!");
             }
         }
-        while (sideLength <= 0 || (sideLength > canvasWidth || sideLength >canvasHeight)) {
+        int minSide = Math.min(canvasWidth, canvasHeight);
+        while (sideLength <= 0 || (sideLength > minSide)) {
             if (sideLength <= 0) {
                 System.out.println("Error! The side length can not be 0 or negative");
             }
@@ -136,54 +121,37 @@ public class DrawingCanvas {
         }
         return sideLength;
     }
-    public int[] getRectangleSide(Scanner sc) {
-        int recWidth = 0;
+
+    public int getRectangleSide(Scanner sc, int isWidth) {
+        int recSideLen = 0;
         while (true) {
             try {
-                System.out.println("width:");
-                recWidth = Integer.parseInt(sc.nextLine());
+                System.out.println(DEFAULT[1][isWidth] + ":");
+                recSideLen = Integer.parseInt(sc.nextLine());
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input!");
 //            e.printStackTrace();
             }
         }
-        while (recWidth <= 0 || (recWidth > canvasWidth)) {
-            if (recWidth <= 0) {
-                System.out.println("Error! The width can not be 0 or negative");
+        int canvasSide = 0;
+        if (isWidth == 1) {
+            canvasSide = canvasWidth;
+        } else {
+            canvasSide = canvasHeight;
+        }
+        while (recSideLen <= 0 || (recSideLen > canvasSide)) {
+            if (recSideLen <= 0) {
+                System.out.println("Error! The " + DEFAULT[1][isWidth] + " can not be 0 or negative");
             }
-            if (recWidth > canvasWidth) {
-                System.out.println("Error! The width is too large (Current canvas size is "
+            if (recSideLen > canvasSide) {
+                System.out.println("Error! The " + DEFAULT[1][isWidth] + " is too large (Current canvas size is "
                         + canvasWidth + "x" + canvasHeight + "). Please try again.");
             }
-            System.out.println("width:");
-            recWidth = Integer.parseInt(sc.nextLine());
+            System.out.println(DEFAULT[1][isWidth] + ":");
+            recSideLen = Integer.parseInt(sc.nextLine());
         }
-
-        int recHeight = 0;
-        while (true) {
-            try {
-                System.out.println("height:");
-                recHeight = Integer.parseInt(sc.nextLine());
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input!");
-//            e.printStackTrace();
-            }
-        }
-        while (recHeight <= 0 || (recHeight > canvasHeight)) {
-            if (recHeight <= 0) {
-                System.out.println("Error! The height can not be 0 or negative");
-            }
-            if (recHeight > canvasHeight) {
-                System.out.println("Error! The height is too large (Current canvas size is "
-                        + canvasWidth + "x" + canvasHeight + "). Please try again.");
-            }
-            System.out.println("height:");
-            recHeight = Integer.parseInt(sc.nextLine());
-        }
-
-        return new int[] {recWidth, recHeight};
+        return recSideLen;
     }
 
     public void zoom(Triangle triangle, Scanner sc) {
@@ -338,6 +306,34 @@ public class DrawingCanvas {
         rectangle.printRectangle(canvasWidth, canvasHeight, backGroundChar);
     }
 
+    public void zoomOrMoving(Triangle triangle, Scanner sc) {
+        System.out.println("Type Z/M for zooming/moving. Use other keys to quit the Zooming/Moving mode.");
+        char zoomingOrMoving = sc.nextLine().toUpperCase().charAt(0);
+        while (zoomingOrMoving == 'Z' || zoomingOrMoving == 'M') {
+            triangle.printTriangle(canvasWidth, canvasHeight, backGroundChar);
+            if (zoomingOrMoving == 'Z') {
+                zoom(triangle, sc);
+            } else {
+                move(triangle, sc);
+            }
+            System.out.println("Type Z/M for zooming/moving. Use other keys to quit the Zooming/Moving mode.");
+            zoomingOrMoving = sc.nextLine().toUpperCase().charAt(0);
+        }
+    }
+    public void zoomOrMoving(Rectangle rectangle, Scanner sc) {
+        System.out.println("Type Z/M for zooming/moving. Use other keys to quit the Zooming/Moving mode.");
+        char zoomingOrMoving = sc.nextLine().toUpperCase().charAt(0);
+        while (zoomingOrMoving == 'Z' || zoomingOrMoving == 'M') {
+            rectangle.printRectangle(canvasWidth, canvasHeight, backGroundChar);
+            if (zoomingOrMoving == 'Z') {
+                zoom(rectangle, sc);
+            } else {
+                move(rectangle, sc);
+            }
+            System.out.println("Type Z/M for zooming/moving. Use other keys to quit the Zooming/Moving mode.");
+            zoomingOrMoving = sc.nextLine().toUpperCase().charAt(0);
+        }
+    }
     public int getCanvasWidth() {
         return canvasWidth;
     }

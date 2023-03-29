@@ -5,6 +5,10 @@ import java.util.Scanner;
 /**
  * COMP90041, Sem1, 2023: Assignment 1
  * @author: Zhiyuan Wang
+ * @studentEmail: zhiyuanw6@student.unimelb.edu.au
+ * @studentID: 1406985
+ * @personalWebsite: www.hellosam.top
+ *
 */
 public class KinderKit {
     public static void main(String[] args) {
@@ -17,6 +21,7 @@ public class KinderKit {
         while (true) {
             drawingCanvas.printDrawingSelection();
             int drawingOptions = -1;
+
             while (true) {
                 try {
                     drawingOptions = Integer.parseInt(sc.nextLine());
@@ -27,6 +32,7 @@ public class KinderKit {
                     drawingCanvas.printCurrentCanvasDetails();
                 }
             }
+
             while (drawingOptions > 4 || drawingOptions < 1) {
                 System.out.println("Unsupported option. Please try again!");
                 drawingCanvas.printDrawingSelection();
@@ -46,6 +52,7 @@ public class KinderKit {
                     System.out.println("Draw another triangle (Y/N)?");
                 } else if (drawingOptions == 2) {
                     System.out.println("Draw another rectangle (Y/N)?");
+                    //future updates
                 } else if (drawingOptions == 3){
                     break;
                 }
