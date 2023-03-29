@@ -21,22 +21,31 @@ public class Rectangle {
     public void printRectangle(int canvasWidth, int canvasHeight, char backGroundChar) {
         //i for outer loop, controls rows = canvasHeight
         for (int i = 0; i < canvasHeight; i++) {
-            //j for each row print.
+            //j for each row print, bond by canvas width.
             int j = 0;
-            if (i < sideHeight) {
-                while (j < startPrintPointX) {
-                    System.out.print(backGroundChar);
-                    j++;
-                }
-                while (j < sideWidth + startPrintPointX + startPrintPointY) {
-                    System.out.print(printingChar);
-                    j++;
+            //this if print the left half of line, until the last char of print char.
+            if (i < sideHeight + startPrintPointY) {
+                //before the startY, print bg char, so jump to the last while
+                //after the startY, print regularly
+                if (i >= startPrintPointY) {
+                    //before the startX, print bg char
+                    while (j < startPrintPointX) {
+                        System.out.print(backGroundChar);
+                        j++;
+                    }
+                    //from the startX, print char
+                    while (j < sideWidth + startPrintPointX) {
+                        System.out.print(printingChar);
+                        j++;
+                    }
                 }
             }
+            //print the rest right half of the bg char
             while (j < canvasWidth) {
                 System.out.print(backGroundChar);
                 j++;
             }
+            //another line.
             System.out.println();
         }
     }
