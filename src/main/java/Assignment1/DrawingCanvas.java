@@ -101,6 +101,34 @@ public class DrawingCanvas {
             inOrOut = sc.nextLine().toUpperCase().charAt(0);
         }
     }
+    public void zoom(Rectangle rectangle, Scanner sc) {
+        System.out.println("Type I/O to zoom in/out. Use other keys to go back to the Zooming/Moving menu.");
+        char inOrOut = sc.nextLine().toUpperCase().charAt(0);
+        while (inOrOut == 'I' || inOrOut == 'O') {
+            int recSideWidth = rectangle.getSideWidth();
+            int recSideHeight = rectangle.getSideHeight();
+
+            if (inOrOut == 'I') {
+                if (recSideWidth + 1 > canvasWidth || recSideHeight + 1 > canvasHeight) {
+                    System.out.println("This rectangle reaches its limit. You cannot make it bigger!");
+                } else {
+                    rectangle.setSideWidth(recSideWidth + 1);
+                    rectangle.setSideHeight(recSideHeight + 1);
+                }
+                rectangle.printRectangle(canvasWidth,canvasHeight, backGroundChar);
+            } else {
+                if (recSideWidth - 1 < 0 || recSideHeight - 1 < 0) {
+                    System.out.println("This rectangle reaches its limit. You cannot make it smaller!");
+                } else {
+                    rectangle.setSideWidth(recSideWidth - 1);
+                    rectangle.setSideHeight(recSideHeight - 1);
+                }
+                rectangle.printRectangle(canvasWidth,canvasHeight, backGroundChar);
+            }
+            System.out.println("Type I/O to zoom in/out. Use other keys to go back to the Zooming/Moving menu.");
+            inOrOut = sc.nextLine().toUpperCase().charAt(0);
+        }
+    }
 
     public void move(Triangle triangle, Scanner sc) {
         System.out.println("Type A/S/W/Z to move left/right/up/down. Use other keys to go back to the Zooming/Moving menu.");
@@ -141,6 +169,53 @@ public class DrawingCanvas {
                         triangle.setStartPrintPointY(startY + 1);
                     }
                     triangle.printTriangle(canvasWidth, canvasHeight, backGroundChar);
+                    break;
+            }
+            System.out.println("Type A/S/W/Z to move left/right/up/down. Use other keys to go back to the Zooming/Moving menu.");
+            direction = sc.nextLine().toUpperCase().charAt(0);
+        }
+    }
+
+    public void move(Rectangle rectangle, Scanner sc) {
+        System.out.println("Type A/S/W/Z to move left/right/up/down. Use other keys to go back to the Zooming/Moving menu.");
+        char direction = sc.nextLine().toUpperCase().charAt(0);
+        //A for left, S for right, W for up, Z for down
+        while (direction == 'A' || direction == 'S' || direction == 'W' || direction == 'Z') {
+            int startX = rectangle.getStartPrintPointX(), startY = rectangle.getStartPrintPointY();
+            int triSideLength = rectangle.getSideLength();
+
+            switch (direction) {
+                case 'A':
+                    if (startX - 1 < 0) {
+                        System.out.println("You cannot move this rectangle outside of the drawing canvas!");
+                    } else {
+                        rectangle.setStartPrintPointX(startX - 1);
+                    }
+                    rectangle.printTriangle(canvasWidth, canvasHeight, backGroundChar);
+                    break;
+                case 'S':
+                    if (startX + triSideLength + 1 > canvasWidth) {
+                        System.out.println("You cannot move this rectangle outside of the drawing canvas!");
+                    } else {
+                        rectangle.setStartPrintPointX(startX + 1);
+                    }
+                    rectangle.printTriangle(canvasWidth, canvasHeight, backGroundChar);
+                    break;
+                case 'W':
+                    if (startY - 1 > canvasHeight) {
+                        System.out.println("You cannot move this rectangle outside of the drawing canvas!");
+                    } else {
+                        rectangle.setStartPrintPointY(startY - 1);
+                    }
+                    rectangle.printTriangle(canvasWidth, canvasHeight, backGroundChar);
+                    break;
+                case 'Z':
+                    if (startY + triSideLength + 1 > canvasHeight) {
+                        System.out.println("You cannot move this rectangle outside of the drawing canvas!");
+                    } else {
+                        rectangle.setStartPrintPointY(startY + 1);
+                    }
+                    rectangle.printTriangle(canvasWidth, canvasHeight, backGroundChar);
                     break;
             }
             System.out.println("Type A/S/W/Z to move left/right/up/down. Use other keys to go back to the Zooming/Moving menu.");
