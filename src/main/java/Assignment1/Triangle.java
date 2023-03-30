@@ -15,29 +15,41 @@ public class Triangle {
         this.startPrintPointY = DEFAULT_START_PRINT_POINT;
     }
 
+    /**
+     * TODO: print triangle to the console.
+     * @param canvasWidth get the current width of the canvas
+     * @param canvasHeight get the current height of the canvas
+     * @param backGroundChar get the current bg char of the canvas
+     */
     public void printTriangle(int canvasWidth, int canvasHeight, char backGroundChar) {
         //i for outer loop, controls rows = canvasHeight
         for (int i = 0; i < canvasHeight; i++) {
-            //j for each row print.
+            //j for each row print, bond by canvas width.
             int j = 0;
             if (i >= startPrintPointY) {
+                //before startX, print background char
                 while (j < startPrintPointX) {
                     System.out.print(backGroundChar);
                     j++;
                 }
-                while (j < sideLength + startPrintPointX - i + startPrintPointY) {
+                // -i to be a triangle -> sideLength - i + (startX + startY)
+                while (j < sideLength - i + startPrintPointX + startPrintPointY) {
                     System.out.print(printingChar);
                     j++;
                 }
             }
+            //print the rest right half of the bg char
             while (j < canvasWidth) {
                 System.out.print(backGroundChar);
                 j++;
             }
+            //next line
             System.out.println();
         }
     }
-
+    /**
+     * Getters and Setters
+     */
     public int getSideLength() {
         return sideLength;
     }

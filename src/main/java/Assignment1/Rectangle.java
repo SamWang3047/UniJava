@@ -18,6 +18,12 @@ public class Rectangle {
         this.startPrintPointY = DEFAULT_START_PRINT_POINT;
     }
 
+    /**
+     * TODO: print rectangle to the console.
+     * @param canvasWidth get the current width of the canvas
+     * @param canvasHeight get the current height of the canvas
+     * @param backGroundChar get the current bg char of the canvas
+     */
     public void printRectangle(int canvasWidth, int canvasHeight, char backGroundChar) {
         //i for outer loop, controls rows = canvasHeight
         for (int i = 0; i < canvasHeight; i++) {
@@ -45,11 +51,14 @@ public class Rectangle {
                 System.out.print(backGroundChar);
                 j++;
             }
-            //another line.
+            //next line.
             System.out.println();
         }
     }
 
+    /**
+     * Getters and Setters
+     */
     public int getSideWidth() {
         return sideWidth;
     }
