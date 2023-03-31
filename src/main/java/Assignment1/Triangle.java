@@ -1,5 +1,7 @@
 package Assignment1;
 
+import java.util.Scanner;
+
 public class Triangle {
     private static final int DEFAULT_START_PRINT_POINT = 0;
     private int sideLength;
@@ -46,6 +48,38 @@ public class Triangle {
             //next line
             System.out.println();
         }
+    }
+
+    /**
+     * TODO: make the triangle bigger or smaller.
+     * @param canvasWidth
+     * @param canvasHeight
+     * @param backGroundChar
+     * @param sc
+     */
+    public void zoom(int canvasWidth, int canvasHeight, char backGroundChar, Scanner sc) {
+        System.out.println("Type I/O to zoom in/out. Use other keys to go back to the Zooming/Moving menu.");
+        char inOrOut = sc.nextLine().toUpperCase().charAt(0);
+        while (inOrOut == 'I' || inOrOut == 'O') {
+            if (inOrOut == 'I') {
+                if (sideLength + 1 > canvasWidth || sideLength + 1 > canvasHeight) {
+                    System.out.println("This triangle reaches its limit. You cannot make it bigger!");
+                } else {
+                    sideLength = sideLength + 1;
+                }
+                printTriangle(canvasWidth,canvasHeight, backGroundChar);
+            } else {
+                if (sideLength - 1 < 0) {
+                    System.out.println("This triangle reaches its limit. You cannot make it smaller!");
+                } else {
+                    sideLength = sideLength - 1;
+                }
+                printTriangle(canvasWidth,canvasHeight, backGroundChar);
+            }
+            System.out.println("Type I/O to zoom in/out. Use other keys to go back to the Zooming/Moving menu.");
+            inOrOut = sc.nextLine().toUpperCase().charAt(0);
+        }
+        printTriangle(canvasWidth,canvasHeight, backGroundChar);
     }
     /**
      * Getters and Setters

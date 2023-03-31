@@ -200,36 +200,7 @@ public class DrawingCanvas {
         }
         return recSideLen;
     }
-    /**
-     * TODO: make the triangle bigger or smaller.
-     * @param sc
-     * @param triangle
-     */
-    public void zoom(Triangle triangle, Scanner sc) {
-        System.out.println("Type I/O to zoom in/out. Use other keys to go back to the Zooming/Moving menu.");
-        char inOrOut = sc.nextLine().toUpperCase().charAt(0);
-        while (inOrOut == 'I' || inOrOut == 'O') {
-            int triSideLen = triangle.getSideLength();
-            if (inOrOut == 'I') {
-                if (triSideLen + 1 > canvasWidth || triSideLen + 1 > canvasHeight) {
-                    System.out.println("This triangle reaches its limit. You cannot make it bigger!");
-                } else {
-                    triangle.setSideLength(triSideLen + 1);
-                }
-                triangle.printTriangle(canvasWidth,canvasHeight, backGroundChar);
-            } else {
-                if (triSideLen - 1 < 0) {
-                    System.out.println("This triangle reaches its limit. You cannot make it smaller!");
-                } else {
-                    triangle.setSideLength(triSideLen - 1);
-                }
-                triangle.printTriangle(canvasWidth,canvasHeight, backGroundChar);
-            }
-            System.out.println("Type I/O to zoom in/out. Use other keys to go back to the Zooming/Moving menu.");
-            inOrOut = sc.nextLine().toUpperCase().charAt(0);
-        }
-        triangle.printTriangle(canvasWidth,canvasHeight, backGroundChar);
-    }
+
     /**
      * TODO: make the rectangle bigger or smaller
      * @param sc
@@ -383,7 +354,7 @@ public class DrawingCanvas {
         while (zoomingOrMoving == 'Z' || zoomingOrMoving == 'M') {
             triangle.printTriangle(canvasWidth, canvasHeight, backGroundChar);
             if (zoomingOrMoving == 'Z') {
-                zoom(triangle, sc);
+                triangle.zoom(canvasWidth, canvasHeight, backGroundChar, sc);
             } else {
                 move(triangle, sc);
             }
