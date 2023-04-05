@@ -12,32 +12,20 @@ import java.util.Scanner;
 */
 public class KinderKit {
     public static void main(String[] args) {
+        //Initiate a new drawing canvas using args
         DrawingCanvas drawingCanvas = new DrawingCanvas(args);
         Scanner sc = new Scanner(System.in);
         System.out.println("----DIGITAL KINDER KIT: LET'S PLAY & LEARN----");
 
         drawingCanvas.printCurrentCanvasDetails();
 
+        //drawing Options != 4, program
         while (true) {
             drawingCanvas.printDrawingSelection();
             int drawingOptions = -1;
 
-            while (true) {
-                try {
-                    drawingOptions = Integer.parseInt(sc.nextLine());
-                    break;
-                } catch (NumberFormatException e) {
-//                e.printStackTrace();
-                    System.out.println("Invalid input!");
-                    drawingCanvas.printCurrentCanvasDetails();
-                }
-            }
-
-            while (drawingOptions > 4 || drawingOptions < 1) {
-                System.out.println("Unsupported option. Please try again!");
-                drawingCanvas.printDrawingSelection();
-                drawingOptions = Integer.parseInt(sc.nextLine());
-            }
+            //try to get drawing options
+            drawingOptions = drawingCanvas.getDrawingOption(sc);
 
             //Quit the program
             if (drawingOptions == 4) {
@@ -45,24 +33,9 @@ public class KinderKit {
                 break;
             }
 
+            //draw the first one sphere, so the default set is Y
             char drawAnotherOne = 'Y';
-            while (drawAnotherOne == 'Y') {
-                drawingCanvas.drawOptions(drawingOptions, sc);
-                if (drawingOptions == 1) {
-                    System.out.println("Draw another triangle (Y/N)?");
-                } else if (drawingOptions == 2) {
-                    System.out.println("Draw another rectangle (Y/N)?");
-                    //future updates
-                } else if (drawingOptions == 3){
-                    break;
-                }
-                drawAnotherOne = sc.nextLine().toUpperCase().charAt(0);
-                while (drawAnotherOne != 'Y' && drawAnotherOne != 'N') {
-                    System.out.println("Unsupported option. Please try again!");
-                    System.out.println("Draw another triangle (Y/N)?");
-                    drawAnotherOne = sc.nextLine().toUpperCase().charAt(0);
-                }
-            }
+            drawingCanvas.drawAnotherOne(drawAnotherOne, drawingOptions, sc);
         }
 
     }

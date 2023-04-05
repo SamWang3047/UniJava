@@ -1,6 +1,14 @@
 package Assignment1;
 
 import java.util.Scanner;
+/**
+ * COMP90041, Sem1, 2023: Assignment 1
+ * @author: Zhiyuan Wang
+ * @studentEmail: zhiyuanw6@student.unimelb.edu.au
+ * @studentID: 1406985
+ * @personalWebsite: www.hellosam.top
+ *
+ */
 
 public class Rectangle {
     private static final int DEFAULT_START_PRINT_POINT = 0;
@@ -115,7 +123,7 @@ public class Rectangle {
     }
 
     /**
-     * Move rectangle to 4 directions
+     * Move rectangle to four different directions
      * @param canvasWidth get the current width of the canvas
      * @param canvasHeight get the current height of the canvas
      * @param backGroundChar get the current bg char of the canvas

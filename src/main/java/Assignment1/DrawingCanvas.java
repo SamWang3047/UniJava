@@ -1,6 +1,14 @@
 package Assignment1;
 
 import java.util.Scanner;
+/**
+ * COMP90041, Sem1, 2023: Assignment 1
+ * @author: Zhiyuan Wang
+ * @studentEmail: zhiyuanw6@student.unimelb.edu.au
+ * @studentID: 1406985
+ * @personalWebsite: www.hellosam.top
+ *
+ */
 
 public class DrawingCanvas {
     //Use for combine duplicate print method like getLength
@@ -14,7 +22,7 @@ public class DrawingCanvas {
     private char backGroundChar;
 
     /**
-     * TODO: Drawing Canvas constructor. Take args to initialized a DC object.
+     * Drawing Canvas constructor. Take args to initialize a DC object.
      * @param args Program arguments
      */
     public DrawingCanvas(String[] args) {
@@ -24,7 +32,7 @@ public class DrawingCanvas {
     }
 
     /**
-     * TODO: Distinguish the options
+     * Distinguish the options
      * @param drawingOptions number of the option
      * @param sc only one scanner
      */
@@ -198,6 +206,70 @@ public class DrawingCanvas {
             recSideLen = Integer.parseInt(sc.nextLine());
         }
         return recSideLen;
+    }
+
+    /**
+     * Get drawing options from user input, has error fixing method
+     * @param sc
+     * @return a new and right drawing option
+     */
+    public int getDrawingOption(Scanner sc) {
+        int drawingOptions = 0;
+        //try to get drawing options, catching the NumberFormat exception to prevent user input is not a number
+        while (true) {
+            try {
+                drawingOptions = Integer.parseInt(sc.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+//                e.printStackTrace();
+                System.out.println("Invalid input!");
+                printCurrentCanvasDetails();
+            }
+        }
+        //not in the correct field
+        while (drawingOptions > 4 || drawingOptions < 1) {
+            System.out.println("Unsupported option. Please try again!");
+            printDrawingSelection();
+            //another time
+            while (true) {
+                try {
+                    drawingOptions = Integer.parseInt(sc.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+//                e.printStackTrace();
+                    System.out.println("Invalid input!");
+                    printCurrentCanvasDetails();
+                }
+            }
+        }
+        return drawingOptions;
+    }
+
+    /**
+     * Decide whether user need to draw another one sphere
+     * @param drawAnotherOne default is Y for the first time for drawing the first sphere.
+     * @param drawingOptions from the top
+     */
+
+    public void drawAnotherOne(char drawAnotherOne, int drawingOptions, Scanner sc) {
+        while (drawAnotherOne == 'Y') {
+            drawOptions(drawingOptions, sc);
+            //differentiate the triangle or rectangle
+            if (drawingOptions == 1) {
+                System.out.println("Draw another triangle (Y/N)?");
+            } else if (drawingOptions == 2) {
+                System.out.println("Draw another rectangle (Y/N)?");
+                //future updates
+            } else if (drawingOptions == 3){
+                break;
+            }
+            drawAnotherOne = sc.nextLine().toUpperCase().charAt(0);
+            while (drawAnotherOne != 'Y' && drawAnotherOne != 'N') {
+                System.out.println("Unsupported option. Please try again!");
+                System.out.println("Draw another triangle (Y/N)?");
+                drawAnotherOne = sc.nextLine().toUpperCase().charAt(0);
+            }
+        }
     }
 
     /**
