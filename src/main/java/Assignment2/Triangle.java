@@ -2,7 +2,7 @@ package Assignment2;
 
 import java.util.Scanner;
 /**
- * COMP90041, Sem1, 2023: Assignment 1
+ * COMP90041, Sem1, 2023: Assignment 2
  * @author: Zhiyuan Wang
  * @studentEmail: zhiyuanw6@student.unimelb.edu.au
  * @studentID: 1406985

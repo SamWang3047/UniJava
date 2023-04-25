@@ -2,7 +2,7 @@ package Assignment2;
 
 import java.util.Scanner;
 /**
- * COMP90041, Sem1, 2023: Assignment 1
+ * COMP90041, Sem1, 2023: Assignment 2
  * @author: Zhiyuan Wang
  * @studentEmail: zhiyuanw6@student.unimelb.edu.au
  * @studentID: 1406985
@@ -21,14 +21,14 @@ public class DrawingCanvas {
     private int canvasHeight;
     private char backGroundChar;
 
-    /**
-     * Drawing Canvas constructor. Take args to initialize a DC object.
-     * @param args Program arguments
-     */
-    public DrawingCanvas(String[] args) {
-        canvasWidth = Integer.parseInt(args[0]);
-        canvasHeight = Integer.parseInt(args[1]);
-        backGroundChar = args[2].charAt(0);
+    private char[][] bitmap;
+
+
+    public DrawingCanvas(int canvasWidth, int canvasHeight, char backGroundChar, char[][] bitmap) {
+        this.canvasWidth = canvasWidth;
+        this.canvasHeight = canvasHeight;
+        this.backGroundChar = backGroundChar;
+        this.bitmap = bitmap;
     }
 
     /**
@@ -39,7 +39,7 @@ public class DrawingCanvas {
     public void drawOptions(int drawingOptions, Scanner sc) {
         switch (drawingOptions) {
             case 1://Draw triangles
-                drawTriangle(sc);
+                drawPredefinedObject(sc);
                 break;
             case 2:
                 drawRectangle(sc);
@@ -120,11 +120,10 @@ public class DrawingCanvas {
      * TODO: simply print the selection part.
      */
     public void printDrawingSelection() {
-        System.out.println("Please select an option. Type 4 to exit.\n" +
-                "1. Draw triangles\n" +
-                "2. Draw rectangles\n" +
-                "3. Update drawing canvas settings\n" +
-                "4. Exit");
+        System.out.println("Please select an option. Type 3 to exit.\n" +
+                "1. Draw a predefined object\n" +
+                "2. Freestyle Drawing\n" +
+                "3. Exit");
     }
     /**
      * TODO: simply print the canvas details part.
@@ -213,7 +212,7 @@ public class DrawingCanvas {
      * @param sc
      * @return a new and right drawing option
      */
-    public int getDrawingOption(Scanner sc) {
+    public int getDrawingOption(Scanner sc, int numOption) {
         int drawingOptions = 0;
         //try to get drawing options, catching the NumberFormat exception to prevent user input is not a number
         while (true) {
@@ -227,7 +226,7 @@ public class DrawingCanvas {
             }
         }
         //not in the correct field
-        while (drawingOptions > 4 || drawingOptions < 1) {
+        while (drawingOptions > numOption || drawingOptions < 1) {
             System.out.println("Unsupported option. Please try again!");
             printDrawingSelection();
             //another time
@@ -271,6 +270,18 @@ public class DrawingCanvas {
             }
         }
     }
+     public void drawPredefinedObject(Scanner sc) {
+         System.out.println("Please select an option. Type 4 to go back to the main menu.\n" +
+                 "1. Preview the sample drawing\n" +
+                 "2. Start/edit the current canvas\n" +
+                 "3. Check result\n" +
+                 "4. Go back to the main menu");
+         int option = getDrawingOption(sc, 4);
+         switch (option) {
+             case 1:
+         }
+
+     }
 
     /**
      * Getters and Setters
@@ -297,6 +308,14 @@ public class DrawingCanvas {
 
     public void setBackGroundChar(char backGroundChar) {
         this.backGroundChar = backGroundChar;
+    }
+
+    public char[][] getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(char[][] bitmap) {
+        this.bitmap = bitmap;
     }
 
 
