@@ -21,14 +21,16 @@ public class DrawingCanvas {
     private int canvasHeight;
     private char backGroundChar;
 
-    private char[][] bitmap;
+    private char[][] fileBitmap;
+
+    private char[][] canvasBitmap;
 
 
-    public DrawingCanvas(int canvasWidth, int canvasHeight, char backGroundChar, char[][] bitmap) {
+    public DrawingCanvas(int canvasWidth, int canvasHeight, char backGroundChar, char[][] fileBitmap) {
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
         this.backGroundChar = backGroundChar;
-        this.bitmap = bitmap;
+        this.fileBitmap = fileBitmap;
     }
 
     /**
@@ -38,16 +40,13 @@ public class DrawingCanvas {
      */
     public void drawOptions(int drawingOptions, Scanner sc) {
         switch (drawingOptions) {
-            case 1://Draw triangles
+            case 1:
+                //drawTriangle(sc);
                 drawPredefinedObject(sc);
                 break;
             case 2:
-                drawRectangle(sc);
-                break;
-            case 3:
                 updateCanvas(sc);
-                System.out.println();
-                printCurrentCanvasDetails();
+                drawFreestyleDrawing(sc);
                 break;
         }
     }
@@ -67,7 +66,7 @@ public class DrawingCanvas {
         Triangle triangle = new Triangle(triSideLength, printingChar);
         triangle.printTriangle(canvasWidth, canvasHeight, backGroundChar);
 
-        triangle.zoomOrMoving(canvasWidth, canvasHeight, backGroundChar, sc);
+        triangle.zoomMoveOrRotate(canvasWidth, canvasHeight, backGroundChar, sc);
     }
 
     /**
@@ -83,7 +82,6 @@ public class DrawingCanvas {
         char printingChar = sc.nextLine().charAt(0);
         Rectangle rectangle = new Rectangle(recWidth, recHeight, printingChar);
         rectangle.printRectangle(canvasWidth, canvasHeight, backGroundChar);
-
         rectangle.zoomOrMoving(canvasWidth, canvasHeight, backGroundChar, sc);
     }
 
@@ -112,8 +110,6 @@ public class DrawingCanvas {
         canvasWidth = updateCanvasWidth;
         canvasHeight = updateCanvasHeight;
         backGroundChar = updateCanvasChar;
-
-        System.out.println("Drawing canvas has been updated!");
     }
 
     /**
@@ -271,17 +267,98 @@ public class DrawingCanvas {
         }
     }
      public void drawPredefinedObject(Scanner sc) {
-         System.out.println("Please select an option. Type 4 to go back to the main menu.\n" +
-                 "1. Preview the sample drawing\n" +
-                 "2. Start/edit the current canvas\n" +
-                 "3. Check result\n" +
-                 "4. Go back to the main menu");
-         int option = getDrawingOption(sc, 4);
-         switch (option) {
-             case 1:
+        boolean startWhile = true;
+        while (startWhile) {
+            System.out.println("Please select an option. Type 4 to go back to the main menu.\n" +
+                    "1. Preview the sample drawing\n" +
+                    "2. Start/edit the current canvas\n" +
+                    "3. Check result\n" +
+                    "4. Go back to the main menu");
+            int option = getDrawingOption(sc, 4);
+            switch (option) {
+                case 1:
+                    System.out.println("This is your task. Just try to draw the same object. Enjoy!");
+                    for (int i = 0; i < fileBitmap.length; i++) {
+                        for (int j = 0; j < fileBitmap[0].length; j++) {
+                            System.out.print(fileBitmap[i][j]);
+                        }
+                        System.out.println();
+                    }
+                    break;
+                case 2:
+                    printCanvas();
+                    printTriangleSelection(sc);
+                    break;
+                case 3:
+
+                    break;
+                case 4:
+                    startWhile = false;
+                    break;
+            }
+        }
+
+     }
+
+     public void drawFreestyleDrawing(Scanner sc) {
+         boolean startWhile = true;
+         while (startWhile) {
+             System.out.println("Please select an option. Type 3 to go back to the main menu.\n" +
+                     "1. Start/edit your current canvas\n" +
+                     "2. Share your current drawing\n" +
+                     "3. Go back to the main menu");
+             int option = getDrawingOption(sc, 3);
+             switch (option) {
+                 case 1:
+                    printCanvas();
+                    printTriangleSelection(sc);
+                     break;
+                 case 2:
+
+                     break;
+                 case 3:
+                     startWhile = false;
+                     break;
+             }
          }
 
      }
+
+     public void printCanvas() {
+         for (int i = 0; i < canvasHeight; i++) {
+             for (int j = 0; j < canvasWidth; j++) {
+                 System.out.print(backGroundChar);
+             }
+             System.out.println();
+          }
+     }
+    public void printTriangleSelection(Scanner sc) {
+        boolean startWhile = true;
+        while (startWhile) {
+            System.out.println("Please select an option. Type 4 to go back to the previous menu.\n" +
+                    "1. Add a new Triangle\n" +
+                    "2. Edit a triangle\n" +
+                    "3. Remove a triangle\n" +
+                    "4. Go back");
+            int option = getDrawingOption(sc, 4);
+            switch (option) {
+                case 1:
+                    drawTriangle(sc);
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+
+                    break;
+                case 4:
+                    startWhile = false;
+                    break;
+            }
+        }
+
+
+    }
 
     /**
      * Getters and Setters
@@ -310,13 +387,20 @@ public class DrawingCanvas {
         this.backGroundChar = backGroundChar;
     }
 
-    public char[][] getBitmap() {
-        return bitmap;
+    public char[][] getFileBitmap() {
+        return fileBitmap;
     }
 
-    public void setBitmap(char[][] bitmap) {
-        this.bitmap = bitmap;
+    public void setFileBitmap(char[][] fileBitmap) {
+        this.fileBitmap = fileBitmap;
     }
 
+    public char[][] getCanvasBitmap() {
+        return canvasBitmap;
+    }
+
+    public void setCanvasBitmap(char[][] canvasBitmap) {
+        this.canvasBitmap = canvasBitmap;
+    }
 
 }

@@ -65,12 +65,6 @@ public class KinderKit {
             System.out.println("The given file is not found!");
             return;
         }
-        for (int i = 0; i < bitmap.length; i++) {
-            for (int j = 0; j < bitmap[0].length; j++) {
-                System.out.print(bitmap[i][j]);
-            }
-            System.out.println();
-        }
 
         //TODO: Write your code from here
         //Initiate a new drawing canvas using args
@@ -90,13 +84,7 @@ public class KinderKit {
                 System.out.println("Goodbye! We hope you had fun :)");
                 break;
             }
-
-
-
-
-            //draw the first one sphere, so the default set is Y
-            char drawAnotherOne = 'Y';
-            drawingCanvas.drawAnotherOne(drawAnotherOne, drawingOptions, sc);
+            drawingCanvas.drawOptions(drawingOptions, sc);
         }
 
     }

@@ -64,18 +64,20 @@ public class Triangle {
      * @param canvasHeight get the current height of the canvas
      * @param backGroundChar get the current bg char of the canvas
      */
-    public void zoomOrMoving(int canvasWidth, int canvasHeight, char backGroundChar, Scanner sc) {
-        System.out.println("Type Z/M for zooming/moving. Use other keys to quit the Zooming/Moving mode.");
-        char zoomingOrMoving = sc.nextLine().toUpperCase().charAt(0);
-        while (zoomingOrMoving == 'Z' || zoomingOrMoving == 'M') {
+    public void zoomMoveOrRotate(int canvasWidth, int canvasHeight, char backGroundChar, Scanner sc) {
+        System.out.println("Type Z/M/R for zooming/moving/rotating. Use other keys to quit the Zooming/Moving/Rotating mode.");
+        char zoomMoveOrRotate = sc.nextLine().toUpperCase().charAt(0);
+        while (zoomMoveOrRotate == 'Z' || zoomMoveOrRotate == 'M' || zoomMoveOrRotate == 'R') {
             printTriangle(canvasWidth, canvasHeight, backGroundChar);
-            if (zoomingOrMoving == 'Z') {
+            if (zoomMoveOrRotate == 'Z') {
                 zoom(canvasWidth, canvasHeight, backGroundChar, sc);
-            } else {
+            } else if (zoomMoveOrRotate == 'M'){
                 move(canvasWidth, canvasHeight, backGroundChar, sc);
+            } else {
+
             }
-            System.out.println("Type Z/M for zooming/moving. Use other keys to quit the Zooming/Moving mode.");
-            zoomingOrMoving = sc.nextLine().toUpperCase().charAt(0);
+            System.out.println("Type Z/M/R for zooming/moving/rotating. Use other keys to quit the Zooming/Moving/Rotating mode.");
+            zoomMoveOrRotate = sc.nextLine().toUpperCase().charAt(0);
         }
     }
 
@@ -162,6 +164,10 @@ public class Triangle {
             direction = sc.nextLine().toUpperCase().charAt(0);
         }
         printTriangle(canvasWidth, canvasHeight, backGroundChar);
+    }
+
+    public void rotate(int canvasWidth, int canvasHeight, char backGroundChar, Scanner sc) {
+
     }
     /**
      * Getters and Setters
