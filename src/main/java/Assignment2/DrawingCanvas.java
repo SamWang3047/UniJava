@@ -1,5 +1,6 @@
 package Assignment2;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 /**
  * COMP90041, Sem1, 2023: Assignment 2
@@ -22,8 +23,9 @@ public class DrawingCanvas {
     private char backGroundChar;
 
     private char[][] fileBitmap;
-
     private char[][] canvasBitmap;
+
+    private ArrayList<Triangle> triangleList;
 
 
     public DrawingCanvas(int canvasWidth, int canvasHeight, char backGroundChar, char[][] fileBitmap) {
@@ -31,6 +33,13 @@ public class DrawingCanvas {
         this.canvasHeight = canvasHeight;
         this.backGroundChar = backGroundChar;
         this.fileBitmap = fileBitmap;
+
+        canvasBitmap = new char[canvasHeight][canvasWidth];
+        for (int i = 0; i < canvasHeight; i++) {
+            for (int j = 0; j < canvasWidth; j++) {
+                canvasBitmap[i][j] = backGroundChar;
+            }
+        }
     }
 
     /**
@@ -41,7 +50,6 @@ public class DrawingCanvas {
     public void drawOptions(int drawingOptions, Scanner sc) {
         switch (drawingOptions) {
             case 1:
-                //drawTriangle(sc);
                 drawPredefinedObject(sc);
                 break;
             case 2:
@@ -64,9 +72,9 @@ public class DrawingCanvas {
         char printingChar = sc.nextLine().charAt(0);
 
         Triangle triangle = new Triangle(triSideLength, printingChar);
-        triangle.printTriangle(canvasWidth, canvasHeight, backGroundChar);
-
-        triangle.zoomMoveOrRotate(canvasWidth, canvasHeight, backGroundChar, sc);
+        triangle.printToBitMap(canvasWidth, canvasHeight, canvasBitmap);
+        showBitmap(canvasBitmap);
+        //triangle.zoomMoveOrRotate(canvasWidth, canvasHeight, backGroundChar, sc);
     }
 
     /**
@@ -267,6 +275,7 @@ public class DrawingCanvas {
         }
     }
      public void drawPredefinedObject(Scanner sc) {
+
         boolean startWhile = true;
         while (startWhile) {
             System.out.println("Please select an option. Type 4 to go back to the main menu.\n" +
@@ -278,12 +287,7 @@ public class DrawingCanvas {
             switch (option) {
                 case 1:
                     System.out.println("This is your task. Just try to draw the same object. Enjoy!");
-                    for (int i = 0; i < fileBitmap.length; i++) {
-                        for (int j = 0; j < fileBitmap[0].length; j++) {
-                            System.out.print(fileBitmap[i][j]);
-                        }
-                        System.out.println();
-                    }
+                    showBitmap(fileBitmap);
                     break;
                 case 2:
                     printCanvas();
@@ -310,11 +314,10 @@ public class DrawingCanvas {
              int option = getDrawingOption(sc, 3);
              switch (option) {
                  case 1:
-                    printCanvas();
-                    printTriangleSelection(sc);
+                     printCanvas();
+                     printTriangleSelection(sc);
                      break;
                  case 2:
-
                      break;
                  case 3:
                      startWhile = false;
@@ -357,7 +360,14 @@ public class DrawingCanvas {
             }
         }
 
-
+    }
+    public void showBitmap(char[][] bitmap) {
+        for (int i = 0; i < bitmap.length; i++) {
+            for (int j = 0; j < bitmap[0].length; j++) {
+                System.out.print(bitmap[i][j]);
+            }
+            System.out.println();
+        }
     }
 
     /**
@@ -402,5 +412,14 @@ public class DrawingCanvas {
     public void setCanvasBitmap(char[][] canvasBitmap) {
         this.canvasBitmap = canvasBitmap;
     }
+
+    public ArrayList<Triangle> getTriangleList() {
+        return triangleList;
+    }
+
+    public void setTriangleList(ArrayList<Triangle> triangleList) {
+        this.triangleList = triangleList;
+    }
+
 
 }

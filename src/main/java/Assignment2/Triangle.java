@@ -58,6 +58,13 @@ public class Triangle {
         }
     }
 
+    public void printToBitMap(int canvasWidth, int canvasHeight, char[][] bitmap) {
+        for (int i = 0; i < sideLength; i++) {
+            for (int j = 0; j < sideLength - i; j++) {
+                bitmap[i][j] = printingChar;
+            }
+        }
+    }
     /**
      * Decide whether the triangle going to zoom or move
      * @param canvasWidth get the current width of the canvas
