@@ -185,7 +185,7 @@ public class DrawingCanvas {
                 break;
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input!");
-//            e.printStackTrace();
+//              e.printStackTrace();
             }
         }
         int canvasSide = 0;

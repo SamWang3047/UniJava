@@ -2,6 +2,7 @@ package Assignment2;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
 /**
  * COMP90041, Sem1, 2023: Assignment 2
  * @author: Zhiyuan Wang
@@ -34,12 +35,10 @@ public class DrawingCanvas {
         this.backGroundChar = backGroundChar;
         this.fileBitmap = fileBitmap;
 
+        triangleList = new ArrayList<>();
         canvasBitmap = new char[canvasHeight][canvasWidth];
-        for (int i = 0; i < canvasHeight; i++) {
-            for (int j = 0; j < canvasWidth; j++) {
-                canvasBitmap[i][j] = backGroundChar;
-            }
-        }
+        canvasInit();
+
     }
 
     /**
@@ -72,25 +71,13 @@ public class DrawingCanvas {
         char printingChar = sc.nextLine().charAt(0);
 
         Triangle triangle = new Triangle(triSideLength, printingChar);
-        triangle.printToBitMap(canvasWidth, canvasHeight, canvasBitmap);
+        triangleList.add(triangle);
+        //这个地方需要重新打印所有的三角形
+        for (int i = 0; i < triangleList.size(); i++) {
+            triangleList.get(i).printToBitMap(canvasBitmap);
+        }
         showBitmap(canvasBitmap);
-        //triangle.zoomMoveOrRotate(canvasWidth, canvasHeight, backGroundChar, sc);
-    }
-
-    /**
-     * TODO: Same as the drawTriangle method. Simplified the getRectangleSide method, need to pass isWidth variable.
-     * @param sc
-     */
-    public void drawRectangle(Scanner sc) {
-//        int[] recSides = getRectangleSide(sc);
-        int recWidth = getRectangleSide(sc, 1);
-        int recHeight = getRectangleSide(sc, 0);
-
-        System.out.println("Printing character:");
-        char printingChar = sc.nextLine().charAt(0);
-        Rectangle rectangle = new Rectangle(recWidth, recHeight, printingChar);
-        rectangle.printRectangle(canvasWidth, canvasHeight, backGroundChar);
-        rectangle.zoomOrMoving(canvasWidth, canvasHeight, backGroundChar, sc);
+        triangle.zoomMoveOrRotate(canvasWidth, canvasHeight, backGroundChar, sc, triangleList, canvasBitmap);
     }
 
     /**
@@ -123,11 +110,36 @@ public class DrawingCanvas {
     /**
      * TODO: simply print the selection part.
      */
-    public void printDrawingSelection() {
-        System.out.println("Please select an option. Type 3 to exit.\n" +
-                "1. Draw a predefined object\n" +
-                "2. Freestyle Drawing\n" +
-                "3. Exit");
+    public void printDrawingSelection(String choice) {
+        switch (choice) {
+            case "1":
+                System.out.println("Please select an option. Type 3 to exit.\n" +
+                        "1. Draw a predefined object\n" +
+                        "2. Freestyle Drawing\n" +
+                        "3. Exit");
+                break;
+            case "P":
+                System.out.println("Please select an option. Type 4 to go back to the main menu.\n" +
+                        "1. Preview the sample drawing\n" +
+                        "2. Start/edit the current canvas\n" +
+                        "3. Check result\n" +
+                        "4. Go back to the main menu");
+                break;
+            case "F" :
+                System.out.println("Please select an option. Type 3 to go back to the main menu.\n" +
+                        "1. Start/edit your current canvas\n" +
+                        "2. Share your current drawing\n" +
+                        "3. Go back to the main menu");
+                break;
+            case "P1" :
+                System.out.println("Please select an option. Type 4 to go back to the previous menu.\n" +
+                        "1. Add a new Triangle\n" +
+                        "2. Edit a triangle\n" +
+                        "3. Remove a triangle\n" +
+                        "4. Go back");
+                break;
+        }
+
     }
     /**
      * TODO: simply print the canvas details part.
@@ -174,49 +186,11 @@ public class DrawingCanvas {
     }
 
     /**
-     * TODO: Get the rectangle length with the correctness check. Use the PRINT_STRINGS to simplify the width and height.
-     * @param sc
-     * @param isWidth 1 means the side is width, and 0 means side is height(is not width).
-     * @return side length
-     */
-    public int getRectangleSide(Scanner sc, int isWidth) {
-        int recSideLen = 0;
-        while (true) {
-            try {
-                System.out.println(PRINT_STRINGS[1][isWidth] + ":");
-                recSideLen = Integer.parseInt(sc.nextLine());
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input!");
-//            e.printStackTrace();
-            }
-        }
-        int canvasSide = 0;
-        if (isWidth == 1) {
-            canvasSide = canvasWidth;
-        } else {
-            canvasSide = canvasHeight;
-        }
-        while (recSideLen <= 0 || (recSideLen > canvasSide)) {
-            if (recSideLen <= 0) {
-                System.out.println("Error! The " + PRINT_STRINGS[1][isWidth] + " can not be 0 or negative");
-            }
-            if (recSideLen > canvasSide) {
-                System.out.println("Error! The " + PRINT_STRINGS[1][isWidth] + " is too large (Current canvas size is "
-                        + canvasWidth + "x" + canvasHeight + "). Please try again.");
-            }
-            System.out.println(PRINT_STRINGS[1][isWidth] + ":");
-            recSideLen = Integer.parseInt(sc.nextLine());
-        }
-        return recSideLen;
-    }
-
-    /**
      * Get drawing options from user input, has error fixing method
      * @param sc
      * @return a new and right drawing option
      */
-    public int getDrawingOption(Scanner sc, int numOption) {
+    public int getDrawingOption(Scanner sc, int numOption, String choice) {
         int drawingOptions = 0;
         //try to get drawing options, catching the NumberFormat exception to prevent user input is not a number
         while (true) {
@@ -232,7 +206,7 @@ public class DrawingCanvas {
         //not in the correct field
         while (drawingOptions > numOption || drawingOptions < 1) {
             System.out.println("Unsupported option. Please try again!");
-            printDrawingSelection();
+            printDrawingSelection(choice);
             //another time
             while (true) {
                 try {
@@ -278,12 +252,8 @@ public class DrawingCanvas {
 
         boolean startWhile = true;
         while (startWhile) {
-            System.out.println("Please select an option. Type 4 to go back to the main menu.\n" +
-                    "1. Preview the sample drawing\n" +
-                    "2. Start/edit the current canvas\n" +
-                    "3. Check result\n" +
-                    "4. Go back to the main menu");
-            int option = getDrawingOption(sc, 4);
+            printDrawingSelection("P");
+            int option = getDrawingOption(sc, 4, "P");
             switch (option) {
                 case 1:
                     System.out.println("This is your task. Just try to draw the same object. Enjoy!");
@@ -307,11 +277,8 @@ public class DrawingCanvas {
      public void drawFreestyleDrawing(Scanner sc) {
          boolean startWhile = true;
          while (startWhile) {
-             System.out.println("Please select an option. Type 3 to go back to the main menu.\n" +
-                     "1. Start/edit your current canvas\n" +
-                     "2. Share your current drawing\n" +
-                     "3. Go back to the main menu");
-             int option = getDrawingOption(sc, 3);
+             printDrawingSelection("F");
+             int option = getDrawingOption(sc, 3, "F");
              switch (option) {
                  case 1:
                      printCanvas();
@@ -338,12 +305,8 @@ public class DrawingCanvas {
     public void printTriangleSelection(Scanner sc) {
         boolean startWhile = true;
         while (startWhile) {
-            System.out.println("Please select an option. Type 4 to go back to the previous menu.\n" +
-                    "1. Add a new Triangle\n" +
-                    "2. Edit a triangle\n" +
-                    "3. Remove a triangle\n" +
-                    "4. Go back");
-            int option = getDrawingOption(sc, 4);
+            printDrawingSelection("P1");
+            int option = getDrawingOption(sc, 4, "P1");
             switch (option) {
                 case 1:
                     drawTriangle(sc);
@@ -367,6 +330,14 @@ public class DrawingCanvas {
                 System.out.print(bitmap[i][j]);
             }
             System.out.println();
+        }
+    }
+
+    public void canvasInit() {
+        for (int i = 0; i < canvasHeight; i++) {
+            for (int j = 0; j < canvasWidth; j++) {
+                canvasBitmap[i][j] = backGroundChar;
+            }
         }
     }
 
