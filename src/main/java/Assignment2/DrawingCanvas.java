@@ -106,41 +106,6 @@ public class DrawingCanvas {
         canvasHeight = updateCanvasHeight;
         backGroundChar = updateCanvasChar;
     }
-
-    /**
-     * TODO: simply print the selection part.
-     */
-    public void printDrawingSelection(String choice) {
-        switch (choice) {
-            case "1":
-                System.out.println("Please select an option. Type 3 to exit.\n" +
-                        "1. Draw a predefined object\n" +
-                        "2. Freestyle Drawing\n" +
-                        "3. Exit");
-                break;
-            case "P":
-                System.out.println("Please select an option. Type 4 to go back to the main menu.\n" +
-                        "1. Preview the sample drawing\n" +
-                        "2. Start/edit the current canvas\n" +
-                        "3. Check result\n" +
-                        "4. Go back to the main menu");
-                break;
-            case "F" :
-                System.out.println("Please select an option. Type 3 to go back to the main menu.\n" +
-                        "1. Start/edit your current canvas\n" +
-                        "2. Share your current drawing\n" +
-                        "3. Go back to the main menu");
-                break;
-            case "P1" :
-                System.out.println("Please select an option. Type 4 to go back to the previous menu.\n" +
-                        "1. Add a new Triangle\n" +
-                        "2. Edit a triangle\n" +
-                        "3. Remove a triangle\n" +
-                        "4. Go back");
-                break;
-        }
-
-    }
     /**
      * TODO: simply print the canvas details part.
      */
@@ -339,6 +304,41 @@ public class DrawingCanvas {
                 canvasBitmap[i][j] = backGroundChar;
             }
         }
+    }
+
+    /**
+     * TODO: simply print the selection part.
+     */
+    public void printDrawingSelection(String choice) {
+        switch (choice) {
+            case "1":
+                System.out.println("Please select an option. Type 3 to exit.\n" +
+                        "1. Draw a predefined object\n" +
+                        "2. Freestyle Drawing\n" +
+                        "3. Exit");
+                break;
+            case "P":
+                System.out.println("Please select an option. Type 4 to go back to the main menu.\n" +
+                        "1. Preview the sample drawing\n" +
+                        "2. Start/edit the current canvas\n" +
+                        "3. Check result\n" +
+                        "4. Go back to the main menu");
+                break;
+            case "F" :
+                System.out.println("Please select an option. Type 3 to go back to the main menu.\n" +
+                        "1. Start/edit your current canvas\n" +
+                        "2. Share your current drawing\n" +
+                        "3. Go back to the main menu");
+                break;
+            case "P1" :
+                System.out.println("Please select an option. Type 4 to go back to the previous menu.\n" +
+                        "1. Add a new Triangle\n" +
+                        "2. Edit a triangle\n" +
+                        "3. Remove a triangle\n" +
+                        "4. Go back");
+                break;
+        }
+
     }
 
     /**

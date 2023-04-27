@@ -17,6 +17,7 @@ public class Triangle {
     private int startPrintPointX;
     private int startPrintPointY;
     private char printingChar;
+    private int[] position;
 
 
     public Triangle(int sideLength, char printingChar) {
@@ -24,6 +25,7 @@ public class Triangle {
         this.printingChar = printingChar;
         this.startPrintPointX = DEFAULT_START_PRINT_POINT;
         this.startPrintPointY = DEFAULT_START_PRINT_POINT;
+        position = new int[]{DEFAULT_START_PRINT_POINT, DEFAULT_START_PRINT_POINT};
     }
 
     /**
@@ -92,7 +94,7 @@ public class Triangle {
             } else if (zoomMoveOrRotate == 'M'){
                 move(canvasWidth, canvasHeight, backGroundChar, sc, triangleList, canvasBitmap);
             } else {
-                rotate(canvasWidth, canvasHeight, backGroundChar, sc);
+                rotate(canvasWidth, canvasHeight, backGroundChar, sc, triangleList, canvasBitmap);
             }
             System.out.println("Type Z/M/R for zooming/moving/rotating. Use other keys to quit the Zooming/Moving/Rotating mode.");
             zoomMoveOrRotate = sc.nextLine().toUpperCase().charAt(0);
@@ -187,12 +189,33 @@ public class Triangle {
         printTriangleArrayList(triangleList, canvasBitmap, canvasHeight, canvasWidth, backGroundChar);
     }
 
-    public void rotate(int canvasWidth, int canvasHeight, char backGroundChar, Scanner sc) {
-
+    public void rotate(int canvasWidth, int canvasHeight, char backGroundChar, Scanner sc,
+                       ArrayList<Triangle> triangleList, char[][] canvasBitmap) {
+        System.out.println("Type R/L to rotate clockwise/anti-clockwise. Use other keys to go back to the Zooming/Moving/Rotating menu.");
+        char clockWise = sc.nextLine().toUpperCase().charAt(0);
+        while (clockWise == 'R' || clockWise == 'L') {
+            int startX = startPrintPointX, startY = startPrintPointY;
+            int triSideLength = sideLength;
+            switch (clockWise) {
+                case 'R':
+                    if (startX - 1 < 0) {
+                        System.out.println("You cannot move this triangle outside of the drawing canvas!");
+                    } else {
+                        startPrintPointX = startX - 1;
+                    }
+                    break;
+                case 'L':
+                    if (startX + triSideLength + 1 > canvasWidth) {
+                        System.out.println("You cannot move this triangle outside of the drawing canvas!");
+                    } else {
+                        startPrintPointX = startX + 1;
+                    }
+                    break;
+            }
+        }
     }
 
     public void showBitmap(char[][] bitmap) {
-
         for (int i = 0; i < bitmap.length; i++) {
             for (int j = 0; j < bitmap[0].length; j++) {
                 System.out.print(bitmap[i][j]);
@@ -239,6 +262,14 @@ public class Triangle {
 
     public void setStartPrintPointY(int startPrintPointY) {
         this.startPrintPointY = startPrintPointY;
+    }
+
+    public int[] getPosition() {
+        return position;
+    }
+
+    public void setPosition(int[] position) {
+        this.position = position;
     }
 
 }
