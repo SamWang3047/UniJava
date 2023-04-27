@@ -19,6 +19,7 @@ public class Triangle {
     private char printingChar;
     private int[] position;
 
+    private int angle;
 
     public Triangle(int sideLength, char printingChar) {
         this.sideLength = sideLength;
@@ -62,11 +63,37 @@ public class Triangle {
     }
 
     public void printToBitMap(char[][] bitmap) {
-        for (int i = startPrintPointY; i < sideLength + startPrintPointY; i++) {
-            for (int j = startPrintPointX; j < sideLength - i + startPrintPointX + startPrintPointY; j++) {
-                bitmap[i][j] = printingChar;
-            }
+        switch (angle) {
+            case 0:
+                for (int i = startPrintPointY; i < sideLength + startPrintPointY; i++) {
+                    for (int j = startPrintPointX; j < sideLength - i + startPrintPointX + startPrintPointY; j++) {
+                        bitmap[i][j] = printingChar;
+                    }
+                }
+                break;
+            case 90:
+                for (int i = startPrintPointY; i < sideLength + startPrintPointY; i++) {
+                    for (int j = sideLength + startPrintPointX + startPrintPointY - 1; j >= startPrintPointX + i; j--) {
+                        bitmap[i][j] = printingChar;
+                    }
+                }
+                break;
+            case 180:
+                for (int i = startPrintPointY; i < sideLength + startPrintPointY; i++) {
+                    for (int j = sideLength + startPrintPointX + startPrintPointY - 1; j >= startPrintPointX + sideLength - i - 1; j--) {
+                        bitmap[i][j] = printingChar;
+                    }
+                }
+                break;
+            case 270:
+                for (int i = startPrintPointY; i < sideLength + startPrintPointY; i++) {
+                    for (int j = startPrintPointX; j < startPrintPointX + startPrintPointY + i + 1; j++) {
+                        bitmap[i][j] = printingChar;
+                    }
+                }
+                break;
         }
+
     }
 
     public void printTriangleArrayList(ArrayList<Triangle> triangleList, char[][] canvasBitmap, int canvasHeight, int canvasWidth, char BGChar) {
@@ -194,25 +221,28 @@ public class Triangle {
         System.out.println("Type R/L to rotate clockwise/anti-clockwise. Use other keys to go back to the Zooming/Moving/Rotating menu.");
         char clockWise = sc.nextLine().toUpperCase().charAt(0);
         while (clockWise == 'R' || clockWise == 'L') {
-            int startX = startPrintPointX, startY = startPrintPointY;
-            int triSideLength = sideLength;
             switch (clockWise) {
                 case 'R':
-                    if (startX - 1 < 0) {
-                        System.out.println("You cannot move this triangle outside of the drawing canvas!");
+                    if (angle + 90 >= 360) {
+                        angle = 0;
                     } else {
-                        startPrintPointX = startX - 1;
+                        angle += 90;
                     }
                     break;
                 case 'L':
-                    if (startX + triSideLength + 1 > canvasWidth) {
-                        System.out.println("You cannot move this triangle outside of the drawing canvas!");
+                    if (angle - 90 < 0) {
+                        angle = 0;
                     } else {
-                        startPrintPointX = startX + 1;
+                        angle -= 90;
                     }
                     break;
             }
+            printTriangleArrayList(triangleList, canvasBitmap, canvasHeight, canvasWidth, backGroundChar);
+
+            System.out.println("Type R/L to rotate clockwise/anti-clockwise. Use other keys to go back to the Zooming/Moving/Rotating menu.");
+            clockWise = sc.nextLine().toUpperCase().charAt(0);
         }
+        printTriangleArrayList(triangleList, canvasBitmap, canvasHeight, canvasWidth, backGroundChar);
     }
 
     public void showBitmap(char[][] bitmap) {
@@ -271,5 +301,11 @@ public class Triangle {
     public void setPosition(int[] position) {
         this.position = position;
     }
+    public int getAngle() {
+        return angle;
+    }
 
+    public void setAngle(int angle) {
+        this.angle = angle;
+    }
 }
