@@ -277,7 +277,7 @@ public class DrawingCanvas {
                     drawTriangle(sc);
                     break;
                 case 2:
-
+                    editTriangle(sc);
                     break;
                 case 3:
 
@@ -288,6 +288,52 @@ public class DrawingCanvas {
             }
         }
 
+    }
+
+    public void editTriangle(Scanner sc) {
+        if (triangleList.isEmpty()) {
+            System.out.println("The current canvas is clean; there are no shapes to edit!");
+        } else {
+            for (int i = 0; i < triangleList.size(); i++) {
+                System.out.println("Shape #" + (i + 1) +
+                        " - Triangle: xPos = " + triangleList.get(i).getStartPrintPointX() +
+                        ", yPos = "+ triangleList.get(i).getStartPrintPointY() +
+                        ", tChar = " + triangleList.get(i).getPrintingChar());
+            }
+
+            int shapeIndex = -1;
+            while (true) {
+                try {
+                    System.out.println("Index of the shape:");
+                    shapeIndex = Integer.parseInt(sc.nextLine()) - 1;
+                    break;
+                } catch (NumberFormatException e) {
+//                e.printStackTrace();
+                    System.out.println("Invalid input!");
+                    printCurrentCanvasDetails();
+                }
+            }
+            while (shapeIndex > triangleList.size() || shapeIndex < 0) {
+                System.out.println("The shape index cannot be larger than the number of shapes!");
+                showBitmap(canvasBitmap);
+                printDrawingSelection("P1");
+                //another time
+                while (true) {
+                    try {
+                        shapeIndex = Integer.parseInt(sc.nextLine()) - 1;
+                        break;
+                    } catch (NumberFormatException e) {
+//                e.printStackTrace();
+                        System.out.println("Invalid input!");
+                        printCurrentCanvasDetails();
+                    }
+                }
+            }
+            //edit the triangle
+            showBitmap(canvasBitmap);
+            triangleList.get(shapeIndex).zoomMoveOrRotate(canvasWidth, canvasHeight, backGroundChar, sc, triangleList, canvasBitmap);
+
+        }
     }
     public void showBitmap(char[][] bitmap) {
         for (int i = 0; i < bitmap.length; i++) {
