@@ -72,8 +72,8 @@ public class DrawingCanvas {
 
         Triangle triangle = new Triangle(triSideLength, printingChar);
         triangleList.add(triangle);
-        //这个地方需要重新打印所有的三角形
-        canvasInit();
+        //print all triangle
+
         for (int i = 0; i < triangleList.size(); i++) {
             triangleList.get(i).printToBitMap(canvasBitmap);
         }
@@ -376,6 +376,13 @@ public class DrawingCanvas {
             }
             //remove the triangle
             triangleList.remove(shapeIndex);
+            if (triangleList.isEmpty()) {
+                canvasInit();
+            } else {
+                for (int i = 0; i < triangleList.size(); i++) {
+                    triangleList.get(i).printToBitMap(canvasBitmap);
+                }
+            }
             showBitmap(canvasBitmap);
         }
     }
