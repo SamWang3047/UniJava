@@ -73,6 +73,7 @@ public class DrawingCanvas {
         Triangle triangle = new Triangle(triSideLength, printingChar);
         triangleList.add(triangle);
         //这个地方需要重新打印所有的三角形
+        canvasInit();
         for (int i = 0; i < triangleList.size(); i++) {
             triangleList.get(i).printToBitMap(canvasBitmap);
         }
@@ -226,7 +227,7 @@ public class DrawingCanvas {
                     break;
                 case 2:
                     printCanvas();
-                    printTriangleSelection(sc);
+                    drawEditOrRemove(sc);
                     break;
                 case 3:
 
@@ -247,7 +248,7 @@ public class DrawingCanvas {
              switch (option) {
                  case 1:
                      printCanvas();
-                     printTriangleSelection(sc);
+                     drawEditOrRemove(sc);
                      break;
                  case 2:
                      break;
@@ -267,7 +268,7 @@ public class DrawingCanvas {
              System.out.println();
           }
      }
-    public void printTriangleSelection(Scanner sc) {
+    public void drawEditOrRemove(Scanner sc) {
         boolean startWhile = true;
         while (startWhile) {
             printDrawingSelection("P1");
@@ -280,7 +281,7 @@ public class DrawingCanvas {
                     editTriangle(sc);
                     break;
                 case 3:
-
+                    remove(sc);
                     break;
                 case 4:
                     startWhile = false;
@@ -293,6 +294,7 @@ public class DrawingCanvas {
     public void editTriangle(Scanner sc) {
         if (triangleList.isEmpty()) {
             System.out.println("The current canvas is clean; there are no shapes to edit!");
+            showBitmap(canvasBitmap);
         } else {
             for (int i = 0; i < triangleList.size(); i++) {
                 System.out.println("Shape #" + (i + 1) +
@@ -310,7 +312,6 @@ public class DrawingCanvas {
                 } catch (NumberFormatException e) {
 //                e.printStackTrace();
                     System.out.println("Invalid input!");
-                    printCurrentCanvasDetails();
                 }
             }
             while (shapeIndex > triangleList.size() || shapeIndex < 0) {
@@ -325,7 +326,6 @@ public class DrawingCanvas {
                     } catch (NumberFormatException e) {
 //                e.printStackTrace();
                         System.out.println("Invalid input!");
-                        printCurrentCanvasDetails();
                     }
                 }
             }
@@ -333,6 +333,50 @@ public class DrawingCanvas {
             showBitmap(canvasBitmap);
             triangleList.get(shapeIndex).zoomMoveOrRotate(canvasWidth, canvasHeight, backGroundChar, sc, triangleList, canvasBitmap);
 
+        }
+    }
+
+    public void remove(Scanner sc) {
+        if (triangleList.isEmpty()) {
+            System.out.println("The current canvas is clean; there are no shapes to remove!");
+            showBitmap(canvasBitmap);
+        } else {
+            for (int i = 0; i < triangleList.size(); i++) {
+                System.out.println("Shape #" + (i + 1) +
+                        " - Triangle: xPos = " + triangleList.get(i).getStartPrintPointX() +
+                        ", yPos = "+ triangleList.get(i).getStartPrintPointY() +
+                        ", tChar = " + triangleList.get(i).getPrintingChar());
+            }
+
+            int shapeIndex = -1;
+            while (true) {
+                try {
+                    System.out.println("Index of the shape:");
+                    shapeIndex = Integer.parseInt(sc.nextLine()) - 1;
+                    break;
+                } catch (NumberFormatException e) {
+//                e.printStackTrace();
+                    System.out.println("Invalid input!");
+                }
+            }
+            while (shapeIndex > triangleList.size() || shapeIndex < 0) {
+                System.out.println("The shape index cannot be larger than the number of shapes!");
+                showBitmap(canvasBitmap);
+                printDrawingSelection("P1");
+                //another time
+                while (true) {
+                    try {
+                        shapeIndex = Integer.parseInt(sc.nextLine()) - 1;
+                        break;
+                    } catch (NumberFormatException e) {
+//                e.printStackTrace();
+                        System.out.println("Invalid input!");
+                    }
+                }
+            }
+            //remove the triangle
+            triangleList.remove(shapeIndex);
+            showBitmap(canvasBitmap);
         }
     }
     public void showBitmap(char[][] bitmap) {
