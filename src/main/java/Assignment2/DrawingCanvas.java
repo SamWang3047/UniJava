@@ -43,8 +43,8 @@ public class DrawingCanvas {
     public void drawOptions(int drawingOptions, Scanner sc) {
         switch (drawingOptions) {
             case 1:
-                canvasWidth = fileBitmap.length;
-                canvasHeight = fileBitmap[0].length;
+                canvasWidth = fileBitmap[0].length;
+                canvasHeight = fileBitmap.length;
                 backGroundChar = fileBGChar;
                 canvasBitmap = new char[canvasHeight][canvasWidth];
                 clear();
@@ -148,7 +148,7 @@ public class DrawingCanvas {
      * @param sc
      * @return a new and right drawing option
      */
-    public int getDrawingOption(Scanner sc, int numOption, String choice) {
+    public int getDrawingOption(Scanner sc, int numOption, String choice, int layer) {
         int drawingOptions = 0;
         //try to get drawing options, catching the NumberFormat exception to prevent user input is not a number
         while (true) {
@@ -163,7 +163,12 @@ public class DrawingCanvas {
         }
         //not in the correct field
         while (drawingOptions > numOption || drawingOptions < 1) {
-            System.out.println("Unsupported option. Please try again!");
+            if (layer == 1) {
+                System.out.println("Unsupported option. Please try again!");
+            }
+            else if (layer == 2) {
+                System.out.println("Unsupported option. Please try again.");
+            }
             printDrawingSelection(choice);
             //another time
             while (true) {
@@ -185,7 +190,7 @@ public class DrawingCanvas {
         boolean startWhile = true;
         while (startWhile) {
             printDrawingSelection("P");
-            int option = getDrawingOption(sc, 4, "P");
+            int option = getDrawingOption(sc, 4, "P", 2);
             switch (option) {
                 case 1:
                     System.out.println("This is your task. Just try to draw the same object. Enjoy!");
@@ -210,7 +215,7 @@ public class DrawingCanvas {
          boolean startWhile = true;
          while (startWhile) {
              printDrawingSelection("F");
-             int option = getDrawingOption(sc, 3, "F");
+             int option = getDrawingOption(sc, 3, "F", 2);
              switch (option) {
                  case 1:
                      printCanvas();
@@ -231,7 +236,7 @@ public class DrawingCanvas {
         boolean startWhile = true;
         while (startWhile) {
             printDrawingSelection("P1");
-            int option = getDrawingOption(sc, 4, "P1");
+            int option = getDrawingOption(sc, 4, "P1", 2);
             switch (option) {
                 case 1:
                     drawTriangle(sc);

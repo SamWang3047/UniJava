@@ -78,7 +78,7 @@ public class KinderKit {
             drawingCanvas.printDrawingSelection("1");
             int drawingOptions = -1;
             //try to get drawing options
-            drawingOptions = drawingCanvas.getDrawingOption(sc, 3, "1");
+            drawingOptions = drawingCanvas.getDrawingOption(sc, 3, "1", 1);
             //Quit
             if (drawingOptions == 3) {
                 System.out.println("Goodbye! We hope you had fun :)");

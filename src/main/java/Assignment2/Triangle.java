@@ -123,7 +123,7 @@ public class Triangle {
                 }
                 printTriangleArrayList(triangleList, canvasBitmap, canvasHeight, canvasWidth, backGroundChar);
             }
-            System.out.println("Type I/O to zoom in/out. Use other keys to go back to the Zooming/Moving menu.");
+            System.out.println("Type I/O to zoom in/out. Use other keys to go back to the Zooming/Moving/Rotating menu.");
             inOrOut = sc.nextLine().toUpperCase().charAt(0);
         }
         printTriangleArrayList(triangleList, canvasBitmap, canvasHeight, canvasWidth, backGroundChar);
@@ -137,7 +137,7 @@ public class Triangle {
      */
     public void move(int canvasWidth, int canvasHeight, char backGroundChar, Scanner sc,
                      ArrayList<Triangle> triangleList, char[][] canvasBitmap) {
-        System.out.println("Type A/S/W/Z to move left/right/up/down. Use other keys to go back to the Zooming/Moving menu.");
+        System.out.println("Type A/S/W/Z to move left/right/up/down. Use other keys to go back to the Zooming/Moving/Rotating menu.");
         char direction = sc.nextLine().toUpperCase().charAt(0);
         //A for left, S for right, W for up, Z for down
         while (direction == 'A' || direction == 'S' || direction == 'W' || direction == 'Z') {
@@ -176,7 +176,7 @@ public class Triangle {
 
             printTriangleArrayList(triangleList, canvasBitmap, canvasHeight, canvasWidth, backGroundChar);
 
-            System.out.println("Type A/S/W/Z to move left/right/up/down. Use other keys to go back to the Zooming/Moving menu.");
+            System.out.println("Type A/S/W/Z to move left/right/up/down. Use other keys to go back to the Zooming/Moving/Rotating menu.");
             direction = sc.nextLine().toUpperCase().charAt(0);
         }
         printTriangleArrayList(triangleList, canvasBitmap, canvasHeight, canvasWidth, backGroundChar);
