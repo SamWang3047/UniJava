@@ -339,6 +339,7 @@ public class DrawingCanvas {
                     }
                 }
             }
+            break;
         }
         if (isCorrect) {
             System.out.println("You successfully complete the drawing task. Congratulations!!");
