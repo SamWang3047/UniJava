@@ -197,7 +197,7 @@ public class DrawingCanvas {
                     showBitmap(fileBitmap);
                     break;
                 case 2:
-                    printCanvas();
+                    showBitmap(canvasBitmap);
                     addEditOrRemove(sc);
                     break;
                 case 3:
@@ -218,7 +218,7 @@ public class DrawingCanvas {
              int option = getDrawingOption(sc, 3, "F", 2);
              switch (option) {
                  case 1:
-                     printCanvas();
+                     showBitmap(canvasBitmap);
                      addEditOrRemove(sc);
                      break;
                  case 2:
@@ -260,7 +260,7 @@ public class DrawingCanvas {
             System.out.println("The current canvas is clean; there are no shapes to edit!");
             showBitmap(canvasBitmap);
         } else {
-            int shapeIndex = getTriangleIndex(sc);
+            int shapeIndex = getTriangleIndex(sc, false);
             //edit the triangle
             showBitmap(canvasBitmap);
             triangleList.get(shapeIndex).zoomMoveOrRotate(canvasWidth, canvasHeight, backGroundChar, sc, triangleList, canvasBitmap);
@@ -273,12 +273,13 @@ public class DrawingCanvas {
             System.out.println("The current canvas is clean; there are no shapes to remove!");
             showBitmap(canvasBitmap);
         } else {
-            int shapeIndex = getTriangleIndex(sc);
+            int shapeIndex = getTriangleIndex(sc, true);
             //remove the triangle
             triangleList.remove(shapeIndex);
             if (triangleList.isEmpty()) {
                 clear();
             } else {
+                clear();
                 for (int i = 0; i < triangleList.size(); i++) {
                     triangleList.get(i).printToBitMap(canvasBitmap);
                 }
@@ -286,7 +287,7 @@ public class DrawingCanvas {
             showBitmap(canvasBitmap);
         }
     }
-    public int getTriangleIndex(Scanner sc) {
+    public int getTriangleIndex(Scanner sc, Boolean isRemove) {
         for (int i = 0; i < triangleList.size(); i++) {
             System.out.println("Shape #" + (i + 1) +
                     " - Triangle: xPos = " + triangleList.get(i).getStartPrintPointX() +
@@ -297,7 +298,11 @@ public class DrawingCanvas {
         int shapeIndex = -1;
         while (true) {
             try {
-                System.out.println("Index of the shape:");
+                if (isRemove) {
+                    System.out.println("Index of the shape to remove:");
+                } else {
+                    System.out.println("Index of the shape:");
+                }
                 shapeIndex = Integer.parseInt(sc.nextLine()) - 1;
                 break;
             } catch (NumberFormatException e) {
@@ -305,7 +310,7 @@ public class DrawingCanvas {
                 System.out.println("Invalid input!");
             }
         }
-        while (shapeIndex > triangleList.size() || shapeIndex < 0) {
+        while (shapeIndex >= triangleList.size() || shapeIndex < 0) {
             System.out.println("The shape index cannot be larger than the number of shapes!");
             showBitmap(canvasBitmap);
             printDrawingSelection("P1");

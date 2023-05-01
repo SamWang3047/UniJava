@@ -198,7 +198,7 @@ public class Triangle {
                     break;
                 case 'L':
                     if (angle - 90 < 0) {
-                        angle = 0;
+                        angle = 270;
                     } else {
                         angle -= 90;
                     }
