@@ -40,21 +40,21 @@ public class Triangle {
                 break;
             case 90:
                 for (int i = startPrintPointY; i < sideLength + startPrintPointY; i++) {
-                    for (int j = sideLength + startPrintPointX + startPrintPointY - 1; j >= startPrintPointX + i; j--) {
+                    for (int j = sideLength + startPrintPointX - 1; j >= startPrintPointX + i - startPrintPointY; j--) {
                         bitmap[i][j] = printingChar;
                     }
                 }
                 break;
             case 180:
                 for (int i = startPrintPointY; i < sideLength + startPrintPointY; i++) {
-                    for (int j = sideLength + startPrintPointX + startPrintPointY - 1; j >= startPrintPointX + sideLength - i - 1; j--) {
+                    for (int j = sideLength + startPrintPointX - 1; j >= startPrintPointX + sideLength - i - 1 + startPrintPointY; j--) {
                         bitmap[i][j] = printingChar;
                     }
                 }
                 break;
             case 270:
                 for (int i = startPrintPointY; i < sideLength + startPrintPointY; i++) {
-                    for (int j = startPrintPointX; j < startPrintPointX + startPrintPointY + i + 1; j++) {
+                    for (int j = startPrintPointX; j < startPrintPointX + i - startPrintPointY + 1; j++) {
                         bitmap[i][j] = printingChar;
                     }
                 }
@@ -81,7 +81,7 @@ public class Triangle {
         char zoomMoveOrRotate = sc.nextLine().toUpperCase().charAt(0);
         while (zoomMoveOrRotate == 'Z' || zoomMoveOrRotate == 'M' || zoomMoveOrRotate == 'R') {
             //Print all the triangles
-            printTriangleArrayList(triangleList, canvasBitmap, canvasHeight, canvasWidth, backGroundChar );
+            printTriangleArrayList(triangleList, canvasBitmap, canvasHeight, canvasWidth, backGroundChar);
             if (zoomMoveOrRotate == 'Z') {
                 zoom(canvasWidth, canvasHeight, backGroundChar, sc, triangleList, canvasBitmap);
             } else if (zoomMoveOrRotate == 'M'){
@@ -92,6 +92,7 @@ public class Triangle {
             System.out.println("Type Z/M/R for zooming/moving/rotating. Use other keys to quit the Zooming/Moving/Rotating mode.");
             zoomMoveOrRotate = sc.nextLine().toUpperCase().charAt(0);
         }
+        printTriangleArrayList(triangleList, canvasBitmap, canvasHeight, canvasWidth, backGroundChar);
     }
 
 
@@ -105,11 +106,11 @@ public class Triangle {
      * @param canvasBitmap
      */
     public void zoom(int canvasWidth, int canvasHeight, char backGroundChar, Scanner sc, ArrayList<Triangle> triangleList, char[][] canvasBitmap) {
-        System.out.println("Type I/O to zoom in/out. Use other keys to go back to the Zooming/Moving menu.");
+        System.out.println("Type I/O to zoom in/out. Use other keys to go back to the Zooming/Moving/Rotating menu.");
         char inOrOut = sc.nextLine().toUpperCase().charAt(0);
         while (inOrOut == 'I' || inOrOut == 'O') {
             if (inOrOut == 'I') {
-                if (sideLength + 1 > canvasWidth || sideLength + 1 > canvasHeight) {
+                if (sideLength + startPrintPointX + 1 > canvasWidth || sideLength +startPrintPointY + 1 > canvasHeight) {
                     System.out.println("This triangle reaches its limit. You cannot make it bigger!");
                 } else {
                     sideLength = sideLength + 1;

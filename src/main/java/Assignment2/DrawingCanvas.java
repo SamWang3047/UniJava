@@ -198,7 +198,7 @@ public class DrawingCanvas {
                     break;
                 case 2:
                     printCanvas();
-                    drawEditOrRemove(sc);
+                    addEditOrRemove(sc);
                     break;
                 case 3:
                     checkResult();
@@ -219,7 +219,7 @@ public class DrawingCanvas {
              switch (option) {
                  case 1:
                      printCanvas();
-                     drawEditOrRemove(sc);
+                     addEditOrRemove(sc);
                      break;
                  case 2:
                      shareResult();
@@ -232,7 +232,7 @@ public class DrawingCanvas {
 
      }
 
-     public void drawEditOrRemove(Scanner sc) {
+     public void addEditOrRemove(Scanner sc) {
         boolean startWhile = true;
         while (startWhile) {
             printDrawingSelection("P1");
