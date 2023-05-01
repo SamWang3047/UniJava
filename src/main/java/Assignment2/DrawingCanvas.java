@@ -47,11 +47,13 @@ public class DrawingCanvas {
                 canvasHeight = fileBitmap.length;
                 backGroundChar = fileBGChar;
                 canvasBitmap = new char[canvasHeight][canvasWidth];
+                triangleList.clear();
                 clear();
                 drawPredefinedObject(sc);
                 break;
             case 2:
                 updateCanvas(sc);
+                triangleList.clear();
                 drawFreestyleDrawing(sc);
                 break;
         }
@@ -261,6 +263,10 @@ public class DrawingCanvas {
             showBitmap(canvasBitmap);
         } else {
             int shapeIndex = getTriangleIndex(sc, false);
+            if (shapeIndex == -1) {
+                showBitmap(canvasBitmap);
+                return;
+            }
             //edit the triangle
             showBitmap(canvasBitmap);
             triangleList.get(shapeIndex).zoomMoveOrRotate(canvasWidth, canvasHeight, backGroundChar, sc, triangleList, canvasBitmap);
@@ -274,6 +280,10 @@ public class DrawingCanvas {
             showBitmap(canvasBitmap);
         } else {
             int shapeIndex = getTriangleIndex(sc, true);
+            if (shapeIndex == -1) {
+                showBitmap(canvasBitmap);
+                return;
+            }
             //remove the triangle
             triangleList.remove(shapeIndex);
             if (triangleList.isEmpty()) {
@@ -310,20 +320,10 @@ public class DrawingCanvas {
                 System.out.println("Invalid input!");
             }
         }
-        while (shapeIndex >= triangleList.size() || shapeIndex < 0) {
+        if (shapeIndex >= triangleList.size() || shapeIndex < 0) {
             System.out.println("The shape index cannot be larger than the number of shapes!");
-            showBitmap(canvasBitmap);
-            printDrawingSelection("P1");
-            //another time
-            while (true) {
-                try {
-                    shapeIndex = Integer.parseInt(sc.nextLine()) - 1;
-                    break;
-                } catch (NumberFormatException e) {
-//                e.printStackTrace();
-                    System.out.println("Invalid input!");
-                }
-            }
+
+            shapeIndex = -1;
         }
         return shapeIndex;
     }

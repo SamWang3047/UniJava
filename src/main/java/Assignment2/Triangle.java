@@ -117,7 +117,7 @@ public class Triangle {
                 }
                 printTriangleArrayList(triangleList, canvasBitmap, canvasHeight, canvasWidth, backGroundChar);
             } else {
-                if (sideLength - 1 < 0) {
+                if (sideLength - 1 <= 0) {
                     System.out.println("This triangle reaches its limit. You cannot make it smaller!");
                 } else {
                     sideLength = sideLength - 1;
