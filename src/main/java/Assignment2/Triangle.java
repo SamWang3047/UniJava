@@ -13,6 +13,8 @@ import java.util.Scanner;
 
 public class Triangle {
     private static final int DEFAULT_START_PRINT_POINT = 0;
+    private static final int DEFAULT_ROTATE_ANGLE = 90;
+    private static final int DEFAULT_FULL_ANGLE = 360;
     private int sideLength;
     private int startPrintPointX;
     private int startPrintPointY;
@@ -63,7 +65,7 @@ public class Triangle {
     }
 
     public void printTriangleArrayList(ArrayList<Triangle> triangleList, char[][] canvasBitmap, int canvasHeight, int canvasWidth, char BGChar) {
-        canvasInit(canvasWidth, canvasHeight, canvasBitmap, BGChar);
+        clearCanvas(canvasWidth, canvasHeight, canvasBitmap, BGChar);
         for (int i = 0; i < triangleList.size(); i++) {
             triangleList.get(i).printToBitMap(canvasBitmap);
         }
@@ -190,17 +192,17 @@ public class Triangle {
         while (clockWise == 'R' || clockWise == 'L') {
             switch (clockWise) {
                 case 'R':
-                    if (angle + 90 >= 360) {
+                    if (angle + DEFAULT_ROTATE_ANGLE >= DEFAULT_FULL_ANGLE) {
                         angle = 0;
                     } else {
-                        angle += 90;
+                        angle += DEFAULT_ROTATE_ANGLE;
                     }
                     break;
                 case 'L':
-                    if (angle - 90 < 0) {
-                        angle = 270;
+                    if (angle - DEFAULT_ROTATE_ANGLE < 0) {
+                        angle = DEFAULT_FULL_ANGLE - DEFAULT_ROTATE_ANGLE;
                     } else {
-                        angle -= 90;
+                        angle -= DEFAULT_ROTATE_ANGLE;
                     }
                     break;
             }
@@ -220,7 +222,7 @@ public class Triangle {
             System.out.println();
         }
     }
-    public void canvasInit(int canvasWidth, int canvasHeight, char[][]canvasBitmap, char backGroundChar) {
+    public void clearCanvas(int canvasWidth, int canvasHeight, char[][]canvasBitmap, char backGroundChar) {
         for (int i = 0; i < canvasHeight; i++) {
             for (int j = 0; j < canvasWidth; j++) {
                 canvasBitmap[i][j] = backGroundChar;

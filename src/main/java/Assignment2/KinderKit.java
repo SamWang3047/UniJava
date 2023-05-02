@@ -75,10 +75,10 @@ public class KinderKit {
 
         //drawing Options != 4, program
         while (true) {
-            drawingCanvas.printDrawingSelection("1");
+            drawingCanvas.printDrawingSelection("Main Menu");
             int drawingOptions = -1;
             //try to get drawing options
-            drawingOptions = drawingCanvas.getDrawingOption(sc, 3, "1", 1);
+            drawingOptions = drawingCanvas.getDrawingOption(sc, 3, "Main Menu", true);
             //Quit
             if (drawingOptions == 3) {
                 System.out.println("Goodbye! We hope you had fun :)");
