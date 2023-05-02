@@ -30,7 +30,10 @@ public class Triangle {
         position = new int[]{DEFAULT_START_PRINT_POINT, DEFAULT_START_PRINT_POINT};
     }
 
-
+    /**
+     * Print triangle to bitmap according to the right angle
+     * @param bitmap canvas bitmap
+     */
     public void printToBitMap(char[][] bitmap) {
         switch (angle) {
             case 0:
@@ -64,18 +67,19 @@ public class Triangle {
         }
     }
 
+    /**
+     * Print triangles in triangle list into canvas bitmap
+     */
     public void printTriangleArrayList(ArrayList<Triangle> triangleList, char[][] canvasBitmap, int canvasHeight, int canvasWidth, char BGChar) {
         clearCanvas(canvasWidth, canvasHeight, canvasBitmap, BGChar);
         for (int i = 0; i < triangleList.size(); i++) {
             triangleList.get(i).printToBitMap(canvasBitmap);
         }
-        showBitmap(canvasBitmap);
+        printBitmap(canvasBitmap);
     }
+
     /**
-     * Decide whether the triangle going to zoom or move
-     * @param canvasWidth get the current width of the canvas
-     * @param canvasHeight get the current height of the canvas
-     * @param backGroundChar get the current bg char of the canvas
+     * Decide whether the triangle going to zoom, move or rotate
      */
     public void zoomMoveOrRotate(int canvasWidth, int canvasHeight, char backGroundChar, Scanner sc,
                                  ArrayList<Triangle> triangleList, char[][] canvasBitmap) {
@@ -99,13 +103,7 @@ public class Triangle {
 
 
     /**
-     * TODO: Make the triangle bigger or smaller.
-     *
-     * @param canvasWidth    get the current width of the canvas
-     * @param canvasHeight   get the current height of the canvas
-     * @param backGroundChar get the current bg char of the canvas
-     * @param triangleList
-     * @param canvasBitmap
+     * Make the triangle bigger or smaller.
      */
     public void zoom(int canvasWidth, int canvasHeight, char backGroundChar, Scanner sc, ArrayList<Triangle> triangleList, char[][] canvasBitmap) {
         System.out.println("Type I/O to zoom in/out. Use other keys to go back to the Zooming/Moving/Rotating menu.");
@@ -134,9 +132,6 @@ public class Triangle {
 
     /**
      * Move triangle to different directions
-     * @param canvasWidth get the current width of the canvas
-     * @param canvasHeight get the current height of the canvas
-     * @param backGroundChar get the current bg char of the canvas
      */
     public void move(int canvasWidth, int canvasHeight, char backGroundChar, Scanner sc,
                      ArrayList<Triangle> triangleList, char[][] canvasBitmap) {
@@ -185,6 +180,9 @@ public class Triangle {
         printTriangleArrayList(triangleList, canvasBitmap, canvasHeight, canvasWidth, backGroundChar);
     }
 
+    /**
+     * Change triangle to different directions.
+     */
     public void rotate(int canvasWidth, int canvasHeight, char backGroundChar, Scanner sc,
                        ArrayList<Triangle> triangleList, char[][] canvasBitmap) {
         System.out.println("Type R/L to rotate clockwise/anti-clockwise. Use other keys to go back to the Zooming/Moving/Rotating menu.");
@@ -213,8 +211,11 @@ public class Triangle {
         }
         printTriangleArrayList(triangleList, canvasBitmap, canvasHeight, canvasWidth, backGroundChar);
     }
-
-    public void showBitmap(char[][] bitmap) {
+    /**
+     * Print a bitmap into console.
+     * @param bitmap the bitmap that need to be printed
+     */
+    public void printBitmap(char[][] bitmap) {
         for (int i = 0; i < bitmap.length; i++) {
             for (int j = 0; j < bitmap[0].length; j++) {
                 System.out.print(bitmap[i][j]);
@@ -222,6 +223,9 @@ public class Triangle {
             System.out.println();
         }
     }
+    /**
+     * Clear the canvas, fill the canvas with the current background character.
+     */
     public void clearCanvas(int canvasWidth, int canvasHeight, char[][]canvasBitmap, char backGroundChar) {
         for (int i = 0; i < canvasHeight; i++) {
             for (int j = 0; j < canvasWidth; j++) {
