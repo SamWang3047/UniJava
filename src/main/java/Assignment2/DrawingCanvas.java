@@ -264,7 +264,7 @@ public class DrawingCanvas {
      }
 
     /**
-     *
+     * sub-menu for both predefined and freestyle, has four cases in total
      * @param sc
      */
      public void addEditOrRemove(Scanner sc) {
@@ -291,7 +291,7 @@ public class DrawingCanvas {
     }
 
     /**
-     *
+     * Choose the right triangle to edit.
      * @param sc
      */
     public void editTriangle(Scanner sc) {
@@ -311,7 +311,7 @@ public class DrawingCanvas {
     }
 
     /**
-     *
+     * Choose the right triangle to remove
      * @param sc
      */
     public void removeTriangle(Scanner sc) {
