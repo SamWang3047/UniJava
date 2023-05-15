@@ -1,8 +1,6 @@
 package AlgoAssignment2;
 
-import java.io.StringReader;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class Problem1 {
@@ -11,11 +9,12 @@ public class Problem1 {
         String[] b = {"abc", "d", "efg"};
         int n = 3;
 
-        double res = solution(a, b, n);
+        double res = JaccardSimilarity(a, b, n);
         System.out.println(res);
     }
-    public static double solution (String[] a, String[] b, int n) {
+    public static double JaccardSimilarity(String[] a, String[] b, int n) {
         HashMap<String, Integer> map = new HashMap<>();
+
 
         /**
          * getOrDefault在key不存在时,返回一个defaultValue。在没有该方法前需要这样写：
