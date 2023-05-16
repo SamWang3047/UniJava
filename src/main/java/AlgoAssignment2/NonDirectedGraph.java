@@ -1,11 +1,6 @@
 package AlgoAssignment2;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 /*
  * 求解无向图的单源最短路径
@@ -15,13 +10,12 @@ public class NonDirectedGraph {
         private String vertexLabel;//顶点标识
         private List<Edge> adjEdges;//与该顶点邻接的边(点)
         private int dist;//顶点距离(该顶点到起始顶点的距离)
-        private Vertex preNode;
+
 
         public Vertex(String vertexLabel) {
             this.vertexLabel = vertexLabel;
             adjEdges = new LinkedList<>();
             dist = Integer.MAX_VALUE;
-            preNode = null;
         }
     }
     private class Edge{
@@ -35,7 +29,7 @@ public class NonDirectedGraph {
     private Vertex startVertex;//图的起始顶点
 
     public NonDirectedGraph(String graphContent) {
-        nonDirectedGraph = new LinkedHashMap<>();
+        nonDirectedGraph = new HashMap<>();
         buildGraph(graphContent);
     }
 
@@ -89,7 +83,7 @@ public class NonDirectedGraph {
                 if(e.endVertex.dist == Integer.MAX_VALUE){//如果这个顶点(e.endVertex)未被访问(每个顶点只会入队列一次)
                     e.endVertex.dist = v.dist + 1;//更新该顶点到源点的距离
                     queue.offer(e.endVertex);
-                    e.endVertex.preNode = v;//设置该顶点的前驱顶点
+                   // e.endVertex.preNode = v;//设置该顶点的前驱顶点
                 }//end if
             }//end for
         }//end while
@@ -99,13 +93,13 @@ public class NonDirectedGraph {
     public void showDistance(){
         Collection<Vertex> vertexs = nonDirectedGraph.values();
         for (Vertex vertex : vertexs) {
-            System.out.print(vertex.vertexLabel + "<--");
-            Vertex tmpPreNode = vertex.preNode;
-            while(tmpPreNode != null){
-                System.out.print(tmpPreNode.vertexLabel + "<--");
-                tmpPreNode = tmpPreNode.preNode;
-            }
-            System.out.println("distance=" + vertex.dist);
+            System.out.print(vertex.vertexLabel);
+            //Vertex tmpPreNode = vertex.preNode;
+//            while(tmpPreNode != null){
+//                System.out.print(tmpPreNode.vertexLabel + "<--");
+//                tmpPreNode = tmpPreNode.preNode;
+//            }
+            System.out.println(" distance=" + vertex.dist);
         }
     }
 }
