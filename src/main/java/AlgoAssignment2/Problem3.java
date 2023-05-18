@@ -9,7 +9,7 @@ public class Problem3 {
 //        int[] value = {1,2,3,4,5,6,7,8,9,10};
 //        int bagSize = 10;
 //        int[] weight = {1,1,1,1,1,1,1,1,1,1}; //10
-//        int[] value = {1,3,3,4,5,6,7,8,9,10};
+//        int[] value = {1,3,3,4,5,16,7,8,9,10};
 //        int bagSize = 10;
         testWeightBagProblem(weight,value,bagSize);
     }
@@ -38,17 +38,17 @@ public class Problem3 {
                 //if (j < weight[i]) {
                 if (value[i] <= value[i - 1]) {
                     /**
-                     * 当前背包的容量都没有当前物品i大的时候，是不放物品i的
-                     * 那么前i-1个物品能放下的最大价值就是当前情况的最大价值
+                     * 当前物品i的价值没有前一个物品i - 1大时，选择不加入当前背包
+                     * 那么前i-1个物品能放下的最大重量就是当前情况的最大重量
                      */
                     dp[i][j] = dp[i - 1][j];
                 } else {
                     /**
-                     * 当前背包的容量可以放下物品i
+                     * 当前背包可以放入物品i
                      * 那么此时分两种情况：
                      *    1、不放物品i
                      *    2、放物品i
-                     * 比较这两种情况下，哪种背包中物品的最大价值最大
+                     * 比较这两种情况下，哪种背包中物品的重量最大
                      */
                     dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - weight[i]] + weight[i]);
                 }
@@ -57,6 +57,7 @@ public class Problem3 {
 
         // 打印dp数组
         for (int i = 0; i < goods; i++) {
+            System.out.print("i" + (i + 1) + " " + "v" + value[i] + "\t\t");
             for (int j = 0; j <= bagSize; j++) {
                 System.out.print(dp[i][j] + "\t");
             }
