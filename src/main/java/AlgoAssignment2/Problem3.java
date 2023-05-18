@@ -1,10 +1,16 @@
-package week10DP;
+package AlgoAssignment2;
 
-public class Knapsack {
+public class Problem3 {
     public static void main(String[] args) {
-        int[] weight = {3,2,3,4,5,6};
-        int[] value = {20,15,25,30,30,50};
-        int bagSize = 12;
+        int[] weight = {1,1,1,1,1,1,1,1,1,1}; //10
+        int[] value = {1,20,14,7,9,30,77,15,20,60};
+        int bagSize = 8;
+//        int[] weight = {1,1,1,1,1,1,1,1,1,1}; //10
+//        int[] value = {1,2,3,4,5,6,7,8,9,10};
+//        int bagSize = 10;
+//        int[] weight = {1,1,1,1,1,1,1,1,1,1}; //10
+//        int[] value = {1,3,3,4,5,6,7,8,9,10};
+//        int bagSize = 10;
         testWeightBagProblem(weight,value,bagSize);
     }
 
@@ -18,26 +24,24 @@ public class Knapsack {
 
         // 创建dp数组
         int goods = weight.length;  // 获取物品的数量
-        int[][] dp = new int[goods + 1][bagSize + 1];
+        int[][] dp = new int[goods][bagSize + 1];
 
         // 初始化dp数组
         // 创建数组后，其中默认的值就是0
-        for (int i = 0; i < goods; i++) {
-            dp[i][0] = 0;
-        }
-        for (int j = 1; j <= bagSize; j++) {
-            dp[0][j] = 0;
+        for (int j = weight[0]; j <= bagSize; j++) {
+            dp[0][j] = weight[0];
         }
 
         // 填充dp数组
         for (int i = 1; i < weight.length; i++) {
             for (int j = 1; j <= bagSize; j++) {
-                if (j < weight[i]) {
+                //if (j < weight[i]) {
+                if (value[i] <= value[i - 1]) {
                     /**
                      * 当前背包的容量都没有当前物品i大的时候，是不放物品i的
                      * 那么前i-1个物品能放下的最大价值就是当前情况的最大价值
                      */
-                    dp[i][j] = dp[i-1][j];
+                    dp[i][j] = dp[i - 1][j];
                 } else {
                     /**
                      * 当前背包的容量可以放下物品i
@@ -46,7 +50,7 @@ public class Knapsack {
                      *    2、放物品i
                      * 比较这两种情况下，哪种背包中物品的最大价值最大
                      */
-                    dp[i][j] = Math.max(dp[i-1][j] , dp[i-1][j-weight[i]] + value[i]);
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - weight[i]] + weight[i]);
                 }
             }
         }
@@ -56,8 +60,7 @@ public class Knapsack {
             for (int j = 0; j <= bagSize; j++) {
                 System.out.print(dp[i][j] + "\t");
             }
-            System.out.println("\n");
+            System.out.println();
         }
     }
 }
-
