@@ -25,8 +25,8 @@ public class Knapsack {
         for (int i = 0; i < goods; i++) {
             dp[i][0] = 0;
         }
-        for (int j = 1; j <= bagSize; j++) {
-            dp[0][j] = 0;
+        for (int j = weight[0]; j <= bagSize; j++) {
+            dp[0][j] = value[0];
         }
 
         // 填充dp数组
