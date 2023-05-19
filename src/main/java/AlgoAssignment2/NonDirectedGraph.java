@@ -47,28 +47,29 @@ public class NonDirectedGraph {
      * @param sourceNode the source node of this graph
      */
     private void buildGraph(int[][] adjacentMatrix, String sourceNode){
-        //String[] lines = graphContent.split("\n");
         String startNodeLabel, endNodeLabel;
         Vertex startNode, endNode;
         for(int i = 0; i < adjacentMatrix.length; i++){
+            //traverse every node above the diagonal of adjacent matrix, which means every edges
             for (int j = i + 1; j < adjacentMatrix[0].length; j++) {
-                //
+                //if adjacentMatrix[i][j] == 1, means this is an edge
                 if (adjacentMatrix[i][j] == 1) {
                     startNodeLabel = String.valueOf(i);
                     endNodeLabel = String.valueOf(j);
+                    //if this node is not in graph yet, add it
                     endNode = nonDirectedGraph.get(endNodeLabel);
                     if(endNode == null){
                         endNode = new Vertex(endNodeLabel);
                         nonDirectedGraph.put(endNodeLabel, endNode);
                     }
-
+                    //if this node is not in graph yet, add it
                     startNode = nonDirectedGraph.get(startNodeLabel);
                     if(startNode == null){
                         startNode = new Vertex(startNodeLabel);
                         nonDirectedGraph.put(startNodeLabel, startNode);
                     }
                     Edge e = new Edge(endNode);
-                    //对于无向图而言,起点和终点都要添加边
+                    //For an undirected graph, edges are added to both the start and end points
                     endNode.adjEdges.add(e);
                     startNode.adjEdges.add(e);
                 }
@@ -86,27 +87,28 @@ public class NonDirectedGraph {
      *  To compute the shortest paths from the source vertex s to all other vertices in an undirected graph:
      *  We need a queue to store the vertices in the graph. Initially, enqueue the source vertex.
      *  Then, using a breadth-first search approach, expand outward to compute the shortest paths for other vertices.
-     * @param source
+     *  Last of all, put all (vertex label : distance to source node) pair into value map.
+     * @param sourceNode the source
      */
-    private void unweightedShortestPath(Vertex source){
-        //初始化
+    private void unweightedShortestPath(Vertex sourceNode){
+        //initialization
         Queue<Vertex> queue = new LinkedList<>();
-        source.dist = 0;
-        queue.offer(source);//将源点dist设置为0并入队列
+        sourceNode.dist = 0;
+        queue.offer(sourceNode);//Set the source point dist to 0 and enqueue
 
         while(!queue.isEmpty()){
             Vertex v = queue.poll();
-            for (Edge e : v.adjEdges) {//扫描v的邻接边(点)
-                if(e.endVertex.dist == Integer.MAX_VALUE){//如果这个顶点(e.endVertex)未被访问(每个顶点只会入队列一次)
-                    e.endVertex.dist = v.dist + 1;//更新该顶点到源点的距离
+            for (Edge e : v.adjEdges) {//Scan the adjacent edges (points) of v
+                if(e.endVertex.dist == Integer.MAX_VALUE){//If this vertex (e.endVertex) has not been visited
+                    e.endVertex.dist = v.dist + 1;//Update the distance from the vertex to the source point
                     queue.offer(e.endVertex);
                 }//end if
             }//end for
         }//end while
 
         //Create hashmap to save the shortest path values
-        Collection<Vertex> vertexs = nonDirectedGraph.values();
-        for (Vertex vertex : vertexs) {
+        Collection<Vertex> vertexes = nonDirectedGraph.values();
+        for (Vertex vertex : vertexes) {
             valueMap.put(vertex.vertexLabel, vertex.dist);
         }
 

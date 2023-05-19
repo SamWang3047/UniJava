@@ -1,8 +1,14 @@
 package AlgoAssignment2;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
 public class Problem3 {
     public static void main(String[] args) {
         int[] weight = {1,1,1,1,1,1,1,1,1,1}; //10
+        //int[] value = {1,20,14,7,9,30,77,15,20,60};
         int[] value = {1,20,14,7,9,30,77,15,20,60};
         int bagSize = 8;
 //        int[] weight = {1,1,1,1,1,1,1,1,1,1}; //10
@@ -11,7 +17,9 @@ public class Problem3 {
 //        int[] weight = {1,1,1,1,1,1,1,1,1,1}; //10
 //        int[] value = {1,3,3,4,5,16,7,8,9,10};
 //        int bagSize = 10;
-        testWeightBagProblem(weight,value,bagSize);
+        //testWeightBagProblem(weight,value,bagSize);
+        //System.out.println(lengthOfLIS(value));
+        System.out.println(longestSubSequence(value));
     }
 
     /**
@@ -63,5 +71,32 @@ public class Problem3 {
             }
             System.out.println();
         }
+    }
+
+    public static int longestSubSequence(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+        Map<Integer, int[]> map = new HashMap<>();
+
+        for (int i = 1; i <= 100; i++) {
+            map.put(i, new int[]{-1, 1}); // 0-last index 1-max length
+        }
+
+        int longest = 1;
+        for (int i = 0; i < nums.length; i++) {
+            int val = nums[i];
+            int tempMax = 1;
+            for (int j = 1; j <= 100; j++) {
+                if (val <= j) continue;
+                int[] tup = map.get(j);
+                if (tup[0] != -1) {
+                    tempMax = Math.max(tempMax, tup[1] + 1);
+                }
+            }
+            map.put(val, new int[]{i, tempMax});
+            longest = Math.max(tempMax, longest);
+        }
+        return longest;
     }
 }

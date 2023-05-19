@@ -12,9 +12,8 @@ public class Problem4 {
         }
         System.out.println();
         //right bound ->
-        System.out.println(predecessor(nums,7, false));
+
         System.out.println(predecessor(nums, 28, false));
-        System.out.println(successor(nums, 7,false));
         System.out.println(successor(nums, 28, false));
 
         System.out.println(successor(nums,16,false));
@@ -60,7 +59,7 @@ public class Problem4 {
         while (left < right) { // 注意
             int mid = left + (right - left) / 2;
             if (nums[mid] == target) {
-                right = mid;
+                return nums[mid];
             } else if (nums[mid] < target) {
                 left = mid + 1;
             } else if (nums[mid] > target) {
@@ -86,7 +85,7 @@ public class Problem4 {
         while (left < right) {
             int mid = left + (right - left) / 2;
             if (nums[mid] == target) {
-                left = mid + 1; // 注意
+                return nums[mid];
             } else if (nums[mid] < target) {
                 left = mid + 1;
             } else if (nums[mid] > target) {
@@ -96,8 +95,39 @@ public class Problem4 {
         if (isIndex) {
             return left - 1;
         } else {
-            return nums[left - 1]; // 注意
+            return nums[left - 1];
         }
+    }
+    static int predecessor(int[] nums, int target) {
+        int left = 0, right = nums.length;
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                return nums[mid];
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid;
+            }
+        }
+        return nums[left - 1];
+    }
+
+    static int successor(int[] nums, int target) {
+        int left = 0, right = nums.length;
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                return nums[mid];
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid;
+            }
+        }
+        return nums[left];
     }
     static int[] rangeArray(int[] nums, int[] range) {
         int leftBound = predecessor(nums, range[0], true);
