@@ -20,7 +20,8 @@ public class Problem4 {
         System.out.println(successor(nums, 13,false));
         System.out.println(predecessor(nums,16,false));
         System.out.println(predecessor(nums, 13,false));
-
+        System.out.println(successor(nums,2));
+        System.out.println(predecessor(nums,2));
 
         int[] range = {4,19};
         int[] test = rangeArray(nums, range);
