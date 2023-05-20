@@ -74,11 +74,7 @@ public class Problem3 {
     }
 
     public static int longestSubSequence(int[] nums) {
-        int n = nums.length;
-        int[] dp = new int[n];
-        Arrays.fill(dp, 1);
         Map<Integer, int[]> map = new HashMap<>();
-
         for (int i = 1; i <= 100; i++) {
             map.put(i, new int[]{-1, 1}); // 0-last index 1-max length
         }

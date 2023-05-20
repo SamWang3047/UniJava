@@ -36,7 +36,6 @@ public class LongestAscendingSubsequence {
     // 查询[1, x]区间的最大值
     private static int query(int[] bit, int x) {
         int max = 0;
-
         while (x > 0) {
             max = Math.max(max, bit[x]);
             x -= x & -x; // 移除最低位的1

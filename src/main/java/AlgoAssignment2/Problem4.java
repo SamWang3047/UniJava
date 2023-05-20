@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Problem4 {
     public static void main(String[] args) {
-        int[] nums = {1,14,7,9,30,77,15,20,60};
+        int[] nums = {1,4,4,4,14,7,9,30,77,15,19,20,60};
         Arrays.sort(nums);
         for (int num : nums) {
             System.out.print(num);
@@ -60,7 +60,7 @@ public class Problem4 {
         while (left < right) { // 注意
             int mid = left + (right - left) / 2;
             if (nums[mid] == target) {
-                return nums[mid];
+                left = mid + 1;
             } else if (nums[mid] < target) {
                 left = mid + 1;
             } else if (nums[mid] > target) {
@@ -86,7 +86,7 @@ public class Problem4 {
         while (left < right) {
             int mid = left + (right - left) / 2;
             if (nums[mid] == target) {
-                return nums[mid];
+                right = mid;
             } else if (nums[mid] < target) {
                 left = mid + 1;
             } else if (nums[mid] > target) {
