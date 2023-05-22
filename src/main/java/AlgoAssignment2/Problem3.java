@@ -1,9 +1,6 @@
 package AlgoAssignment2;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 public class Problem3 {
     public static void main(String[] args) {
@@ -73,26 +70,74 @@ public class Problem3 {
         }
     }
 
-    public static int longestSubSequence(int[] nums) {
+    public static List<Integer> longestSubSequence(int[] nums) {
         Map<Integer, int[]> map = new HashMap<>();
         for (int i = 1; i <= 100; i++) {
             map.put(i, new int[]{-1, 1}); // 0-last index 1-max length
         }
 
-        int longest = 1;
+        int longest = 1;//maintain the max length of LIS all the time
         for (int i = 0; i < nums.length; i++) {
             int val = nums[i];
-            int tempMax = 1;
+            int tempMax = 1;//tempMax to maintain the max length of LIS for nums[i]
             for (int j = 1; j <= 100; j++) {
-                if (val <= j) continue;
+                if (val <= j) continue;//val must bigger than j to maintain LIS
                 int[] tup = map.get(j);
-                if (tup[0] != -1) {
+                if (tup[0] != -1) {//check if j is in the previous sequence S
                     tempMax = Math.max(tempMax, tup[1] + 1);
                 }
             }
-            map.put(val, new int[]{i, tempMax});
+            map.put(val, new int[]{i, tempMax});// update the map with the new index and visited the val
             longest = Math.max(tempMax, longest);
         }
-        return longest;
+        //to store the subsequence
+        List<Integer> subsequence = new ArrayList<>();
+        int currLength = longest;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            //to check the where the map's last curLength appears
+            if (map.get(nums[i])[1] == currLength) {
+                subsequence.add(nums[i]);//add to the subsequence
+                currLength--;//means the next number
+            }
+        }
+
+        Collections.reverse(subsequence); // since it is added from back to front, need reverse
+        return subsequence;
     }
+//    public static int longestSubSequence(int[] nums) {
+//        Map<Integer, ArrayList<ArrayList<Integer>>> map = new HashMap<>();
+//        for (int i = 1; i <= 100; i++) {
+//            ArrayList<ArrayList<Integer>> arrayList = new ArrayList<>();
+//            ArrayList<Integer> value = new ArrayList<>();
+//            value.add(-1);
+//            value.add(1);
+//            arrayList.add(value);
+//            arrayList.add(new ArrayList<>());
+//            map.put(i, arrayList); // 0-last index 1-max length
+//        }
+//
+//        int longest = 1;
+//        for (int i = 0; i < nums.length; i++) {
+//            ArrayList<ArrayList<Integer>> arrayList = new ArrayList<>();
+//            ArrayList<Integer> value = new ArrayList<>();
+//            int val = nums[i];
+//            int tempMax = 1;
+//            for (int j = 1; j <= 100; j++) {
+//                if (val <= j) continue;
+//                ArrayList<ArrayList<Integer>> tup = map.get(j);
+//                if (tup.get(0).get(0) != -1) {
+//                    tempMax = Math.max(tempMax, tup.get(0).get(1) + 1);
+//                    tup.get(1).add(j);
+//                    value.add(i);
+//                    value.add(tempMax);
+//                    arrayList.add(value);
+//                    arrayList.add(tup.get(1));
+//                }
+//            }
+//            map.put(val, arrayList);
+//            longest = Math.max(tempMax, longest);
+//        }
+//        return longest;
+//    }
+
 }
