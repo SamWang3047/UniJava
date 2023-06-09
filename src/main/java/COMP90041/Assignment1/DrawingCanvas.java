@@ -1,4 +1,4 @@
-package Assignment1;
+package COMP90041.Assignment1;
 
 import java.util.Scanner;
 /**

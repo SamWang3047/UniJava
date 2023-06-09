@@ -1,4 +1,4 @@
-package Assignment2;
+package COMP90041.Assignment2;
 
 /**
  * COMP90041, Sem1, 2023: Assignment 2

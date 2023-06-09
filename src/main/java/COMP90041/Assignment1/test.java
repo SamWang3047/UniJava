@@ -1,4 +1,4 @@
-package Assignment1;
+package COMP90041.Assignment1;
 
 public class test {
     public static void main(String[] args) {

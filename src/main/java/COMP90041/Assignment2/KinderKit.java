@@ -1,4 +1,4 @@
-package Assignment2;
+package COMP90041.Assignment2;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
