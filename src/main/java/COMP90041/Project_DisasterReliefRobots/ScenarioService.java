@@ -40,17 +40,31 @@ public class ScenarioService {
 
         // Check for invalid data format
         if (data.length != 8) {
-            throw new InvalidDataFormatException("invalid data format in scenarios file");
+            throw new InvalidDataFormatException();
         }
 
         // Parse and validate data
         if (data[0].startsWith("scenario:")) {
-            Scenario scenario = new Scenario(data[0]);
+            //start from the 9th character e.g. scenario:flood,,,,,,,
+            String disaster = data[0].substring(9);
+            if (disaster.equals("")) {
+                throw new InvalidFieldValuesException();
+                //Default disaster
+                return new Scenario("Flood");
+            }
             // Parse scenario
-            return scenario;
+            return new Scenario(disaster);
         } else if (data[0].startsWith("location:")) {
             // Parse location
-            String[]
+            //split location information e.g. location:13.7154 N;150.9094 W;trespassing,,,,,,,
+            String[] locationInfo = data[0].split(";");
+            //e.g. location:13.7154 N
+            String[] latiduteInfo = locationInfo[0].split(":");
+            //13.7154 N
+            String[] latidute = latiduteInfo[1].split(" ");
+            //150.9094 W
+            String[] longitude = locationInfo[1].split(" ");
+
             Location location = new Location();
         } else {
             // Parse resident

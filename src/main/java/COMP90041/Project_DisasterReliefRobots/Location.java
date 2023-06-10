@@ -3,8 +3,6 @@ package COMP90041.Project_DisasterReliefRobots;
 import java.util.ArrayList;
 
 public class Location {
-    enum direction {N, S, W, E};
-    enum status {trespassing, legal};
 
     private double latitude;
     private double longitude;
