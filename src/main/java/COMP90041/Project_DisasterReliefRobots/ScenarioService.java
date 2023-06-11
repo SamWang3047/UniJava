@@ -15,6 +15,9 @@ public class ScenarioService {
     private static final String[] GENDER = {"MALE", "FEMALE"};
 
     private static final String[] STATUS = {"TRESPASSING", "LEGAL"};
+
+    private static final Character[] LATITUDE_DIRECTION = {'N', 'S'};
+    private static final Character[] LONGITUDE_DIRECTION = {'E', 'W'};
     public ArrayList<Scenario> loadScenariosFromFile(String scenariosFilePath) {
         ArrayList<Scenario> scenarios = new ArrayList<>();
         Scenario currentScenario = null;
@@ -133,14 +136,14 @@ public class ScenarioService {
         }
 
         try { //Latitude direction validation
-            if (locationLatitudeDirection != 'N' && locationLatitudeDirection != 'S') {
+            if (!Arrays.stream(LATITUDE_DIRECTION).toList().contains(locationLatitudeDirection)) {
                 throw new InvalidCharacteristicException(lineNumber);
             }
         } catch (InvalidCharacteristicException e) {
             locationLatitudeDirection = 'N';
         }
         try { //Longitude direction validation
-            if (locationLongitudeDirection != 'E' && locationLongitudeDirection != 'W') {
+            if (!Arrays.stream(LONGITUDE_DIRECTION).toList().contains(locationLongitudeDirection)) {
                 throw new InvalidCharacteristicException(lineNumber);
             }
         } catch (InvalidCharacteristicException e) {

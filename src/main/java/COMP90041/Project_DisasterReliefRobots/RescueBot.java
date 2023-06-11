@@ -100,14 +100,6 @@ public class RescueBot {
             }
         }
 
-        ArrayList<Scenario> scenarios = null;
-        if (scenariosFilePath == null) {
-            // Generate random scenarios
-        } else {
-            // Load scenarios from file
-            scenarios = scenarioService.loadScenariosFromFile(scenariosFilePath);
-        }
-
         // Display the welcome message
         try {
             Path filePath = Paths.get("welcome.ascii");
@@ -118,7 +110,13 @@ public class RescueBot {
         }
 
         // Load scenarios and display the number of imported scenarios
-
+        ArrayList<Scenario> scenarios = null;
+        if (scenariosFilePath == null) {
+            // Generate random scenarios
+        } else {
+            // Load scenarios from file
+            scenarios = scenarioService.loadScenariosFromFile(scenariosFilePath);
+        }
 
         System.out.println(scenarios.size() + " scenarios imported.");
 
