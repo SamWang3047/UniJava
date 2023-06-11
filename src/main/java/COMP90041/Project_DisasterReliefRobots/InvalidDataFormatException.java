@@ -7,6 +7,12 @@ public class InvalidDataFormatException extends Exception{
     public InvalidDataFormatException() {
         super("invalid data format");
     }
+
+    public InvalidDataFormatException(int lineNumber) {
+        super("invalid data format");
+        System.out.println("WARNING: invalid data format in line " + lineNumber);
+    }
+
     public InvalidDataFormatException(Scenario scenario) {
         super("invalid data format");
         this.scenario = scenario;

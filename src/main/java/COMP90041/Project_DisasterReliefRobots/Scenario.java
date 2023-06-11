@@ -5,21 +5,16 @@ import java.util.ArrayList;
 public class Scenario {
 
     private String disaster;
-    private Location[] locations;
+    private ArrayList<Location> locations;
 
 
     public Scenario(String disaster) {
         this.disaster = disaster;
-        locations = new Location[2];
+        locations = new ArrayList<>();
     }
 
     public Location getLocation(int choice) {
-        if (choice == 1) {
-            return locations[0];
-        } else if(choice == 2) {
-            return locations[1];
-        }
-        return null;
+        return locations.get(choice);
     }
     public String getDisaster() {
         return disaster;
@@ -29,13 +24,11 @@ public class Scenario {
         this.disaster = disaster;
     }
 
-    public Location[] getLocations() {
+    public ArrayList<Location> getLocations() {
         return locations;
     }
 
-    public void setLocations(Location[] locations) {
+    public void setLocations(ArrayList<Location> locations) {
         this.locations = locations;
     }
-
-
 }

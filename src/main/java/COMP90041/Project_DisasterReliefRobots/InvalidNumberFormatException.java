@@ -9,6 +9,11 @@ public class InvalidNumberFormatException extends NumberFormatException {
         super("invalid number format");
     }
 
+    public InvalidNumberFormatException(int lineNumber) {
+        super("invalid number format");
+        System.out.println("WARNING: invalid number format in line " + lineNumber);
+    }
+
     public InvalidNumberFormatException(Scenario scenario) {
         super("invalid number format");
         this.scenario = scenario;

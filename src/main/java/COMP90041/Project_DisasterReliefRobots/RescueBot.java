@@ -100,17 +100,12 @@ public class RescueBot {
             }
         }
 
-        ArrayList<Scenario> scenarios;
+        ArrayList<Scenario> scenarios = null;
         if (scenariosFilePath == null) {
             // Generate random scenarios
         } else {
             // Load scenarios from file
-            try {
-                scenarios = scenarioService.loadScenariosFromFile(scenariosFilePath);
-            } catch (FileNotFoundException e) {
-                System.out.println("java.io.FileNotFoundException: could not find scenarios file.");
-                return;
-            }
+            scenarios = scenarioService.loadScenariosFromFile(scenariosFilePath);
         }
 
         // Display the welcome message
