@@ -1,25 +1,29 @@
 package COMP90041.Project_DisasterReliefRobots;
 
-public class InvalidDataFormatException extends Exception{
+public class InvalidCharacteristicException extends Exception{
     private Scenario scenario;
     private Location location;
     private Resident resident;
-    public InvalidDataFormatException() {
-        super("invalid data format");
+
+    public InvalidCharacteristicException() {
+        super("invalid characteristic");
     }
-    public InvalidDataFormatException(Scenario scenario) {
-        super("invalid data format");
+    public InvalidCharacteristicException(Scenario scenario) {
+        super("invalid characteristic");
         this.scenario = scenario;
     }
-    public InvalidDataFormatException(Location location) {
-        super("invalid data format");
+
+    public InvalidCharacteristicException(Location location) {
+        super("invalid characteristic");
         this.location = location;
     }
-    public InvalidDataFormatException(Resident resident) {
-        super("invalid data format");
+
+    public InvalidCharacteristicException(Resident resident) {
+        super("invalid characteristic");
         this.resident = resident;
     }
-    public InvalidDataFormatException(String message) {
+
+    public InvalidCharacteristicException(String message) {
         super(message);
     }
 

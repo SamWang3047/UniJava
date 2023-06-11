@@ -8,10 +8,8 @@ public class Location {
     private double longitude;
     private char latitudeDirection;
     private char longitudeDirection;
-
-    private ArrayList<Resident> residents;
-
     private String status;
+    private ArrayList<Resident> residents;
 
     public Location(double latitude, double longitude, char latitudeDirection, char longitudeDirection, String status) {
         this.latitude = latitude;

@@ -1,17 +1,19 @@
 package COMP90041.Project_DisasterReliefRobots;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.Math;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 /**
  * COMP90041, Sem1, 2023: Final Project
- * @author: 
- * student id: 1406985
+ *
+ * @author: student id: 1406985
  * student email: zhiyuanw6@student.unimelb.edu.au
  * personal website: www.hellosam.top
  */
@@ -19,6 +21,7 @@ public class RescueBot {
 
     /**
      * Decides whether to save the passengers or the pedestrians
+     *
      * @param scenario : the ethical dilemma
      * @return Decision: which group to save
      */
@@ -27,7 +30,7 @@ public class RescueBot {
         // TODO: take into account at least 5 characteristics
 
         // 50/50
-        if(Math.random() > 0.5) {
+        if (Math.random() > 0.5) {
             return scenario.getLocation(1);
         } else {
             return scenario.getLocation(2);
@@ -97,13 +100,18 @@ public class RescueBot {
             }
         }
 
+        ArrayList<Scenario> scenarios;
         if (scenariosFilePath == null) {
             // Generate random scenarios
         } else {
             // Load scenarios from file
-            List<Scenario> scenarios = scenarioService.loadScenariosFromFile(scenariosFilePath);
+            try {
+                scenarios = scenarioService.loadScenariosFromFile(scenariosFilePath);
+            } catch (FileNotFoundException e) {
+                System.out.println("java.io.FileNotFoundException: could not find scenarios file.");
+                return;
+            }
         }
-
 
         // Display the welcome message
         try {
