@@ -152,7 +152,7 @@ public class ScenarioService {
         try { //Longitude direction validation
             if (status == null) {
                 throw new InvalidCharacteristicException(lineNumber);
-            } else if (!Arrays.stream(STATUS).toList().contains(status)) {
+            } else if (!Arrays.stream(STATUS).toList().contains(status.toUpperCase())) {
                 throw new InvalidCharacteristicException(lineNumber);
             }
         } catch (InvalidCharacteristicException e) {
