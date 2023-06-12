@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class ScenarioService {
     private static final String[] PROFESSION = {"DOCTOR", "CEO", "CRIMINAL", "HOMELESS", "UNEMPLOYED", "ATHLETIC", "STUDENT", "PROFESSOR","NONE"};
@@ -18,8 +19,14 @@ public class ScenarioService {
 
     private static final Character[] LATITUDE_DIRECTION = {'N', 'S'};
     private static final Character[] LONGITUDE_DIRECTION = {'E', 'W'};
-    public ArrayList<Scenario> loadScenariosFromFile(String scenariosFilePath) {
-        ArrayList<Scenario> scenarios = new ArrayList<>();
+
+    private ArrayList<Scenario> scenarios;
+
+    public ScenarioService() {
+        scenarios = new ArrayList<>();
+    }
+
+    public void loadScenariosFromFile(String scenariosFilePath) {
         Scenario currentScenario = null;
         Location currentLocation = null;
         try (BufferedReader reader = new BufferedReader(new FileReader(scenariosFilePath))) {
@@ -52,7 +59,6 @@ public class ScenarioService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return scenarios;
     }
 
     private Object parseLine(String line, int lineNumber)  {
@@ -236,6 +242,25 @@ public class ScenarioService {
         }
     }
 
+    private boolean collectUserConsent(Scanner scanner) throws InvalidInputException {
+        System.out.println("Do you consent to have your decisions saved to a file? (yes/no)");
+        String response = scanner.nextLine().toLowerCase();
 
+        switch (response) {
+            case "yes":
+                return true;
+            case "no":
+                return false;
+            default:
+                throw new InvalidInputException("Invalid response! Do you consent to have your decisions saved to a file? (yes/no)");
+        }
+    }
 
+    public ArrayList<Scenario> getScenarios() {
+        return scenarios;
+    }
+
+    public void setScenarios(ArrayList<Scenario> scenarios) {
+        this.scenarios = scenarios;
+    }
 }

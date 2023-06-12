@@ -37,7 +37,7 @@ public class RescueBot {
         }
     }
 
-    private static void displayMainMenu(Scanner scanner) {
+    private static void displayMainMenu(Scanner scanner, ScenarioService scenarioService) {
         String command = "";
 
         while (!command.equals("quit") && !command.equals("q")) {
@@ -54,6 +54,7 @@ public class RescueBot {
                 case "judge":
                 case "j":
                     // TODO: Implement judging scenarios
+
                     break;
                 case "run":
                 case "r":
@@ -108,18 +109,15 @@ public class RescueBot {
             System.out.println("Error reading welcome.ascii file: " + e.getMessage());
             System.exit(1);
         }
-
         // Load scenarios and display the number of imported scenarios
-        ArrayList<Scenario> scenarios = null;
         if (scenariosFilePath == null) {
             // Generate random scenarios
         } else {
             // Load scenarios from file
-            scenarios = scenarioService.loadScenariosFromFile(scenariosFilePath);
+            scenarioService.loadScenariosFromFile(scenariosFilePath);
         }
-        System.out.println(scenarios.size() + " scenarios imported.");
-
+        System.out.println(scenarioService.getScenarios().size() + " scenarios imported.");
         // Display the main menu
-        displayMainMenu(scanner);
+        displayMainMenu(scanner, scenarioService);
     }
 }
