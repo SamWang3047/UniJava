@@ -12,24 +12,21 @@ import java.util.*;
 
 public class ScenarioService {
     private static final String[] BODYTYPE = {"OVERWEIGHT", "AVERAGE", "ATHLETIC"};
-
     private static final String[] GENDER = {"MALE", "FEMALE"};
-
     private static final String[] STATUS = {"TRESPASSING", "LEGAL"};
-
     private static final String[] AUTO_GENERATED_SPECIES = {"PUPPY", "CAT", "KOALA", "WALLABY", "SNAKE", "LION", "DOG", "DINGO", "PLATYPUS"};
     private static final String[] AUTO_GENERATED_PROFESSION = {"DOCTOR", "CEO", "CRIMINAL", "HOMELESS", "UNEMPLOYED", "ATHLETIC", "STUDENT", "PROFESSOR", "NONE"};
     private static final String[] AUTO_GENERATED_DISASTER = {"CYCLONE", "FLOOD", "EARTHQUAKE", "BUSHFIRE", "METEORITE"};
     private static final Character[] LATITUDE_DIRECTION = {'N', 'S'};
     private static final Character[] LONGITUDE_DIRECTION = {'E', 'W'};
-
+    private HashMap<String, int[]> attributes;
     private ArrayList<Scenario> scenarios;
-
     private boolean consent;
 
     public ScenarioService() {
         scenarios = new ArrayList<>();
         consent = false;
+        attributes = new HashMap<>();
     }
 
     public void loadScenariosFromFile(String scenariosFilePath) {
@@ -55,7 +52,13 @@ public class ScenarioService {
                     }
                 } else {
                     if (currentScenario != null && currentLocation != null) {
+                        if (currentLocation.isTrespassing()) {
+                            if (object instanceof Animal) {
+                                ((Animal) object).setTrespassing(true);
+                            }
+                        }
                         currentLocation.getResidents().add((Resident) object);
+                        parseResidentAttributes((Resident) object);
                     }
                 }
             }
@@ -244,6 +247,7 @@ public class ScenarioService {
 
         // Create Human or Animal Resident based on 'resident' field
         if (resident.equalsIgnoreCase("human")) {
+
             return new Human(gender, age, bodyType, profession, isPregnant);
         } else {
             return new Animal(gender, age, bodyType, species, isPet);
@@ -275,9 +279,9 @@ public class ScenarioService {
     }
 
     public void presentScenarios(Scanner scanner) {
-        for (int i = 0; i < scenarios.size(); i++) {
-            scenarios.get(i).presentScenario();
-            deployRescueBot(scanner, scenarios.get(i));
+        for (Scenario scenario : scenarios) {
+            scenario.presentScenario();
+            deployRescueBot(scanner, scenario);
         }
     }
 
@@ -287,8 +291,12 @@ public class ScenarioService {
             System.out.print("> ");
             int choice = -1;
             try {
-                choice = scanner.nextInt();
-                if (choice >= 1 && choice <= scenario.getLocations().size()) {
+                choice = scanner.nextInt() - 1;
+                if (choice >= 0 && choice < scenario.getLocations().size()) {
+                    scenario.getLocations().get(choice).setSaved(true); // set this location to saved
+                    for (Resident resident : scenario.getLocations().get(choice).getResidents()) {
+                        parseSavedResidentAttributes(resident);
+                    }
                     break;
                 } else {
                     System.out.println("Invalid response! To which location should RescueBot be deployed?");
@@ -298,7 +306,6 @@ public class ScenarioService {
                 scanner.next();
             }
         }
-
     }
 
     public void randomScenarioGeneration() {
@@ -319,9 +326,11 @@ public class ScenarioService {
     public Location randomLocation() {
         Random r = new Random();
         double lat = r.nextDouble() * 180 - 90;  // latitude [-90, 90]
-        char latDirec = 'S'; if (lat < 0) latDirec = 'N';
+        char latDirect = 'S';
+        if (lat < 0) latDirect = 'N';
         double lon = r.nextDouble() * 360 - 180;  // longitude [-180, 180]
-        char lonDirec = 'E'; if (lon < 0) latDirec = 'W';
+        char lonDirect = 'E';
+        if (lon < 0) latDirect = 'W';
         boolean isTrespassing = r.nextBoolean();
 
         int numCharacters = r.nextInt(7) + 1;  // Number of characters [1, 8]
@@ -330,7 +339,7 @@ public class ScenarioService {
             residents.add(randomCharacter());
         }
 
-        return new Location(lat, lon, latDirec, lonDirec, isTrespassing, residents);
+        return new Location(lat, lon, latDirect, lonDirect, isTrespassing, residents);
     }
 
 
@@ -342,7 +351,11 @@ public class ScenarioService {
             String gender = GENDER[r.nextInt(GENDER.length)].toLowerCase();
             String bodyType = BODYTYPE[r.nextInt(BODYTYPE.length)].toLowerCase();
             String profession = AUTO_GENERATED_PROFESSION[r.nextInt(AUTO_GENERATED_PROFESSION.length)].toLowerCase();
-            boolean isPregnant = r.nextBoolean();
+            boolean isPregnant = false;
+            //Only female can get pregnant
+            if (gender.equals(GENDER[1])) {
+                isPregnant = r.nextBoolean();
+            }
             return new Human(gender, age, bodyType, profession, isPregnant);
         } else {
             // Generate an animal
@@ -354,6 +367,67 @@ public class ScenarioService {
             return new Animal(gender, age, bodyType, species, isPet);
         }
     }
+
+    public void addAttribute(String attribute) {
+        if (attributes.containsKey(attribute)) {
+            attributes.get(attribute)[0]++; //total number
+        } else {
+            int[] value = new int[]{1, 0}; //total number
+            attributes.put(attribute, value);
+        }
+    }
+
+    public void addSavedAttribute(String attribute) {
+        attributes.get(attribute)[1]++; //saved number
+    }
+
+    public void parseResidentAttributes(Resident resident) {
+        if (resident instanceof Human) {
+            addAttribute(resident.getClass().getSimpleName().toLowerCase());//human class type (human or animal)
+            addAttribute(((Human) resident).getAgeCategory()); //age category
+            addAttribute(resident.getGender()); //gender
+            addAttribute(resident.getBodyType()); //body type
+            addAttribute(((Human) resident).getProfession()); //profession
+            if (((Human) resident).getPregnant()) {
+                addAttribute("pregnant"); //pregnancy
+            }
+        } else {
+            addAttribute(resident.getClass().getSimpleName().toLowerCase()); //animal class type (human or animal)
+            addAttribute(((Animal) resident).getSpecies()); //species
+            if (((Animal) resident).getPet()) {
+                addAttribute("pet"); //pets
+            }
+            if (((Animal) resident).getTrespassing()) { //trespassing
+                addAttribute("trespassing");
+            } else {
+                addAttribute("legal");
+            }
+        }
+    }
+    public void parseSavedResidentAttributes(Resident resident) {
+        if (resident instanceof Human) {
+            addSavedAttribute(resident.getClass().getSimpleName().toLowerCase());//human class type (human or animal)
+            addSavedAttribute(((Human) resident).getAgeCategory()); //age category
+            addSavedAttribute(resident.getGender()); //gender
+            addSavedAttribute(resident.getBodyType()); //body type
+            addSavedAttribute(((Human) resident).getProfession()); //profession
+            if (((Human) resident).getPregnant()) {
+                addSavedAttribute("pregnant"); //pregnancy
+            }
+        } else {
+            addSavedAttribute(resident.getClass().getSimpleName().toLowerCase()); //animal class type (human or animal)
+            addSavedAttribute(((Animal) resident).getSpecies()); //species
+            if (((Animal) resident).getPet()) {
+                addSavedAttribute("pet"); //pets
+            }
+            if (((Animal) resident).getTrespassing()) { //trespassing
+                addSavedAttribute("trespassing");
+            } else {
+                addSavedAttribute("legal");
+            }
+        }
+    }
+
 
 
     public ArrayList<Scenario> getScenarios() {
@@ -370,5 +444,13 @@ public class ScenarioService {
 
     public void setConsent(boolean consent) {
         this.consent = consent;
+    }
+
+    public HashMap<String, int[]> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(HashMap<String, int[]> attributes) {
+        this.attributes = attributes;
     }
 }

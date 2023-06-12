@@ -1,13 +1,10 @@
 package COMP90041.Project_DisasterReliefRobots;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.Math;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -21,7 +18,6 @@ public class RescueBot {
 
     /**
      * Decides whether to save the passengers or the pedestrians
-     *
      * @param scenario : the ethical dilemma
      * @return Decision: which group to save
      */
@@ -88,14 +84,15 @@ public class RescueBot {
         ScenarioService scenarioService = new ScenarioService();
 
         if (args[0].equals("--help") || args[0].equals("-h")) {
-            System.out.println("RescueBot - COMP90041 - Final Project\n" +
-                    "\n" +
-                    "Usage: java RescueBot [arguments]\n" +
-                    "\n" +
-                    "Arguments:\n" +
-                    "-s or --scenarios    Optional: path to scenario file\n" +
-                    "-h or --help        Optional: Print Help (this message) and exit\n" +
-                    "-l or --log        Optional: path to data log file");
+            System.out.println("""
+                    RescueBot - COMP90041 - Final Project
+
+                    Usage: java RescueBot [arguments]
+
+                    Arguments:
+                    -s or --scenarios    Optional: path to scenario file
+                    -h or --help        Optional: Print Help (this message) and exit
+                    -l or --log        Optional: path to data log file""");
         } else if (args.length > 1) {
             if (args[0].equals("--scenarios") || args[0].equals("-s")) {
                 scenariosFilePath = args[1];

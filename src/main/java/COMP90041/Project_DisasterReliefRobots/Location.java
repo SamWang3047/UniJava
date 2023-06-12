@@ -9,6 +9,7 @@ public class Location {
     private char latitudeDirection;
     private char longitudeDirection;
     private boolean isTrespassing;
+    private boolean isSaved;
     private String status;
     private ArrayList<Resident> residents;
 
@@ -18,12 +19,9 @@ public class Location {
         this.latitudeDirection = latitudeDirection;
         this.longitudeDirection = longitudeDirection;
         this.isTrespassing = isTrespassing;
-        if (isTrespassing){
-            status = "trespassing";
-        } else {
-            status = "legal";
-        }
+        if (isTrespassing) {status = "trespassing";} else {status = "legal";}
         residents = new ArrayList<>();
+        isSaved = false;
     }
 
     public Location(double latitude, double longitude, char latitudeDirection, char longitudeDirection, boolean isTrespassing, ArrayList<Resident> residents) {
@@ -32,15 +30,12 @@ public class Location {
         this.latitudeDirection = latitudeDirection;
         this.longitudeDirection = longitudeDirection;
         this.isTrespassing = isTrespassing;
-        if (isTrespassing){
-            status = "trespassing";
-        } else {
-            status = "legal";
-        }
+        if (isTrespassing) {status = "trespassing";} else {status = "legal";}
         this.residents = residents;
+        isSaved = false;
     }
     public String getLocationInfo() {
-        StringBuilder info = new StringBuilder("Location: " + latitude + ", " + longitude +
+        StringBuilder info = new StringBuilder("Location: " + latitude + " " + latitudeDirection + ", " + longitude + " " + longitudeDirection +
                                  "\nTrespassing: " + (status.equals("trespassing") ? "yes" : "no") + "\n");
         info.append(residents.size()).append(" Characters:\n");
         for (Resident resident : residents) {
@@ -103,5 +98,13 @@ public class Location {
 
     public void setTrespassing(boolean trespassing) {
         isTrespassing = trespassing;
+    }
+
+    public boolean isSaved() {
+        return isSaved;
+    }
+
+    public void setSaved(boolean saved) {
+        isSaved = saved;
     }
 }
