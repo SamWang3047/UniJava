@@ -19,14 +19,16 @@ public class ScenarioService {
     private static final String[] AUTO_GENERATED_DISASTER = {"CYCLONE", "FLOOD", "EARTHQUAKE", "BUSHFIRE", "METEORITE"};
     private static final Character[] LATITUDE_DIRECTION = {'N', 'S'};
     private static final Character[] LONGITUDE_DIRECTION = {'E', 'W'};
-    private HashMap<String, int[]> attributes;
     private ArrayList<Scenario> scenarios;
+    private HashMap<String, int[]> attributes;
     private boolean consent;
+    private ArrayList<Integer> savedHumanAge;
 
     public ScenarioService() {
         scenarios = new ArrayList<>();
         consent = false;
         attributes = new HashMap<>();
+        savedHumanAge = new ArrayList<>();
     }
 
     public void loadScenariosFromFile(String scenariosFilePath) {
@@ -52,13 +54,13 @@ public class ScenarioService {
                     }
                 } else {
                     if (currentScenario != null && currentLocation != null) {
+                        // set trespassing attribute of animals
                         if (currentLocation.isTrespassing()) {
                             if (object instanceof Animal) {
                                 ((Animal) object).setTrespassing(true);
                             }
                         }
                         currentLocation.getResidents().add((Resident) object);
-                        parseResidentAttributes((Resident) object);
                     }
                 }
             }
@@ -279,13 +281,40 @@ public class ScenarioService {
     }
 
     public void presentScenarios(Scanner scanner) {
+        int scenarioNum = 1;
         for (Scenario scenario : scenarios) {
             scenario.presentScenario();
             deployRescueBot(scanner, scenario);
+            if (scenarioNum % 3 == 0) {
+                printStatistics(scenarioNum);
+                if (scenarioNum != scenarios.size()) {
+                    System.out.println("Would you like to continue? (yes/no)");
+                    String response = scanner.nextLine().toLowerCase();
+                    while (!response.equals("no") && !response.equals("yes")) {
+                        System.out.println("Invalid input. Please type 'yes' or 'no'.");
+                        response = scanner.nextLine().toLowerCase();
+                    }
+                    if (response.equals("no")) {
+                        return; // Return if user selects 'no'
+                    }
+                }
+            }
+            scenarioNum++;
         }
+        printStatistics(scenarioNum);
+        System.out.println("That's all. Press Enter to return to main menu.");
+        System.out.print("> ");
+        scanner.nextLine();  // Wait for the user to press Enter
     }
 
+
     public void deployRescueBot(Scanner scanner, Scenario scenario) {
+        // Load current scenario's residents' all attributes
+        for (Location location : scenario.getLocations()) {
+            for (Resident resident : location.getResidents()) {
+                parseResidentAttributes(resident);
+            }
+        }
         System.out.println("To which location should RescueBot be deployed?");
         while (true) {
             System.out.print("> ");
@@ -295,7 +324,8 @@ public class ScenarioService {
                 if (choice >= 0 && choice < scenario.getLocations().size()) {
                     scenario.getLocations().get(choice).setSaved(true); // set this location to saved
                     for (Resident resident : scenario.getLocations().get(choice).getResidents()) {
-                        parseSavedResidentAttributes(resident);
+                        parseSavedResidentAttributes(resident); //Load this location's residents' attributes
+                        savedHumanAge.add(resident.age);
                     }
                     break;
                 } else {
@@ -306,6 +336,7 @@ public class ScenarioService {
                 scanner.next();
             }
         }
+        scanner.nextLine();
     }
 
     public void randomScenarioGeneration() {
@@ -428,7 +459,49 @@ public class ScenarioService {
         }
     }
 
+    public void printStatistics(int runNumber) {
+        // Create a list to hold the survival ratio of each attribute
+        List<AttributeSurvivalRatio> survivalRatios = new ArrayList<>();
 
+        // Iterate over the HashMap
+        for (Map.Entry<String, int[]> entry : attributes.entrySet()) {
+            String attributeName = entry.getKey();
+            int[] values = entry.getValue();
+
+            // Calculate the survival ratio
+            double survivalRatio = (double) values[1] / values[0];
+
+            // Add the survival ratio to the list
+            survivalRatios.add(new AttributeSurvivalRatio(attributeName, survivalRatio));
+        }
+
+        // Sort the list
+        Collections.sort(survivalRatios);
+
+        // Print the statistic
+        System.out.println("======================================");
+        System.out.println("# Statistic");
+        System.out.println("======================================");
+        System.out.println("- % SAVED AFTER " + runNumber + " RUNS");
+
+        // Print each survival ratio
+        for (AttributeSurvivalRatio ratio : survivalRatios) {
+            System.out.printf("%s: %.2f\n", ratio.getAttributeName(), ratio.getSurvivalRatio());
+        }
+
+        // Print the average age
+        System.out.println("--");
+        System.out.printf("average age: %.2f", getAvgAge());
+        System.out.println();
+    }
+
+    private double getAvgAge() {
+        int totalAge = 0;
+        for (Integer age : savedHumanAge) {
+            totalAge += age;
+        }
+        return (double) (totalAge / savedHumanAge.size());
+    }
 
     public ArrayList<Scenario> getScenarios() {
         return scenarios;
