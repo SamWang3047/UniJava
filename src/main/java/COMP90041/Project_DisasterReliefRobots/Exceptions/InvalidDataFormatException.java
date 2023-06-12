@@ -1,4 +1,8 @@
-package COMP90041.Project_DisasterReliefRobots;
+package COMP90041.Project_DisasterReliefRobots.Exceptions;
+
+import COMP90041.Project_DisasterReliefRobots.Location;
+import COMP90041.Project_DisasterReliefRobots.Resident;
+import COMP90041.Project_DisasterReliefRobots.Scenario;
 
 public class InvalidDataFormatException extends Exception{
     private Scenario scenario;

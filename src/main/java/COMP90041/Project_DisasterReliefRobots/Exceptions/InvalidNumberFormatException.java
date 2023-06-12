@@ -1,4 +1,8 @@
-package COMP90041.Project_DisasterReliefRobots;
+package COMP90041.Project_DisasterReliefRobots.Exceptions;
+
+import COMP90041.Project_DisasterReliefRobots.Location;
+import COMP90041.Project_DisasterReliefRobots.Resident;
+import COMP90041.Project_DisasterReliefRobots.Scenario;
 
 public class InvalidNumberFormatException extends NumberFormatException {
     private Scenario scenario;

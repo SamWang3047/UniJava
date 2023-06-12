@@ -11,6 +11,8 @@ public abstract class Resident {
         this.bodyType = bodyType;
     }
 
+    public abstract String getDescription();
+
     public String getGender() {
         return gender;
     }

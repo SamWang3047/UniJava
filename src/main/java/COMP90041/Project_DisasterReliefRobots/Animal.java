@@ -9,6 +9,10 @@ public class Animal extends Resident{
         this.species = species;
         this.isPet = isPet;
     }
+    @Override
+    public String getDescription() {
+        return species + (isPet ? " is pet" : "");
+    }
 
     public String getSpecies() {
         return species;
@@ -25,4 +29,6 @@ public class Animal extends Resident{
     public void setPet(Boolean pet) {
         isPet = pet;
     }
+
+
 }

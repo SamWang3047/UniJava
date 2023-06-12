@@ -54,7 +54,8 @@ public class RescueBot {
                 case "judge":
                 case "j":
                     // TODO: Implement judging scenarios
-
+                    scenarioService.collectUserConsent(scanner);
+                    scenarioService.presentScenarios(scanner);
                     break;
                 case "run":
                 case "r":
@@ -112,6 +113,7 @@ public class RescueBot {
         // Load scenarios and display the number of imported scenarios
         if (scenariosFilePath == null) {
             // Generate random scenarios
+            scenarioService.randomScenarioGeneration();
         } else {
             // Load scenarios from file
             scenarioService.loadScenariosFromFile(scenariosFilePath);
