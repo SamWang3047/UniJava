@@ -203,7 +203,7 @@ public class ScenarioService {
         if (resident.equalsIgnoreCase("human")) {
             try { // Validate age
                 if (age < 0) {
-                    throw new InvalidCharacteristicException();
+                    throw new InvalidCharacteristicException(lineNumber);
                 }
             } catch (InvalidCharacteristicException e) {
                 age = 18; // default value
@@ -211,9 +211,9 @@ public class ScenarioService {
 
             try { // Validate profession
                 if ((age < 17 || age > 68) && !profession.toUpperCase().equals("NONE")) {
-                    throw new InvalidCharacteristicException();
+                    throw new InvalidCharacteristicException(lineNumber);
                 } else if (!Arrays.stream(PROFESSION).toList().contains(profession.toUpperCase())) {
-                    throw new InvalidCharacteristicException();
+                    throw new InvalidCharacteristicException(lineNumber);
                 }
             } catch (InvalidCharacteristicException e) {
                 profession = "NONE"; // default value
@@ -221,7 +221,7 @@ public class ScenarioService {
 
             try { // Validate pregnant
                 if (gender.toUpperCase().equals("MALE") && isPregnant) {
-                    throw new InvalidCharacteristicException();
+                    throw new InvalidCharacteristicException(lineNumber);
                 }
             } catch (InvalidCharacteristicException e) {
                 isPregnant = false;// default value

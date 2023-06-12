@@ -117,12 +117,9 @@ public class RescueBot {
             // Load scenarios from file
             scenarios = scenarioService.loadScenariosFromFile(scenariosFilePath);
         }
-
         System.out.println(scenarios.size() + " scenarios imported.");
 
         // Display the main menu
         displayMainMenu(scanner);
     }
-
-
 }
