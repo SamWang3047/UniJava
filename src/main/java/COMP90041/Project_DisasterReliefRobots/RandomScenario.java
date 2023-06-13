@@ -11,11 +11,7 @@ public class RandomScenario {
     private static final String[] AUTO_GENERATED_DISASTER = {"CYCLONE", "FLOOD", "EARTHQUAKE", "BUSHFIRE", "METEORITE"};
     private static final Character[] LATITUDE_DIRECTION = {'N', 'S'};
     private static final Character[] LONGITUDE_DIRECTION = {'E', 'W'};
-    private int randomScenarioNumber;
 
-    public RandomScenario(int randomScenarioNumber) {
-        this.randomScenarioNumber = randomScenarioNumber;
-    }
     public RandomScenario() {
     }
 

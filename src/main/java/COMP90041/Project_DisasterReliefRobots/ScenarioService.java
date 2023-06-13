@@ -287,7 +287,7 @@ public class ScenarioService {
     }
 
     public void randomScenarioGeneration(int randomScenarioNumber) {
-        RandomScenario randomScenario = new RandomScenario(randomScenarioNumber);
+        RandomScenario randomScenario = new RandomScenario();
         randomScenario.randomScenarioGeneration(scenarios, randomScenarioNumber);
     }
 
