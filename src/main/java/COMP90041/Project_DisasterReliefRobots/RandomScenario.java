@@ -11,16 +11,28 @@ public class RandomScenario {
     private static final String[] AUTO_GENERATED_DISASTER = {"CYCLONE", "FLOOD", "EARTHQUAKE", "BUSHFIRE", "METEORITE"};
     private static final Character[] LATITUDE_DIRECTION = {'N', 'S'};
     private static final Character[] LONGITUDE_DIRECTION = {'E', 'W'};
-
     private int randomScenarioNumber;
 
     public RandomScenario(int randomScenarioNumber) {
         this.randomScenarioNumber = randomScenarioNumber;
     }
+    public RandomScenario() {
+    }
+
     public void randomScenarioGeneration(ArrayList<Scenario> scenarios) {
         Random r = new Random();
         String disaster;
         int scenarioNum = r.nextInt(7) + 3; // Number of scenarios [3, 10]
+        randomScenario(scenarios, r, scenarioNum);
+    }
+    public void randomScenarioGeneration(ArrayList<Scenario> scenarios, int randomScenarioNumber) {
+        Random r = new Random();
+        String disaster;
+        randomScenario(scenarios, r, randomScenarioNumber);
+    }
+
+    private void randomScenario(ArrayList<Scenario> scenarios, Random r, int scenarioNum) {
+        String disaster;
         for (int i = 0; i < scenarioNum; i++) {
             int locationNum = r.nextInt(4) + 2; // Number of locations [2, 6]
             ArrayList<Location> locations = new ArrayList<>();
@@ -77,11 +89,4 @@ public class RandomScenario {
         }
     }
 
-    public int getRandomScenarioNumber() {
-        return randomScenarioNumber;
-    }
-
-    public void setRandomScenarioNumber(int randomScenarioNumber) {
-        this.randomScenarioNumber = randomScenarioNumber;
-    }
 }

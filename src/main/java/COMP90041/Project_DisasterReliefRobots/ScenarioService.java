@@ -281,9 +281,14 @@ public class ScenarioService {
         }
     }
 
+    public void randomScenarioGeneration() {
+        RandomScenario randomScenario = new RandomScenario();
+        randomScenario.randomScenarioGeneration(scenarios);
+    }
+
     public void randomScenarioGeneration(int randomScenarioNumber) {
         RandomScenario randomScenario = new RandomScenario(randomScenarioNumber);
-        randomScenario.randomScenarioGeneration(scenarios);
+        randomScenario.randomScenarioGeneration(scenarios, randomScenarioNumber);
     }
 
     public void collectUserConsent(Scanner scanner) {
@@ -343,7 +348,6 @@ public class ScenarioService {
         scanner.nextLine();  // Wait for the user to press Enter
     }
 
-
     public void deployRescueBot(Scanner scanner, Scenario scenario) {
         // Load current scenario's residents' all attributes
         for (Location location : scenario.getLocations()) {
@@ -375,7 +379,22 @@ public class ScenarioService {
         scanner.nextLine();
     }
 
+    public void runSimulation(Scenario scenario, Location savedLocation) {
+        // Load current scenario's residents' all attributes
+        for (Location location : scenario.getLocations()) {
+            for (Resident resident : location.getResidents()) {
+                parseResidentAttributes(resident);
+            }
+        }
+        for (Resident resident : savedLocation.getResidents()) {
+            parseSavedResidentAttributes(resident); //Load this location's residents' attributes
+            savedHumanAge.add(resident.age);
+        }
+    }
 
+    public void getRescueLog(int scenarioNum) {
+        RescueLog rescueLog = new RescueLog(scenarioNum, attributes, savedHumanAge, logPath);
+    }
 
     public void addAttribute(String attribute) {
         if (attributes.containsKey(attribute)) {

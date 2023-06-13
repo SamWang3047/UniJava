@@ -1,0 +1,110 @@
+Time: 2023-06-13 04:58:43
+======================================
+# Statistic
+======================================
+- % SAVED AFTER 4 RUNS
+ceo: 1.00
+wallaby: 1.00
+pet: 0.88
+doctor: 0.75
+puppy: 0.75
+snake: 0.75
+adult: 0.67
+average: 0.67
+homeless: 0.67
+female: 0.56
+animal: 0.50
+athletic: 0.50
+baby: 0.50
+human: 0.50
+legal: 0.50
+none: 0.50
+male: 0.47
+overweight: 0.38
+senior: 0.38
+dingo: 0.33
+dog: 0.33
+student: 0.33
+lion: 0.25
+child: 0.00
+platypus: 0.00
+unemployed: 0.00
+--
+average age: 30.00
+
+Time: 2023-06-13 05:01:06
+======================================
+# Statistic
+======================================
+- % SAVED AFTER 50 RUNS
+student: 0.67
+baby: 0.59
+criminal: 0.55
+senior: 0.53
+average: 0.52
+snake: 0.51
+koala: 0.48
+overweight: 0.48
+dog: 0.48
+doctor: 0.48
+female: 0.47
+ceo: 0.47
+lion: 0.47
+human: 0.46
+male: 0.46
+adult: 0.43
+pet: 0.43
+professor: 0.42
+athletic: 0.41
+unemployed: 0.41
+animal: 0.40
+legal: 0.40
+child: 0.40
+dingo: 0.39
+wallaby: 0.38
+none: 0.37
+puppy: 0.33
+homeless: 0.30
+platypus: 0.27
+cat: 0.26
+--
+average age: 29.00
+
+Time: 2023-06-13 05:02:58
+======================================
+# Statistic
+======================================
+- % SAVED AFTER 100 RUNS
+ceo: 0.51
+criminal: 0.49
+student: 0.47
+baby: 0.47
+snake: 0.46
+koala: 0.45
+female: 0.44
+average: 0.44
+adult: 0.44
+senior: 0.43
+human: 0.43
+athletic: 0.43
+none: 0.42
+doctor: 0.42
+overweight: 0.42
+male: 0.41
+professor: 0.39
+dog: 0.38
+pet: 0.38
+dingo: 0.38
+child: 0.38
+animal: 0.38
+legal: 0.38
+wallaby: 0.37
+homeless: 0.36
+unemployed: 0.36
+puppy: 0.35
+lion: 0.34
+platypus: 0.33
+cat: 0.32
+--
+average age: 29.00
+
