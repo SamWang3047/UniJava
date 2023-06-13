@@ -3,7 +3,6 @@ package COMP90041.Project_DisasterReliefRobots;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.lang.Math;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,7 +19,7 @@ import java.util.Scanner;
 public class RescueBot {
 
     private static final double IS_TRESPASSING = 2.0 / 3;
-    private static final double HUMAN_SCORE = 2.0;
+    private static final double HUMAN_SCORE = 5.0;
 
     private static final String USER_LOG_PATH = "userRescueBot.csv";
     private static final String SIMULATION_LOG_PATH = "simulationRescueBot.csv";
@@ -34,7 +33,7 @@ public class RescueBot {
     public static Location decide(Scenario scenario) {
         // a very simple decision engine
         // TODO: take into account at least 5 characteristics
-        // Location resident number; isTrespassing; human number; pregnant human number; animal number;
+        // Location resident number; isTrespassing; human number; pregnant human number; animal number
         Location bestLocation = null;
         double bestScore = Integer.MIN_VALUE;
         // Iterate through all locations in the scenario
@@ -106,13 +105,15 @@ public class RescueBot {
                 case "run":
                 case "r":
                     // TODO: Implement running simulations
-                    scenarioService.setScenarios(new ArrayList<>());
+                    scenarioService.setScenarios(new ArrayList<>()); //clear current scenarios
                     scenarioService.randomScenarioGeneration(getScenarioCount(scanner));
                     simulation(scenarioService, simulationLogFile);
                     break;
                 case "audit":
                 case "a":
                     // TODO: Implement audit history
+                    scenarioService.setScenarios(new ArrayList<>());//clear current scenarios
+                    scenarioService.audit(scanner, userLogFile);
                     break;
                 case "quit":
                 case "q":
@@ -162,7 +163,7 @@ public class RescueBot {
         RescueLog rescueLog = new RescueLog();
         for (Scenario scenario : scenarioService.getScenarios()) {
             scenarioService.runSimulation(scenario, decide(scenario));
-            rescueLog.writeToCSV(simulationLogPath, scenario);
+            rescueLog.writeToCSV(simulationLogPath, scenario ,true);
         }
         scenarioService.printStatistics(scenarioService.getScenarios().size());
     }
@@ -180,7 +181,7 @@ public class RescueBot {
             switch (args[i]) {
                 case "-s":
                 case "--scenarios":
-                    if (i + 1 < args.length) {
+                    if (i + 1 < args.length && !args[i + 1].startsWith("-")) {
                         scenariosFilePath = args[i + 1];
                         i++;  // skip next arg
                     } else {
@@ -189,7 +190,7 @@ public class RescueBot {
                     break;
                 case "-l":
                 case "--log":
-                    if (i + 1 < args.length) {
+                    if (i + 1 < args.length && !args[i + 1].startsWith("-")) {
                         userLogPath = args[i + 1];
                         simulationLogPath = args[i + 1];
                         i++;  // skip next arg

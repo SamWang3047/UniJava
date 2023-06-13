@@ -8,11 +8,14 @@ public class Scenario {
     private ArrayList<Location> locations;
     private int rescuedLocation;
 
+    private boolean isSimulation;
+
 
     public Scenario(String disaster) {
         this.disaster = disaster;
         locations = new ArrayList<>();
         rescuedLocation = -1;
+        isSimulation = false;
     }
 
     public Scenario(String disaster, ArrayList<Location> locations) {
@@ -57,5 +60,13 @@ public class Scenario {
 
     public void setRescuedLocation(int rescuedLocation) {
         this.rescuedLocation = rescuedLocation;
+    }
+
+    public boolean isSimulation() {
+        return isSimulation;
+    }
+
+    public void setSimulation(boolean simulation) {
+        isSimulation = simulation;
     }
 }

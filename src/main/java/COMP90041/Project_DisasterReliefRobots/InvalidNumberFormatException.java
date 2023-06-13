@@ -1,35 +1,39 @@
-package COMP90041.Project_DisasterReliefRobots.Exceptions;
+package COMP90041.Project_DisasterReliefRobots;
 
 import COMP90041.Project_DisasterReliefRobots.Location;
 import COMP90041.Project_DisasterReliefRobots.Resident;
 import COMP90041.Project_DisasterReliefRobots.Scenario;
 
-public class InvalidDataFormatException extends Exception{
+public class InvalidNumberFormatException extends NumberFormatException {
     private Scenario scenario;
     private Location location;
     private Resident resident;
-    public InvalidDataFormatException() {
-        super("invalid data format");
+
+    public InvalidNumberFormatException() {
+        super("invalid number format");
     }
 
-    public InvalidDataFormatException(int lineNumber) {
-        super("invalid data format");
-        System.out.println("WARNING: invalid data format in line " + lineNumber);
+    public InvalidNumberFormatException(int lineNumber) {
+        super("invalid number format");
+        System.out.println("WARNING: invalid number format in line " + lineNumber);
     }
 
-    public InvalidDataFormatException(Scenario scenario) {
-        super("invalid data format");
+    public InvalidNumberFormatException(Scenario scenario) {
+        super("invalid number format");
         this.scenario = scenario;
     }
-    public InvalidDataFormatException(Location location) {
-        super("invalid data format");
+
+    public InvalidNumberFormatException(Location location) {
+        super("invalid number format");
         this.location = location;
     }
-    public InvalidDataFormatException(Resident resident) {
-        super("invalid data format");
+
+    public InvalidNumberFormatException(Resident resident) {
+        super("invalid number format");
         this.resident = resident;
     }
-    public InvalidDataFormatException(String message) {
+
+    public InvalidNumberFormatException(String message) {
         super(message);
     }
 

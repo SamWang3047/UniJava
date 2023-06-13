@@ -6,14 +6,11 @@ import java.util.Random;
 public class RandomScenario {
     private static final String[] AUTO_GENERATED_BODYTYPE = {"OVERWEIGHT", "AVERAGE", "ATHLETIC"};
     private static final String[] AUTO_GENERATED_GENDER = {"MALE", "FEMALE"};
-    private static final String[] AUTO_GENERATED_SPECIES = {"PUPPY", "CAT", "KOALA", "WALLABY", "SNAKE", "LION", "DOG", "DINGO", "PLATYPUS"};
+    private static final String[] AUTO_GENERATED_SPECIES = {"PUPPY", "DINGO", "CAT", "KOALA", "WALLABY", "SNAKE", "LION", "DOG", "PLATYPUS"};
     private static final String[] AUTO_GENERATED_PROFESSION = {"DOCTOR", "CEO", "CRIMINAL", "HOMELESS", "UNEMPLOYED", "ATHLETIC", "STUDENT", "PROFESSOR", "NONE"};
     private static final String[] AUTO_GENERATED_DISASTER = {"CYCLONE", "FLOOD", "EARTHQUAKE", "BUSHFIRE", "METEORITE"};
     private static final Character[] LATITUDE_DIRECTION = {'N', 'S'};
     private static final Character[] LONGITUDE_DIRECTION = {'E', 'W'};
-
-    public RandomScenario() {
-    }
 
     public void randomScenarioGeneration(ArrayList<Scenario> scenarios) {
         Random r = new Random();
@@ -40,7 +37,7 @@ public class RandomScenario {
         }
     }
 
-    public Location randomLocation() {
+    private Location randomLocation() {
         Random r = new Random();
         double lat = r.nextDouble() * 180 - 90;  // latitude [-90, 90]
         char latDirect = LATITUDE_DIRECTION[0];
@@ -60,7 +57,7 @@ public class RandomScenario {
     }
 
 
-    public Resident randomCharacter() {
+    private Resident randomCharacter() {
         Random r = new Random();
         if (r.nextBoolean()) {
             // Generate a human

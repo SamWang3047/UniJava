@@ -1,4 +1,4 @@
-package COMP90041.Project_DisasterReliefRobots.Exceptions;
+package COMP90041.Project_DisasterReliefRobots;
 
 public class InvalidInputException extends Exception{
     public InvalidInputException() {

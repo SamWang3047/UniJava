@@ -1,37 +1,35 @@
-package COMP90041.Project_DisasterReliefRobots.Exceptions;
+package COMP90041.Project_DisasterReliefRobots;
 
 import COMP90041.Project_DisasterReliefRobots.Location;
 import COMP90041.Project_DisasterReliefRobots.Resident;
 import COMP90041.Project_DisasterReliefRobots.Scenario;
 
-public class InvalidCharacteristicException extends Exception{
+public class InvalidDataFormatException extends Exception{
     private Scenario scenario;
     private Location location;
     private Resident resident;
+    public InvalidDataFormatException() {
+        super("invalid data format");
+    }
 
-    public InvalidCharacteristicException() {
-        super("invalid characteristic");
+    public InvalidDataFormatException(int lineNumber) {
+        super("invalid data format");
+        System.out.println("WARNING: invalid data format in line " + lineNumber);
     }
-    public InvalidCharacteristicException(int lineNumber) {
-        super("invalid characteristic");
-        System.out.println("WARNING: invalid characteristic in line " + lineNumber);
-    }
-    public InvalidCharacteristicException(Scenario scenario) {
-        super("invalid characteristic");
+
+    public InvalidDataFormatException(Scenario scenario) {
+        super("invalid data format");
         this.scenario = scenario;
     }
-
-    public InvalidCharacteristicException(Location location) {
-        super("invalid characteristic");
+    public InvalidDataFormatException(Location location) {
+        super("invalid data format");
         this.location = location;
     }
-
-    public InvalidCharacteristicException(Resident resident) {
-        super("invalid characteristic");
+    public InvalidDataFormatException(Resident resident) {
+        super("invalid data format");
         this.resident = resident;
     }
-
-    public InvalidCharacteristicException(String message) {
+    public InvalidDataFormatException(String message) {
         super(message);
     }
 
