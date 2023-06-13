@@ -11,24 +11,30 @@ import java.io.IOException;
 import java.util.*;
 
 public class ScenarioService {
-    private static final String[] BODYTYPE = {"OVERWEIGHT", "AVERAGE", "ATHLETIC"};
-    private static final String[] GENDER = {"MALE", "FEMALE"};
+    private static final String[] BODYTYPE = {"OVERWEIGHT", "AVERAGE", "ATHLETIC", "UNSPECIFIED"};
+    private static final String[] GENDER = {"MALE", "FEMALE", "UNKNOWN"};
     private static final String[] STATUS = {"TRESPASSING", "LEGAL"};
-    private static final String[] AUTO_GENERATED_SPECIES = {"PUPPY", "CAT", "KOALA", "WALLABY", "SNAKE", "LION", "DOG", "DINGO", "PLATYPUS"};
-    private static final String[] AUTO_GENERATED_PROFESSION = {"DOCTOR", "CEO", "CRIMINAL", "HOMELESS", "UNEMPLOYED", "ATHLETIC", "STUDENT", "PROFESSOR", "NONE"};
-    private static final String[] AUTO_GENERATED_DISASTER = {"CYCLONE", "FLOOD", "EARTHQUAKE", "BUSHFIRE", "METEORITE"};
+    private static final String[] SPECIES = {"PUPPY", "CAT", "KOALA", "WALLABY", "SNAKE", "LION", "DOG", "DINGO", "PLATYPUS", "UNSPECIFIED"};
+    private static final String[] PROFESSION = {"DOCTOR", "CEO", "CRIMINAL", "HOMELESS", "UNEMPLOYED", "ATHLETIC", "STUDENT", "PROFESSOR", "NONE"};
+    private static final String[] DISASTER = {"CYCLONE", "FLOOD", "EARTHQUAKE", "BUSHFIRE", "METEORITE"};
     private static final Character[] LATITUDE_DIRECTION = {'N', 'S'};
     private static final Character[] LONGITUDE_DIRECTION = {'E', 'W'};
     private ArrayList<Scenario> scenarios;
     private HashMap<String, int[]> attributes;
     private boolean consent;
     private ArrayList<Integer> savedHumanAge;
+    private String logPath;
 
-    public ScenarioService() {
+    public ScenarioService(String logPath) {
         scenarios = new ArrayList<>();
         consent = false;
         attributes = new HashMap<>();
         savedHumanAge = new ArrayList<>();
+        if (logPath == null) {
+            this.logPath = "rescuebot.txt";
+        } else {
+            this.logPath = logPath;
+        }
     }
 
     public void loadScenariosFromFile(String scenariosFilePath) {
@@ -60,6 +66,7 @@ public class ScenarioService {
                                 ((Animal) object).setTrespassing(true);
                             }
                         }
+                        // add current resident to this location
                         currentLocation.getResidents().add((Resident) object);
                     }
                 }
@@ -87,7 +94,7 @@ public class ScenarioService {
         } else if (data[0].startsWith("location:")) {
             return parseLocation(data, lineNumber); // Parse location
         } else {
-            return parseCharacter(data, lineNumber); //Parse Resident
+            return parseCharacter(data, lineNumber);// Parse Resident
         }
     }
 
@@ -97,7 +104,7 @@ public class ScenarioService {
         String disaster = data[0].substring(9);
         Scenario scenario = new Scenario(disaster);
         try {
-            if (disaster.equals("")) {
+            if (!Arrays.stream(DISASTER).toList().contains(disaster)) {
                 throw new InvalidCharacteristicException(lineNumber);
             }
         } catch (InvalidCharacteristicException e) {
@@ -194,7 +201,7 @@ public class ScenarioService {
                 throw new InvalidCharacteristicException(lineNumber);
             }
         } catch (InvalidCharacteristicException e) {
-            gender = "NONE"; // default value
+            gender = GENDER[GENDER.length - 1]; // default value
         }
 
         int age;
@@ -205,18 +212,36 @@ public class ScenarioService {
             age = 18;
         }
         String bodyType = data[3];
-        String profession = data[4];
+        // profession validation
+        String profession;
+        try {
+            profession = data[4];
+            if (!Arrays.stream(PROFESSION).toList().contains(profession)) {
+                throw new InvalidCharacteristicException(lineNumber);
+            }
+        } catch (InvalidCharacteristicException e) {
+            profession = PROFESSION[PROFESSION.length - 1].toLowerCase(); //NONE
+        }
         boolean isPregnant = Boolean.parseBoolean(data[5]);
-        String species = data[6];
+        // species validation
+        String species;
+        try {
+            species = data[6];
+            if (!Arrays.stream(SPECIES).toList().contains(species)) {
+                throw new InvalidCharacteristicException(lineNumber);
+            }
+        } catch (InvalidCharacteristicException e) {
+            species = SPECIES[SPECIES.length - 1].toLowerCase(); //NONE
+        }
+
         boolean isPet = Boolean.parseBoolean(data[7]);
 
         try { // Validate bodyType
             if (!Arrays.stream(BODYTYPE).toList().contains(bodyType.toUpperCase())) {
-                System.out.println("WARNING: invalid body type. Defaulting to 'average'.");
                 throw new InvalidCharacteristicException(lineNumber);
             }
         } catch (InvalidCharacteristicException e) {
-            bodyType = "UNSPECIFIED"; // default value
+            bodyType = BODYTYPE[BODYTYPE.length - 1]; // default value
         }
 
 
@@ -256,6 +281,11 @@ public class ScenarioService {
         }
     }
 
+    public void randomScenarioGeneration(int randomScenarioNumber) {
+        RandomScenario randomScenario = new RandomScenario(randomScenarioNumber);
+        randomScenario.randomScenarioGeneration(scenarios);
+    }
+
     public void collectUserConsent(Scanner scanner) {
         System.out.println("Do you consent to have your decisions saved to a file? (yes/no)");
         boolean notConsent = true;
@@ -287,6 +317,9 @@ public class ScenarioService {
             deployRescueBot(scanner, scenario);
             if (scenarioNum % 3 == 0) {
                 printStatistics(scenarioNum);
+                if (consent) {
+                    RescueLog rescueLog = new RescueLog(scenarioNum, attributes, savedHumanAge, logPath);
+                }
                 if (scenarioNum != scenarios.size()) {
                     System.out.println("Would you like to continue? (yes/no)");
                     String response = scanner.nextLine().toLowerCase();
@@ -302,6 +335,9 @@ public class ScenarioService {
             scenarioNum++;
         }
         printStatistics(scenarioNum);
+        if (consent) {
+            RescueLog rescueLog = new RescueLog(scenarioNum, attributes, savedHumanAge, logPath);
+        }
         System.out.println("That's all. Press Enter to return to main menu.");
         System.out.print("> ");
         scanner.nextLine();  // Wait for the user to press Enter
@@ -339,65 +375,7 @@ public class ScenarioService {
         scanner.nextLine();
     }
 
-    public void randomScenarioGeneration() {
-        Random r = new Random();
-        String disaster;
-        int scenarioNum = r.nextInt(7) + 3; // Number of scenarios [3, 10]
-        for (int i = 0; i < scenarioNum; i++) {
-            int locationNum = r.nextInt(4) + 2; // Number of locations [2, 6]
-            ArrayList<Location> locations = new ArrayList<>();
-            for (int j = 0; j < locationNum; j++) {
-                locations.add(randomLocation());
-            }
-            disaster = AUTO_GENERATED_DISASTER[r.nextInt(AUTO_GENERATED_DISASTER.length)].toLowerCase();
-            scenarios.add(new Scenario(disaster, locations));
-        }
-    }
 
-    public Location randomLocation() {
-        Random r = new Random();
-        double lat = r.nextDouble() * 180 - 90;  // latitude [-90, 90]
-        char latDirect = 'S';
-        if (lat < 0) latDirect = 'N';
-        double lon = r.nextDouble() * 360 - 180;  // longitude [-180, 180]
-        char lonDirect = 'E';
-        if (lon < 0) latDirect = 'W';
-        boolean isTrespassing = r.nextBoolean();
-
-        int numCharacters = r.nextInt(7) + 1;  // Number of characters [1, 8]
-        ArrayList<Resident> residents = new ArrayList<>();
-        for (int i = 0; i < numCharacters; i++) {
-            residents.add(randomCharacter());
-        }
-
-        return new Location(lat, lon, latDirect, lonDirect, isTrespassing, residents);
-    }
-
-
-    public Resident randomCharacter() {
-        Random r = new Random();
-        if (r.nextBoolean()) {
-            // Generate a human
-            int age = r.nextInt(100);
-            String gender = GENDER[r.nextInt(GENDER.length)].toLowerCase();
-            String bodyType = BODYTYPE[r.nextInt(BODYTYPE.length)].toLowerCase();
-            String profession = AUTO_GENERATED_PROFESSION[r.nextInt(AUTO_GENERATED_PROFESSION.length)].toLowerCase();
-            boolean isPregnant = false;
-            //Only female can get pregnant
-            if (gender.equals(GENDER[1])) {
-                isPregnant = r.nextBoolean();
-            }
-            return new Human(gender, age, bodyType, profession, isPregnant);
-        } else {
-            // Generate an animal
-            int age = r.nextInt(15);
-            String gender = GENDER[r.nextInt(GENDER.length)].toLowerCase();
-            String bodyType = BODYTYPE[r.nextInt(BODYTYPE.length)].toLowerCase();
-            String species = AUTO_GENERATED_SPECIES[r.nextInt(AUTO_GENERATED_SPECIES.length)].toLowerCase();
-            boolean isPet = r.nextBoolean();
-            return new Animal(gender, age, bodyType, species, isPet);
-        }
-    }
 
     public void addAttribute(String attribute) {
         if (attributes.containsKey(attribute)) {
@@ -491,11 +469,11 @@ public class ScenarioService {
 
         // Print the average age
         System.out.println("--");
-        System.out.printf("average age: %.2f", getAvgAge());
+        System.out.printf("average age: %.2f", getAvgAge(savedHumanAge));
         System.out.println();
     }
 
-    private double getAvgAge() {
+    private double getAvgAge(ArrayList<Integer> savedHumanAge) {
         int totalAge = 0;
         for (Integer age : savedHumanAge) {
             totalAge += age;
@@ -525,5 +503,13 @@ public class ScenarioService {
 
     public void setAttributes(HashMap<String, int[]> attributes) {
         this.attributes = attributes;
+    }
+
+    public String getLogPath() {
+        return logPath;
+    }
+
+    public void setLogPath(String logPath) {
+        this.logPath = logPath;
     }
 }

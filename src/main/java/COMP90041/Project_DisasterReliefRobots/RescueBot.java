@@ -33,7 +33,18 @@ public class RescueBot {
         }
     }
 
-    private static void displayMainMenu(Scanner scanner, ScenarioService scenarioService) {
+    private static void displayMainMenu(Scanner scanner, ScenarioService scenarioService, String scenariosFilePath) {
+
+        // Load scenarios and display the number of imported scenarios
+        if (scenariosFilePath == null) {
+            // Generate random scenarios
+            int randomScenarioNumber = 0;
+            scenarioService.randomScenarioGeneration(randomScenarioNumber);
+        } else {
+            // Load scenarios from file
+            scenarioService.loadScenariosFromFile(scenariosFilePath);
+        }
+
         String command = "";
 
         while (!command.equals("quit") && !command.equals("q")) {
@@ -72,6 +83,18 @@ public class RescueBot {
         }
         scanner.close();
     }
+    private static void printHelpAndExit() {
+        System.out.println("RescueBot - COMP90041 - Final Project");
+        System.out.println();
+        System.out.println("Usage: java RescueBot [arguments]");
+        System.out.println();
+        System.out.println("Arguments:");
+        System.out.println("-s or --scenarios    Optional: path to scenario file");
+        System.out.println("-h or --help         Optional: Print Help (this message) and exit");
+        System.out.println("-l or --log          Optional: path to data log file");
+        System.out.println();
+        System.exit(0);
+    }
 
     /**
      * Program entry
@@ -80,24 +103,40 @@ public class RescueBot {
 
         Scanner scanner = new Scanner(System.in);
         String scenariosFilePath = null;
+        String logPath = null;
 
-        ScenarioService scenarioService = new ScenarioService();
-
-        if (args[0].equals("--help") || args[0].equals("-h")) {
-            System.out.println("""
-                    RescueBot - COMP90041 - Final Project
-
-                    Usage: java RescueBot [arguments]
-
-                    Arguments:
-                    -s or --scenarios    Optional: path to scenario file
-                    -h or --help        Optional: Print Help (this message) and exit
-                    -l or --log        Optional: path to data log file""");
-        } else if (args.length > 1) {
-            if (args[0].equals("--scenarios") || args[0].equals("-s")) {
-                scenariosFilePath = args[1];
+        for (int i = 0; i < args.length; i++) {
+            switch (args[i]) {
+                case "-s":
+                case "--scenarios":
+                    if (i + 1 < args.length) {
+                        scenariosFilePath = args[i + 1];
+                        i++;  // skip next arg
+                    } else {
+                        scenariosFilePath = null;
+                    }
+                    break;
+                case "-l":
+                case "--log":
+                    if (i + 1 < args.length) {
+                        logPath = args[i + 1];
+                        i++;  // skip next arg
+                    } else {
+                        logPath = null;
+                    }
+                    break;
+                case "-h":
+                case "--help":
+                    printHelpAndExit();
+                    break;
+                default:
+                    System.out.println("Invalid argument: " + args[i]);
+                    printHelpAndExit();
+                    break;
             }
         }
+
+        ScenarioService scenarioService = new ScenarioService(logPath);
 
         // Display the welcome message
         try {
@@ -107,16 +146,9 @@ public class RescueBot {
             System.out.println("Error reading welcome.ascii file: " + e.getMessage());
             System.exit(1);
         }
-        // Load scenarios and display the number of imported scenarios
-        if (scenariosFilePath == null) {
-            // Generate random scenarios
-            scenarioService.randomScenarioGeneration();
-        } else {
-            // Load scenarios from file
-            scenarioService.loadScenariosFromFile(scenariosFilePath);
-        }
         System.out.println(scenarioService.getScenarios().size() + " scenarios imported.");
         // Display the main menu
-        displayMainMenu(scanner, scenarioService);
+        displayMainMenu(scanner, scenarioService, scenariosFilePath);
     }
+
 }
