@@ -1,5 +1,7 @@
 package COMP90041.Project_DisasterReliefRobots;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.lang.Math;
 import java.nio.file.Files;
@@ -17,11 +19,15 @@ import java.util.Scanner;
  */
 public class RescueBot {
 
-    private static final double IS_TRESPASSING= 2.0/3;
+    private static final double IS_TRESPASSING = 2.0 / 3;
     private static final double HUMAN_SCORE = 2.0;
+
+    private static final String USER_LOG_PATH = "userRescueBot.csv";
+    private static final String SIMULATION_LOG_PATH = "simulationRescueBot.csv";
 
     /**
      * Decides whether to save the passengers or the pedestrians
+     *
      * @param scenario : the ethical dilemma
      * @return Decision: which group to save
      */
@@ -32,16 +38,11 @@ public class RescueBot {
         Location bestLocation = null;
         double bestScore = Integer.MIN_VALUE;
         // Iterate through all locations in the scenario
+        int locationIndex = 0, savedLocationIndex = 0;
         for (Location location : scenario.getLocations()) {
             double score = 0;
-
             // Consider number of residents: more residents mean higher score
             score += location.getResidents().size();
-
-            // Consider trespassing: if residents are trespassing, reduce the score
-            if (location.isTrespassing()) {
-                score *= IS_TRESPASSING;
-            }
 
             // Consider number of humans: more humans mean higher score
             for (Resident resident : location.getResidents()) {
@@ -51,26 +52,29 @@ public class RescueBot {
                     if (((Human) resident).getPregnant()) {
                         score++;
                     }
+                } else if (resident instanceof Animal) {
+                    score++;
                 }
             }
 
-            // Consider number of animals: more animals mean higher score
-            for (Resident resident : location.getResidents()) {
-                if (resident instanceof Animal) {
-                    score++;
-                }
+            // Consider trespassing: if residents are trespassing, reduce the score
+            if (location.isTrespassing()) {
+                score *= IS_TRESPASSING;
             }
 
             // Update the best location if this location's score is higher
             if (score > bestScore) {
                 bestScore = score;
                 bestLocation = location;
+                savedLocationIndex = locationIndex;
             }
+            locationIndex++;
         }
+        scenario.getLocation(savedLocationIndex).setSaved(true);
         return bestLocation;
     }
 
-    private static void displayMainMenu(Scanner scanner, ScenarioService scenarioService, String scenariosFilePath) {
+    private static void displayMainMenu(Scanner scanner, ScenarioService scenarioService, String scenariosFilePath, String userLogFile, String simulationLogFile) {
         // Load scenarios and display the number of imported scenarios
         if (scenariosFilePath != null) {
             // Load scenarios from file
@@ -104,7 +108,7 @@ public class RescueBot {
                     // TODO: Implement running simulations
                     scenarioService.setScenarios(new ArrayList<>());
                     scenarioService.randomScenarioGeneration(getScenarioCount(scanner));
-                    simulation(scenarioService);
+                    simulation(scenarioService, simulationLogFile);
                     break;
                 case "audit":
                 case "a":
@@ -121,6 +125,7 @@ public class RescueBot {
         }
         scanner.close();
     }
+
     private static void printHelpAndExit() {
         System.out.println("RescueBot - COMP90041 - Final Project");
         System.out.println();
@@ -142,7 +147,7 @@ public class RescueBot {
             String input = scanner.nextLine();
             try {
                 scenarioCount = Integer.parseInt(input);
-                if(scenarioCount < 0){
+                if (scenarioCount < 0) {
                     System.out.println("Invalid input! The number of scenarios should be positive.");
                     throw new NumberFormatException();
                 }
@@ -153,22 +158,23 @@ public class RescueBot {
         return scenarioCount;
     }
 
-    private static void simulation(ScenarioService scenarioService) {
+    private static void simulation(ScenarioService scenarioService, String simulationLogPath) {
+        RescueLog rescueLog = new RescueLog();
         for (Scenario scenario : scenarioService.getScenarios()) {
             scenarioService.runSimulation(scenario, decide(scenario));
+            rescueLog.writeToCSV(simulationLogPath, scenario);
         }
         scenarioService.printStatistics(scenarioService.getScenarios().size());
-        scenarioService.getRescueLog(scenarioService.getScenarios().size());
     }
 
     /**
      * Program entry
      */
-    public static void main(String[] args) {
-
+    public static void main(String @NotNull [] args) {
         Scanner scanner = new Scanner(System.in);
         String scenariosFilePath = null;
-        String logPath = null;
+        String userLogPath = null;
+        String simulationLogPath = null;
 
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
@@ -184,10 +190,9 @@ public class RescueBot {
                 case "-l":
                 case "--log":
                     if (i + 1 < args.length) {
-                        logPath = args[i + 1];
+                        userLogPath = args[i + 1];
+                        simulationLogPath = args[i + 1];
                         i++;  // skip next arg
-                    } else {
-                        logPath = null;
                     }
                     break;
                 case "-h":
@@ -200,8 +205,14 @@ public class RescueBot {
                     break;
             }
         }
+        if (userLogPath == null) {
+            userLogPath = USER_LOG_PATH;
+        }
+        if (simulationLogPath == null) {
+            simulationLogPath = SIMULATION_LOG_PATH;
+        }
 
-        ScenarioService scenarioService = new ScenarioService(logPath);
+        ScenarioService scenarioService = new ScenarioService(userLogPath, simulationLogPath);
 
         // Display the welcome message
         try {
@@ -212,7 +223,7 @@ public class RescueBot {
             System.exit(1);
         }
         // Display the main menu
-        displayMainMenu(scanner, scenarioService, scenariosFilePath);
+        displayMainMenu(scanner, scenarioService, scenariosFilePath, userLogPath, simulationLogPath);
     }
 
 }

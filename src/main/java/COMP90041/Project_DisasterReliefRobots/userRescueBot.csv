@@ -1,0 +1,75 @@
+Time: 2023-06-13 09:06:37
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:flood,,,,,,
+location:22.71 N;29.08 E;trespassing,true,,,,,
+human,female,0,average,ceo,false,,
+animal,female,14,overweight,,cat,true
+human,female,75,athletic,student,false,,
+location:72.21 W;60.39 E;legal,,,,,,
+animal,male,13,athletic,,platypus,false
+human,male,30,average,student,false,,
+location:17.79 S;33.86 E;legal,,,,,,
+animal,male,5,average,,koala,false
+human,male,83,athletic,unemployed,false,,
+human,male,56,athletic,unemployed,false,,
+animal,male,14,overweight,,lion,true
+animal,female,10,average,,koala,false
+human,female,29,athletic,ceo,false,,
+location:60.16 N;115.71 E;legal,,,,,,
+animal,male,4,athletic,,cat,true
+animal,male,0,average,,puppy,true
+location:1.13 S;77.86 E;legal,,,,,,
+animal,male,6,overweight,,platypus,true
+human,female,46,average,student,false,,
+animal,male,0,overweight,,koala,true
+
+Time: 2023-06-13 09:06:37
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:meteorite,,,,,,
+location:30.92 W;20.22 E;trespassing,true,,,,,
+human,female,0,athletic,ceo,false,,
+animal,female,8,overweight,,wallaby,true
+animal,male,2,overweight,,wallaby,false
+location:26.45 W;29.37 E;trespassing,,,,,,
+animal,male,1,overweight,,snake,false
+human,male,95,athletic,professor,false,,
+location:22.81 S;81.07 E;legal,,,,,,
+animal,male,13,athletic,,koala,true
+location:62.36 N;33.50 E;legal,,,,,,
+human,male,54,average,criminal,false,,
+human,male,1,average,athletic,false,,
+human,female,98,athletic,unemployed,false,,
+location:50.08 W;146.03 E;legal,,,,,,
+human,female,77,overweight,unemployed,false,,
+human,male,3,average,homeless,false,,
+
+Time: 2023-06-13 09:06:38
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:flood,,,,,,
+location:89.54 W;99.72 E;legal,true,,,,,
+human,female,59,athletic,none,false,,
+human,male,67,athletic,homeless,false,,
+animal,female,12,average,,snake,true
+human,male,41,overweight,criminal,false,,
+location:31.68 N;160.07 E;trespassing,,,,,,
+human,female,57,average,ceo,false,,
+animal,female,7,athletic,,puppy,true
+human,male,25,athletic,unemployed,false,,
+location:74.71 N;26.32 E;legal,,,,,,
+human,female,70,overweight,homeless,false,,
+animal,male,0,athletic,,dingo,true
+human,male,61,average,unemployed,false,,
+animal,female,1,athletic,,koala,false
+human,male,13,athletic,professor,false,,
+human,female,15,average,student,false,,
+location:5.83 W;22.37 E;legal,,,,,,
+animal,male,11,athletic,,koala,false
+location:78.59 S;129.07 E;legal,,,,,,
+human,female,74,overweight,ceo,false,,
+human,male,95,average,none,false,,
+human,female,15,overweight,none,false,,
+animal,male,7,overweight,,wallaby,true
+animal,female,7,overweight,,dog,true
+animal,female,1,average,,cat,false
+human,male,97,athletic,athletic,false,,
+

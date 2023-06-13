@@ -6,7 +6,6 @@ public class Scenario {
 
     private String disaster;
     private ArrayList<Location> locations;
-
     private int rescuedLocation;
 
 
@@ -21,12 +20,13 @@ public class Scenario {
         this.locations = locations;
         rescuedLocation = -1;
     }
+
     public void presentScenario() {
         System.out.println("======================================");
         System.out.println("# Scenario: " + disaster);
         System.out.println("======================================");
         for (int i = 0; i < locations.size(); i++) {
-            System.out.print("[" + (i+1) + "] " + locations.get(i).getLocationInfo());
+            System.out.print("[" + (i + 1) + "] " + locations.get(i).getLocationInfo());
         }
     }
 
@@ -34,6 +34,7 @@ public class Scenario {
     public Location getLocation(int choice) {
         return locations.get(choice);
     }
+
     public String getDisaster() {
         return disaster;
     }

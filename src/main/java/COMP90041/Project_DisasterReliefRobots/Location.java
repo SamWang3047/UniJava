@@ -35,13 +35,22 @@ public class Location {
         isSaved = false;
     }
     public String getLocationInfo() {
-        StringBuilder info = new StringBuilder("Location: " + latitude + " " + latitudeDirection + ", " + longitude + " " + longitudeDirection +
-                                 "\nTrespassing: " + (status.equals("trespassing") ? "yes" : "no") + "\n");
+        StringBuilder info = new StringBuilder("Location: "
+                + String.format("%.2f",latitude) + " "
+                + latitudeDirection + ", "
+                + String.format("%.2f",longitude) + " "
+                + longitudeDirection + "\nTrespassing: "
+                + (status.equals("trespassing") ? "yes" : "no") + "\n");
         info.append(residents.size()).append(" Characters:\n");
         for (Resident resident : residents) {
             info.append("- ").append(resident.getDescription()).append("\n");
         }
         return info.toString();
+    }
+
+    public String getCoordinates() {
+        return String.format("%.2f", latitude) + " " + latitudeDirection + ";" +
+                String.format("%.2f", longitude) + " " + longitudeDirection + ";";
     }
 
     public double getLatitude() {

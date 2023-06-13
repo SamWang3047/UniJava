@@ -56,7 +56,7 @@ public class RandomScenario {
             residents.add(randomCharacter());
         }
 
-        return new Location(lat, lon, latDirect, lonDirect, isTrespassing, residents);
+        return new Location(Math.abs(lat), Math.abs(lon), latDirect, lonDirect, isTrespassing, residents);
     }
 
 

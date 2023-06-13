@@ -23,18 +23,16 @@ public class ScenarioService {
     private HashMap<String, int[]> attributes;
     private boolean consent;
     private ArrayList<Integer> savedHumanAge;
-    private String logPath;
+    private String userLogPath;
+    private String simulationLogPath;
 
-    public ScenarioService(String logPath) {
+    public ScenarioService(String userLogPath, String simulationLogPath) {
         scenarios = new ArrayList<>();
         consent = false;
         attributes = new HashMap<>();
         savedHumanAge = new ArrayList<>();
-        if (logPath == null) {
-            this.logPath = "rescuebot.txt";
-        } else {
-            this.logPath = logPath;
-        }
+        this.userLogPath = Objects.requireNonNullElse(userLogPath, "userRescueBot.csv");
+        this.simulationLogPath = Objects.requireNonNullElse(simulationLogPath, "simulationRescueBot.csv");
     }
 
     public void loadScenariosFromFile(String scenariosFilePath) {
@@ -317,14 +315,15 @@ public class ScenarioService {
 
     public void presentScenarios(Scanner scanner) {
         int scenarioNum = 1;
+        RescueLog rescueLog = new RescueLog();
         for (Scenario scenario : scenarios) {
             scenario.presentScenario();
             deployRescueBot(scanner, scenario);
+            if (consent) {
+                rescueLog.writeToCSV(userLogPath, scenario);
+            }
             if (scenarioNum % 3 == 0) {
                 printStatistics(scenarioNum);
-                if (consent) {
-                    RescueLog rescueLog = new RescueLog(scenarioNum, attributes, savedHumanAge, logPath);
-                }
                 if (scenarioNum != scenarios.size()) {
                     System.out.println("Would you like to continue? (yes/no)");
                     String response = scanner.nextLine().toLowerCase();
@@ -340,9 +339,6 @@ public class ScenarioService {
             scenarioNum++;
         }
         printStatistics(scenarioNum);
-        if (consent) {
-            RescueLog rescueLog = new RescueLog(scenarioNum, attributes, savedHumanAge, logPath);
-        }
         System.out.println("That's all. Press Enter to return to main menu.");
         System.out.print("> ");
         scanner.nextLine();  // Wait for the user to press Enter
@@ -392,9 +388,7 @@ public class ScenarioService {
         }
     }
 
-    public void getRescueLog(int scenarioNum) {
-        RescueLog rescueLog = new RescueLog(scenarioNum, attributes, savedHumanAge, logPath);
-    }
+
 
     public void addAttribute(String attribute) {
         if (attributes.containsKey(attribute)) {
@@ -524,11 +518,11 @@ public class ScenarioService {
         this.attributes = attributes;
     }
 
-    public String getLogPath() {
-        return logPath;
+    public String getUserLogPath() {
+        return userLogPath;
     }
 
-    public void setLogPath(String logPath) {
-        this.logPath = logPath;
+    public void setUserLogPath(String userLogPath) {
+        this.userLogPath = userLogPath;
     }
 }
