@@ -45,6 +45,8 @@ public class RescueBot {
             scenarioService.loadScenariosFromFile(scenariosFilePath);
         }
 
+        System.out.println(scenarioService.getScenarios().size() + " scenarios imported.");
+
         String command = "";
 
         while (!command.equals("quit") && !command.equals("q")) {
@@ -146,7 +148,6 @@ public class RescueBot {
             System.out.println("Error reading welcome.ascii file: " + e.getMessage());
             System.exit(1);
         }
-        System.out.println(scenarioService.getScenarios().size() + " scenarios imported.");
         // Display the main menu
         displayMainMenu(scanner, scenarioService, scenariosFilePath);
     }

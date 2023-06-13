@@ -2,6 +2,7 @@ package COMP90041.Project_DisasterReliefRobots;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class RescueLog {
@@ -28,8 +29,11 @@ public class RescueLog {
     }
 
     public void saveStatisticsToFile(String logPath, int runNumber, List<AttributeSurvivalRatio> survivalRatios, ArrayList<Integer> savedHumanAge) {
+        Date dNow = new Date( );
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
         try {
             FileWriter writer = new FileWriter(logPath, true); // Set append to true
+            writer.write("Time: " + ft.format(dNow) + "\n");
             writer.write("======================================\n");
             writer.write("# Statistic\n");
             writer.write("======================================\n");
