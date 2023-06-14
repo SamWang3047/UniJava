@@ -4,11 +4,12 @@ public abstract class Resident {
     String gender;
     int age;
     String bodyType;
-
+    Boolean isTrespassing;
     public Resident(String gender, int age, String bodyType) {
         this.gender = gender;
         this.age = age;
         this.bodyType = bodyType;
+        isTrespassing = false;
     }
 
     public abstract String getDescription();
@@ -35,5 +36,13 @@ public abstract class Resident {
 
     public void setBodyType(String bodyType) {
         this.bodyType = bodyType;
+    }
+
+    public Boolean getTrespassing() {
+        return isTrespassing;
+    }
+
+    public void setTrespassing(Boolean trespassing) {
+        isTrespassing = trespassing;
     }
 }

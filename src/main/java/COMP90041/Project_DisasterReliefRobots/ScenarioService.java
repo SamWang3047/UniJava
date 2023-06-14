@@ -4,9 +4,13 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class ScenarioService {
+
+    private static final DecimalFormat df = new DecimalFormat("0.00");
     private static final String[] BODYTYPE = {"OVERWEIGHT", "AVERAGE", "ATHLETIC", "UNSPECIFIED"};
     private static final String[] GENDER = {"MALE", "FEMALE", "UNKNOWN"};
     private static final String[] STATUS = {"TRESPASSING", "LEGAL"};
@@ -29,6 +33,7 @@ public class ScenarioService {
         savedHumanAge = new ArrayList<>();
         this.userLogPath = Objects.requireNonNullElse(userLogPath, "userRescueBot.csv");
         this.simulationLogPath = Objects.requireNonNullElse(simulationLogPath, "simulationRescueBot.csv");
+        df.setRoundingMode(RoundingMode.UP);
     }
 
     public void loadScenariosFromFile(String scenariosFilePath) {
@@ -103,9 +108,7 @@ public class ScenarioService {
             if (currentScenario != null && currentLocation != null) {
                 // set trespassing attribute of animals
                 if (currentLocation.isTrespassing()) {
-                    if (object instanceof Animal) {
-                        ((Animal) object).setTrespassing(true);
-                    }
+                    ((Resident) object).setTrespassing(true);
                 }
                 // add current resident to this location
                 currentLocation.getResidents().add((Resident) object);
@@ -379,6 +382,9 @@ public class ScenarioService {
                         response = scanner.nextLine().toLowerCase();
                     }
                     if (response.equals("no")) {
+                        System.out.println("> That's all. Press Enter to return to main menu.");
+                        System.out.print("> ");
+                        scanner.nextLine();  // Wait for the user to press Enter
                         return; // Return if user selects 'no'
                     }
                 }
@@ -408,7 +414,9 @@ public class ScenarioService {
                     scenario.getLocations().get(choice).setSaved(true); // set this location to saved
                     for (Resident resident : scenario.getLocations().get(choice).getResidents()) {
                         addSavedResidentAttributes(resident); //Load this location's residents' attributes
-                        savedHumanAge.add(resident.age);
+                        if (resident instanceof Human) {
+                            savedHumanAge.add(resident.age);
+                        }
                     }
                     break;
                 } else {
@@ -431,7 +439,9 @@ public class ScenarioService {
         }
         for (Resident resident : savedLocation.getResidents()) {
             addSavedResidentAttributes(resident); //Load this location's residents' attributes
-            savedHumanAge.add(resident.age);
+            if (resident instanceof Human) {
+                savedHumanAge.add(resident.age);
+            }
         }
     }
 
@@ -462,7 +472,8 @@ public class ScenarioService {
 
         // Print each survival ratio
         for (AttributeSurvivalRatio ratio : survivalRatios) {
-            System.out.printf("%s: %.2f\n", ratio.getAttributeName(), ratio.getSurvivalRatio());
+            String survivalRatio = df.format(ratio.getSurvivalRatio());
+            System.out.printf("%s: %s\n", ratio.getAttributeName(), survivalRatio);
         }
 
         // Print the average age
@@ -502,7 +513,8 @@ public class ScenarioService {
 
         // Print each survival ratio
         for (AttributeSurvivalRatio ratio : survivalRatios) {
-            System.out.printf("%s: %.2f\n", ratio.getAttributeName(), ratio.getSurvivalRatio());
+            String survivalRatio = df.format(ratio.getSurvivalRatio());
+            System.out.printf("%s: %s\n", ratio.getAttributeName(), survivalRatio);
         }
 
         // Print the average age
@@ -548,12 +560,19 @@ public class ScenarioService {
     }
 
     private void addResidentAttributes(Resident resident) {
+        if (resident.getTrespassing()) { //trespassing
+            addAttribute("trespassing");
+        } else {
+            addAttribute("legal");
+        }
         if (resident instanceof Human) {
             addAttribute(resident.getClass().getSimpleName().toLowerCase());//human class type (human or animal)
             addAttribute(((Human) resident).getAgeCategory()); //age category
             addAttribute(resident.getGender()); //gender
             addAttribute(resident.getBodyType()); //body type
-            addAttribute(((Human) resident).getProfession()); //profession
+            if (!((Human) resident).getProfession().equalsIgnoreCase("none")) {
+                addAttribute(((Human) resident).getProfession().toLowerCase()); //profession
+            }
             if (((Human) resident).getPregnant()) {
                 addAttribute("pregnant"); //pregnancy
             }
@@ -563,20 +582,22 @@ public class ScenarioService {
             if (((Animal) resident).getPet()) {
                 addAttribute("pet"); //pets
             }
-            if (((Animal) resident).getTrespassing()) { //trespassing
-                addAttribute("trespassing");
-            } else {
-                addAttribute("legal");
-            }
         }
     }
     private void addResidentAttributes(Resident resident, HashMap<String, int[]> attributes) {
+        if (resident.getTrespassing()) { //trespassing
+            addAttribute("trespassing");
+        } else {
+            addAttribute("legal");
+        }
         if (resident instanceof Human) {
             addAttribute(resident.getClass().getSimpleName().toLowerCase(), attributes);//human class type (human or animal)
             addAttribute(((Human) resident).getAgeCategory(), attributes); //age category
             addAttribute(resident.getGender(), attributes); //gender
             addAttribute(resident.getBodyType(), attributes); //body type
-            addAttribute(((Human) resident).getProfession(), attributes); //profession
+            if (!((Human) resident).getProfession().equalsIgnoreCase("none")) {
+                addAttribute(((Human) resident).getProfession().toLowerCase(), attributes); //profession
+            }
             if (((Human) resident).getPregnant()) {
                 addAttribute("pregnant", attributes); //pregnancy
             }
@@ -586,20 +607,22 @@ public class ScenarioService {
             if (((Animal) resident).getPet()) {
                 addAttribute("pet",attributes); //pets
             }
-            if (((Animal) resident).getTrespassing()) { //trespassing
-                addAttribute("trespassing",attributes);
-            } else {
-                addAttribute("legal",attributes);
-            }
         }
     }
     private void addSavedResidentAttributes(Resident resident) {
+        if (resident.getTrespassing()) { //trespassing
+            addSavedAttribute("trespassing");
+        } else {
+            addSavedAttribute("legal");
+        }
         if (resident instanceof Human) {
             addSavedAttribute(resident.getClass().getSimpleName().toLowerCase());//human class type (human or animal)
             addSavedAttribute(((Human) resident).getAgeCategory()); //age category
             addSavedAttribute(resident.getGender()); //gender
             addSavedAttribute(resident.getBodyType()); //body type
-            addSavedAttribute(((Human) resident).getProfession()); //profession
+            if (!((Human) resident).getProfession().equalsIgnoreCase("none")) {
+                addSavedAttribute(((Human) resident).getProfession().toLowerCase()); //profession
+            }
             if (((Human) resident).getPregnant()) {
                 addSavedAttribute("pregnant"); //pregnancy
             }
@@ -609,20 +632,22 @@ public class ScenarioService {
             if (((Animal) resident).getPet()) {
                 addSavedAttribute("pet"); //pets
             }
-            if (((Animal) resident).getTrespassing()) { //trespassing
-                addSavedAttribute("trespassing");
-            } else {
-                addSavedAttribute("legal");
-            }
         }
     }
     private void addSavedResidentAttributes(Resident resident, HashMap<String, int[]> attributes) {
+        if (resident.getTrespassing()) { //trespassing
+            addSavedAttribute("trespassing");
+        } else {
+            addSavedAttribute("legal");
+        }
         if (resident instanceof Human) {
             addSavedAttribute(resident.getClass().getSimpleName().toLowerCase(), attributes);//human class type (human or animal)
             addSavedAttribute(((Human) resident).getAgeCategory(), attributes); //age category
             addSavedAttribute(resident.getGender(), attributes); //gender
             addSavedAttribute(resident.getBodyType(), attributes); //body type
-            addSavedAttribute(((Human) resident).getProfession(), attributes); //profession
+            if (!((Human) resident).getProfession().equalsIgnoreCase("none")) {
+                addSavedAttribute(((Human) resident).getProfession().toLowerCase(), attributes); //profession
+            }
             if (((Human) resident).getPregnant()) {
                 addSavedAttribute("pregnant", attributes); //pregnancy
             }
@@ -663,11 +688,12 @@ public class ScenarioService {
     }
 
     private double getAvgAge(ArrayList<Integer> savedHumanAge) {
-        int totalAge = 0;
+        double totalAge = 0;
         for (Integer age : savedHumanAge) {
             totalAge += age;
         }
-        return (double) (totalAge / savedHumanAge.size());
+        double age = (totalAge / savedHumanAge.size());
+        return Double.parseDouble(df.format(age));
     }
 
 
@@ -702,4 +728,5 @@ public class ScenarioService {
     public void setUserLogPath(String userLogPath) {
         this.userLogPath = userLogPath;
     }
+
 }
