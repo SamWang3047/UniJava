@@ -1,7 +1,5 @@
 package COMP90041.Project_DisasterReliefRobots;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -171,7 +169,7 @@ public class RescueBot {
     /**
      * Program entry
      */
-    public static void main(String @NotNull [] args) {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String scenariosFilePath = null;
         String userLogPath = null;
