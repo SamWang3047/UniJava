@@ -1,0 +1,666 @@
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:flood,Simulation,,,,,,
+location:69.9710 N;121.2635 E;trespassing,,,,,,,
+human,male,46,athletic,none,false,,
+animal,female,5,average,,,koala,false
+human,female,95,average,NONE,false,,
+human,male,5,overweight,NONE,false,,
+location:65.8126 N;149.6203 W;trespassing,,,,,,,
+human,female,3,overweight,NONE,false,,
+animal,male,10,overweight,,,platypus,false
+animal,female,11,average,,,puppy,true
+human,female,47,overweight,unemployed,false,,
+human,female,26,overweight,student,false,,
+location:1.8537 N;97.3748 W;trespassing,,,,,,,
+human,male,32,athletic,student,false,,
+human,male,28,overweight,doctor,false,,
+human,female,54,athletic,homeless,false,,
+human,male,4,average,NONE,false,,
+location:58.0720 S;128.7000 W;legal,true,,,,,,
+human,female,32,average,professor,false,,
+human,male,51,average,homeless,false,,
+human,female,90,athletic,NONE,false,,
+animal,male,13,overweight,,,cat,false
+location:47.5166 N;144.4864 E;trespassing,,,,,,,
+human,male,20,overweight,homeless,false,,
+human,male,66,average,professor,false,,
+human,male,86,athletic,NONE,false,,
+animal,female,0,athletic,,,lion,false
+human,female,92,average,NONE,false,,
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:flood,Simulation,,,,,,
+location:64.3042 S;67.2258 E;legal,,,,,,,
+animal,male,8,average,,,platypus,true
+location:77.9503 N;165.1085 W;legal,,,,,,,
+human,female,71,athletic,NONE,false,,
+animal,female,3,athletic,,,wallaby,true
+animal,male,13,athletic,,,wallaby,true
+location:58.7105 N;110.5722 E;legal,,,,,,,
+human,male,8,average,NONE,false,,
+animal,female,11,athletic,,,wallaby,false
+animal,male,8,overweight,,,wallaby,true
+location:72.1964 N;25.5982 W;trespassing,,,,,,,
+human,male,72,athletic,NONE,false,,
+animal,female,5,athletic,,,koala,false
+human,male,73,athletic,NONE,false,,
+location:40.2677 N;148.1245 E;trespassing,true,,,,,,
+animal,male,3,athletic,,,dog,false
+human,male,26,athletic,homeless,false,,
+human,male,99,athletic,NONE,false,,
+animal,female,8,overweight,,,dingo,true
+human,male,69,overweight,NONE,false,,
+animal,female,5,overweight,,,puppy,true
+human,female,51,average,doctor,false,,
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:cyclone,Simulation,,,,,,
+location:60.9518 N;68.5287 W;legal,,,,,,,
+human,male,64,athletic,ceo,false,,
+animal,female,8,average,,,snake,true
+location:49.7237 N;170.9169 W;trespassing,true,,,,,,
+human,male,6,athletic,NONE,false,,
+human,male,11,overweight,NONE,false,,
+animal,female,11,average,,,lion,false
+human,male,84,athletic,NONE,false,,
+animal,female,13,average,,,dingo,false
+location:83.3611 S;121.6079 W;legal,,,,,,,
+animal,female,4,athletic,,,koala,false
+animal,male,0,overweight,,,dog,false
+animal,male,9,athletic,,,lion,false
+human,female,65,average,homeless,false,,
+location:55.4280 S;167.1069 W;trespassing,,,,,,,
+human,male,88,athletic,NONE,false,,
+animal,female,5,athletic,,,puppy,true
+animal,female,13,average,,,dog,false
+human,female,25,athletic,ceo,false,,
+animal,female,7,overweight,,,lion,false
+location:25.0508 N;11.6564 W;legal,,,,,,,
+human,male,72,average,NONE,false,,
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:flood,Simulation,,,,,,
+location:76.7703 S;43.6793 E;legal,true,,,,,,
+animal,male,12,overweight,,,puppy,false
+human,male,83,average,NONE,false,,
+human,male,21,athletic,athletic,false,,
+human,female,86,average,NONE,false,,
+animal,female,10,athletic,,,puppy,true
+human,female,79,average,NONE,false,,
+location:35.4589 S;70.5839 E;trespassing,,,,,,,
+animal,male,7,athletic,,,lion,true
+human,female,11,athletic,NONE,false,,
+animal,male,3,overweight,,,cat,true
+human,male,36,average,homeless,false,,
+human,male,95,athletic,NONE,false,,
+human,female,25,overweight,unemployed,false,,
+human,male,97,athletic,NONE,false,,
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:flood,Simulation,,,,,,
+location:73.5715 N;53.3553 E;trespassing,true,,,,,,
+human,male,72,athletic,NONE,false,,
+human,female,34,average,athletic,false,,
+location:87.3460 S;80.6678 W;trespassing,,,,,,,
+animal,female,8,overweight,,,lion,true
+human,female,4,overweight,NONE,false,,
+animal,male,11,average,,,puppy,true
+location:88.6267 S;106.3647 W;trespassing,,,,,,,
+animal,male,14,average,,,snake,true
+human,male,33,average,unemployed,false,,
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:meteorite,Simulation,,,,,,
+location:79.0868 S;41.0225 W;trespassing,,,,,,,
+animal,male,7,average,,,platypus,true
+animal,male,8,athletic,,,platypus,true
+location:87.1118 N;17.3841 W;legal,,,,,,,
+animal,female,4,overweight,,,lion,false
+human,female,15,average,NONE,false,,
+location:59.8181 S;19.7066 W;legal,true,,,,,,
+animal,female,1,athletic,,,lion,true
+human,female,78,overweight,NONE,false,,
+human,female,71,average,NONE,false,,
+animal,male,3,overweight,,,puppy,true
+animal,female,6,average,,,cat,true
+human,female,9,athletic,NONE,false,,
+human,female,51,overweight,unemployed,false,,
+location:79.0092 N;101.5439 E;legal,,,,,,,
+animal,female,12,athletic,,,wallaby,true
+human,female,63,overweight,ceo,false,,
+human,female,2,average,NONE,false,,
+location:2.6929 N;177.6068 W;legal,,,,,,,
+animal,male,4,overweight,,,wallaby,false
+human,female,78,average,NONE,false,,
+animal,female,11,average,,,wallaby,false
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:bushfire,Simulation,,,,,,
+location:63.9308 N;143.9207 W;legal,,,,,,,
+animal,female,7,overweight,,,wallaby,false
+animal,male,2,average,,,platypus,false
+human,male,41,athletic,unemployed,false,,
+animal,female,9,athletic,,,dog,false
+location:2.9905 S;169.3520 E;trespassing,,,,,,,
+human,female,27,overweight,student,false,,
+animal,female,7,overweight,,,wallaby,true
+animal,male,1,athletic,,,lion,true
+animal,male,5,overweight,,,wallaby,false
+animal,female,0,athletic,,,lion,true
+human,female,68,average,professor,false,,
+location:19.4148 S;50.9381 W;legal,true,,,,,,
+human,female,59,athletic,professor,false,,
+human,female,91,overweight,NONE,false,,
+animal,female,7,average,,,koala,false
+animal,female,4,average,,,puppy,false
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:earthquake,Simulation,,,,,,
+location:39.4288 S;3.3550 E;trespassing,true,,,,,,
+human,female,91,overweight,NONE,false,,
+human,male,76,athletic,NONE,false,,
+animal,female,5,athletic,,,koala,true
+animal,female,7,overweight,,,snake,true
+human,female,66,overweight,homeless,false,,
+animal,male,6,average,,,dingo,false
+location:83.3064 S;120.0624 W;trespassing,,,,,,,
+human,male,43,overweight,none,false,,
+human,male,8,average,NONE,false,,
+animal,male,8,overweight,,,lion,false
+animal,male,12,athletic,,,dingo,false
+human,male,61,average,ceo,false,,
+animal,female,11,athletic,,,puppy,false
+location:39.0600 N;5.6773 W;legal,,,,,,,
+animal,male,2,average,,,snake,true
+animal,male,4,overweight,,,dingo,false
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:meteorite,Simulation,,,,,,
+location:85.9118 N;108.0400 W;legal,,,,,,,
+human,female,71,athletic,NONE,false,,
+animal,male,10,athletic,,,wallaby,false
+animal,female,2,overweight,,,koala,false
+location:52.8482 N;151.0167 W;trespassing,,,,,,,
+human,female,34,average,professor,false,,
+human,male,80,average,NONE,false,,
+animal,male,6,overweight,,,puppy,false
+human,female,50,average,homeless,false,,
+animal,male,12,average,,,wallaby,false
+animal,male,9,overweight,,,snake,true
+location:9.0265 S;22.4271 W;trespassing,true,,,,,,
+human,male,68,average,athletic,false,,
+animal,female,6,athletic,,,dingo,true
+animal,female,4,average,,,puppy,false
+human,male,98,overweight,NONE,false,,
+animal,female,5,overweight,,,cat,true
+human,female,3,athletic,NONE,false,,
+animal,male,5,average,,,dingo,true
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:cyclone,Simulation,,,,,,
+location:51.8272 N;73.9343 W;trespassing,,,,,,,
+animal,female,5,overweight,,,snake,false
+human,female,4,athletic,NONE,false,,
+human,male,90,athletic,NONE,false,,
+human,female,19,average,doctor,false,,
+human,female,58,athletic,ceo,false,,
+human,male,81,athletic,NONE,false,,
+location:9.2176 S;147.0643 E;trespassing,,,,,,,
+human,male,75,average,NONE,false,,
+animal,male,0,overweight,,,dog,true
+animal,male,7,overweight,,,snake,false
+animal,female,5,athletic,,,cat,true
+location:31.8151 S;44.8373 E;legal,true,,,,,,
+animal,male,14,athletic,,,koala,true
+human,male,36,overweight,criminal,false,,
+human,female,50,athletic,athletic,false,,
+human,male,93,average,NONE,false,,
+human,female,99,athletic,NONE,false,,
+human,female,70,overweight,NONE,false,,
+human,male,32,average,professor,false,,
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:cyclone,Simulation,,,,,,
+location:44.6275 S;73.2259 E;trespassing,,,,,,,
+animal,female,11,average,,,cat,true
+human,female,31,overweight,athletic,false,,
+human,male,85,athletic,NONE,false,,
+animal,female,9,athletic,,,platypus,false
+location:41.1645 S;94.0542 E;trespassing,,,,,,,
+human,female,82,overweight,NONE,false,,
+location:1.1649 N;21.0889 E;trespassing,,,,,,,
+human,female,72,overweight,NONE,false,,
+location:33.5833 S;71.8312 E;legal,true,,,,,,
+animal,male,9,average,,,dog,false
+human,male,95,average,NONE,false,,
+animal,male,13,athletic,,,dog,true
+animal,male,9,athletic,,,snake,true
+human,female,2,athletic,NONE,false,,
+human,female,55,overweight,criminal,false,,
+location:84.0378 S;103.0558 W;legal,,,,,,,
+animal,male,10,overweight,,,koala,false
+human,female,82,overweight,NONE,false,,
+human,male,14,overweight,NONE,false,,
+human,female,80,athletic,NONE,false,,
+animal,male,12,average,,,lion,false
+animal,male,14,overweight,,,wallaby,true
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:earthquake,Simulation,,,,,,
+location:12.8206 N;177.9880 E;legal,true,,,,,,
+animal,male,3,overweight,,,wallaby,true
+human,female,62,athletic,unemployed,false,,
+human,female,23,average,professor,false,,
+location:71.4031 S;89.8861 E;trespassing,,,,,,,
+human,female,44,average,none,false,,
+location:55.8095 N;156.7891 E;legal,,,,,,,
+animal,male,1,average,,,wallaby,true
+animal,female,3,athletic,,,cat,false
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:bushfire,Simulation,,,,,,
+location:53.9745 N;117.9390 W;trespassing,true,,,,,,
+human,female,91,average,NONE,false,,
+human,male,46,average,unemployed,false,,
+animal,male,0,overweight,,,dog,false
+human,male,0,athletic,NONE,false,,
+human,female,93,overweight,NONE,false,,
+animal,female,6,athletic,,,platypus,true
+human,female,81,athletic,NONE,false,,
+location:87.6109 N;74.3821 E;trespassing,,,,,,,
+human,female,26,athletic,professor,false,,
+human,female,25,overweight,ceo,false,,
+animal,female,6,athletic,,,dog,true
+animal,female,11,average,,,wallaby,true
+animal,male,7,overweight,,,puppy,false
+human,male,82,athletic,NONE,false,,
+location:5.0726 S;18.9140 W;legal,,,,,,,
+human,female,73,athletic,NONE,false,,
+animal,female,9,average,,,wallaby,true
+animal,female,14,athletic,,,platypus,true
+human,male,59,average,ceo,false,,
+animal,female,1,athletic,,,dingo,false
+location:85.8763 S;173.8583 E;legal,,,,,,,
+human,male,39,athletic,athletic,false,,
+animal,female,12,overweight,,,koala,false
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:cyclone,Simulation,,,,,,
+location:9.8315 S;140.4799 W;legal,true,,,,,,
+animal,male,7,athletic,,,dingo,false
+animal,female,8,athletic,,,puppy,true
+animal,female,1,average,,,cat,false
+human,female,55,average,criminal,false,,
+human,male,7,athletic,NONE,false,,
+animal,male,2,overweight,,,snake,false
+location:77.1750 S;100.3263 W;trespassing,,,,,,,
+human,male,91,overweight,NONE,false,,
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:earthquake,Simulation,,,,,,
+location:40.4649 S;18.8788 W;trespassing,true,,,,,,
+human,female,65,athletic,criminal,false,,
+human,male,29,average,professor,false,,
+human,female,18,average,unemployed,false,,
+animal,female,4,athletic,,,dingo,true
+location:81.1794 N;30.5009 W;legal,,,,,,,
+animal,female,5,athletic,,,lion,true
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:meteorite,Simulation,,,,,,
+location:29.4820 S;92.9852 W;legal,,,,,,,
+human,female,13,overweight,NONE,false,,
+animal,male,5,average,,,cat,false
+human,female,65,average,doctor,false,,
+human,female,55,athletic,doctor,false,,
+animal,male,3,average,,,snake,false
+human,female,48,average,none,false,,
+location:86.5186 S;126.2156 E;legal,true,,,,,,
+animal,female,1,athletic,,,platypus,false
+human,male,54,overweight,none,false,,
+animal,male,5,overweight,,,dog,false
+human,female,27,average,homeless,false,,
+human,female,36,athletic,professor,false,,
+human,female,7,athletic,NONE,false,,
+animal,female,6,overweight,,,snake,false
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:meteorite,Simulation,,,,,,
+location:43.7281 S;5.7430 E;legal,true,,,,,,
+animal,male,6,average,,,puppy,false
+animal,female,8,athletic,,,dog,false
+human,female,24,overweight,homeless,false,,
+human,female,91,athletic,NONE,false,,
+location:80.7769 N;17.4266 W;legal,,,,,,,
+animal,male,7,average,,,puppy,true
+animal,male,2,average,,,snake,false
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:meteorite,Simulation,,,,,,
+location:60.6145 N;112.5177 E;trespassing,,,,,,,
+animal,female,4,athletic,,,dog,true
+animal,male,13,average,,,platypus,true
+location:74.3082 N;125.1720 W;legal,,,,,,,
+human,female,85,athletic,NONE,false,,
+animal,male,12,average,,,dog,true
+animal,male,2,average,,,wallaby,true
+human,male,49,average,homeless,false,,
+location:69.1783 N;110.4281 E;trespassing,,,,,,,
+animal,male,5,athletic,,,puppy,false
+human,female,33,overweight,student,false,,
+animal,female,13,athletic,,,snake,false
+location:43.7545 N;99.7760 W;trespassing,true,,,,,,
+animal,male,9,overweight,,,cat,true
+human,female,93,athletic,NONE,false,,
+human,male,81,average,NONE,false,,
+human,male,98,average,NONE,false,,
+animal,female,6,average,,,snake,false
+animal,male,0,overweight,,,dog,false
+human,male,52,athletic,none,false,,
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:cyclone,Simulation,,,,,,
+location:29.0118 N;74.7249 E;legal,,,,,,,
+animal,male,2,athletic,,,dingo,false
+animal,female,4,overweight,,,dingo,true
+animal,female,9,overweight,,,koala,false
+human,male,85,overweight,NONE,false,,
+animal,male,13,average,,,dingo,true
+location:34.5165 N;175.8604 W;legal,,,,,,,
+animal,male,9,average,,,platypus,true
+animal,female,2,athletic,,,platypus,true
+human,male,84,athletic,NONE,false,,
+location:47.6960 N;14.4287 W;legal,true,,,,,,
+human,female,54,average,professor,false,,
+human,female,88,athletic,NONE,false,,
+animal,female,0,overweight,,,platypus,false
+animal,male,11,average,,,cat,true
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:cyclone,Simulation,,,,,,
+location:6.3124 N;113.3606 E;trespassing,,,,,,,
+human,female,59,overweight,none,false,,
+animal,female,11,athletic,,,dingo,true
+human,female,61,athletic,athletic,false,,
+animal,male,12,average,,,wallaby,false
+animal,male,11,athletic,,,koala,false
+human,female,90,athletic,NONE,false,,
+location:82.1978 N;44.5332 W;legal,true,,,,,,
+human,male,71,average,NONE,false,,
+human,male,67,athletic,doctor,false,,
+human,female,96,average,NONE,false,,
+animal,female,5,athletic,,,cat,false
+human,female,14,overweight,NONE,false,,
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:meteorite,Simulation,,,,,,
+location:21.8520 S;157.1502 E;legal,,,,,,,
+animal,female,2,average,,,lion,false
+animal,female,9,overweight,,,dingo,true
+human,male,79,overweight,NONE,false,,
+human,female,38,overweight,unemployed,false,,
+human,male,94,overweight,NONE,false,,
+human,female,83,athletic,NONE,false,,
+location:31.9332 S;31.6776 W;legal,true,,,,,,
+animal,female,5,overweight,,,puppy,false
+human,male,88,overweight,NONE,false,,
+human,male,16,athletic,NONE,false,,
+human,male,88,athletic,NONE,false,,
+human,female,31,athletic,homeless,false,,
+human,female,45,athletic,unemployed,false,,
+human,male,78,athletic,NONE,false,,
+location:65.3859 S;146.8470 E;legal,,,,,,,
+human,female,82,overweight,NONE,false,,
+human,male,62,average,none,false,,
+animal,male,12,athletic,,,cat,true
+location:35.6961 N;95.2586 E;legal,,,,,,,
+human,male,30,average,ceo,false,,
+animal,female,5,athletic,,,dog,true
+animal,female,4,overweight,,,snake,false
+location:65.1652 S;102.4345 W;trespassing,,,,,,,
+human,male,34,average,criminal,false,,
+human,female,56,overweight,criminal,false,,
+human,female,1,average,NONE,false,,
+animal,female,4,overweight,,,wallaby,true
+animal,female,11,overweight,,,platypus,false
+human,male,19,athletic,unemployed,false,,
+animal,male,14,athletic,,,platypus,false
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:flood,Simulation,,,,,,
+location:35.4188 N;119.4916 E;trespassing,true,,,,,,
+human,female,35,athletic,criminal,false,,
+animal,male,14,overweight,,,lion,false
+human,male,65,average,athletic,false,,
+human,female,29,average,athletic,false,,
+animal,female,11,overweight,,,platypus,true
+human,female,47,average,doctor,false,,
+animal,female,11,overweight,,,lion,true
+location:30.6743 N;75.3020 E;trespassing,,,,,,,
+animal,female,4,overweight,,,platypus,false
+animal,male,10,average,,,koala,true
+human,male,94,athletic,NONE,false,,
+human,female,3,average,NONE,false,,
+human,female,89,overweight,NONE,false,,
+human,female,58,average,professor,false,,
+location:56.5242 N;77.0085 W;legal,,,,,,,
+human,male,47,average,criminal,false,,
+animal,male,5,overweight,,,dog,false
+animal,female,8,average,,,dingo,false
+animal,female,5,athletic,,,puppy,false
+animal,female,0,average,,,dog,false
+animal,female,3,athletic,,,koala,true
+animal,female,7,average,,,koala,true
+location:4.7632 N;146.5476 W;trespassing,,,,,,,
+animal,female,8,average,,,wallaby,false
+animal,female,8,overweight,,,platypus,false
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:bushfire,Simulation,,,,,,
+location:11.3572 N;72.2399 W;trespassing,,,,,,,
+human,female,23,athletic,unemployed,false,,
+human,male,14,overweight,NONE,false,,
+human,female,31,overweight,homeless,false,,
+location:9.5958 N;73.3168 E;trespassing,,,,,,,
+human,female,73,average,NONE,false,,
+animal,male,2,average,,,puppy,true
+location:59.6224 N;175.3490 W;legal,true,,,,,,
+human,female,49,athletic,ceo,false,,
+human,male,64,average,professor,false,,
+animal,male,7,overweight,,,cat,false
+animal,female,13,athletic,,,dingo,false
+human,male,40,average,homeless,false,,
+human,male,10,average,NONE,false,,
+animal,female,9,athletic,,,puppy,false
+location:44.2797 S;43.7553 W;legal,,,,,,,
+human,female,87,average,NONE,false,,
+human,male,99,overweight,NONE,false,,
+animal,female,4,athletic,,,platypus,true
+human,male,33,average,homeless,false,,
+animal,female,8,average,,,lion,false
+location:46.9018 S;8.8619 E;legal,,,,,,,
+human,female,63,overweight,student,false,,
+human,female,77,average,NONE,false,,
+animal,male,8,overweight,,,wallaby,false
+animal,male,4,overweight,,,puppy,true
+animal,male,10,overweight,,,dingo,true
+animal,female,6,athletic,,,koala,true
+human,male,18,athletic,doctor,false,,
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:cyclone,Simulation,,,,,,
+location:73.1748 S;56.1750 W;legal,,,,,,,
+human,female,56,average,homeless,false,,
+animal,female,8,athletic,,,koala,true
+human,male,88,average,NONE,false,,
+location:56.7952 S;157.1997 W;legal,true,,,,,,
+human,male,57,overweight,athletic,false,,
+human,male,35,average,unemployed,false,,
+animal,male,10,overweight,,,koala,true
+human,male,64,athletic,none,false,,
+animal,female,0,average,,,platypus,false
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:cyclone,Simulation,,,,,,
+location:15.9568 S;31.3094 W;trespassing,,,,,,,
+human,female,9,average,NONE,false,,
+animal,male,3,athletic,,,dingo,false
+animal,male,11,athletic,,,dingo,true
+animal,male,12,average,,,cat,false
+animal,male,4,athletic,,,dog,true
+human,female,51,average,criminal,false,,
+animal,male,0,average,,,wallaby,false
+location:56.4248 S;90.7442 W;trespassing,,,,,,,
+human,female,19,average,criminal,false,,
+human,female,44,overweight,athletic,false,,
+animal,male,7,athletic,,,cat,true
+animal,female,6,average,,,platypus,true
+human,female,90,average,NONE,false,,
+human,female,87,overweight,NONE,false,,
+location:34.7846 S;73.2599 W;trespassing,,,,,,,
+human,female,93,athletic,NONE,false,,
+human,male,82,athletic,NONE,false,,
+animal,male,6,average,,,puppy,false
+human,male,96,average,NONE,false,,
+human,female,16,overweight,NONE,false,,
+human,female,33,athletic,none,false,,
+animal,female,11,athletic,,,koala,true
+location:0.9405 S;29.6260 W;legal,true,,,,,,
+human,male,43,overweight,none,false,,
+human,male,45,average,ceo,false,,
+human,male,16,average,NONE,false,,
+human,male,5,overweight,NONE,false,,
+animal,male,0,overweight,,,cat,true
+human,male,89,average,NONE,false,,
+location:20.5636 S;58.6684 W;legal,,,,,,,
+animal,female,9,average,,,snake,false
+animal,female,13,average,,,dog,false
+animal,male,8,average,,,wallaby,true
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:cyclone,Simulation,,,,,,
+location:39.7330 S;138.8253 W;trespassing,,,,,,,
+human,male,36,overweight,none,false,,
+human,male,77,overweight,NONE,false,,
+animal,female,8,average,,,wallaby,false
+animal,female,12,overweight,,,cat,false
+location:13.6274 S;45.8292 E;trespassing,true,,,,,,
+animal,female,3,average,,,platypus,false
+animal,female,13,average,,,dog,true
+animal,female,11,athletic,,,lion,false
+human,male,8,athletic,NONE,false,,
+human,female,56,average,homeless,false,,
+human,female,43,athletic,homeless,false,,
+location:35.6103 S;13.6442 E;trespassing,,,,,,,
+human,male,94,average,NONE,false,,
+human,male,85,overweight,NONE,false,,
+animal,male,8,overweight,,,koala,true
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:meteorite,Simulation,,,,,,
+location:1.6374 N;105.0027 W;legal,true,,,,,,
+animal,female,11,overweight,,,dingo,true
+animal,male,2,average,,,koala,true
+human,male,37,athletic,unemployed,false,,
+animal,male,12,athletic,,,cat,false
+human,male,66,average,athletic,false,,
+location:26.5111 S;161.3449 W;legal,,,,,,,
+human,male,34,athletic,student,false,,
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:meteorite,Simulation,,,,,,
+location:51.2446 N;1.7650 E;legal,,,,,,,
+animal,female,6,athletic,,,cat,true
+human,female,94,average,NONE,false,,
+animal,male,8,athletic,,,dog,false
+animal,male,13,average,,,puppy,false
+location:74.4956 N;45.4884 E;legal,true,,,,,,
+animal,female,10,athletic,,,koala,true
+animal,female,8,average,,,snake,true
+human,female,13,athletic,NONE,false,,
+human,female,96,overweight,NONE,false,,
+animal,female,4,average,,,cat,false
+location:56.7173 S;175.4128 E;legal,,,,,,,
+animal,male,3,overweight,,,cat,true
+animal,male,10,average,,,cat,true
+location:0.7898 N;21.3030 E;trespassing,,,,,,,
+human,female,13,athletic,NONE,false,,
+human,female,67,athletic,criminal,false,,
+animal,female,1,overweight,,,platypus,false
+human,female,40,athletic,homeless,false,,
+location:21.2656 N;1.1449 E;legal,,,,,,,
+animal,female,14,average,,,dingo,true
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:earthquake,Simulation,,,,,,
+location:64.3629 S;162.9753 W;legal,true,,,,,,
+human,female,56,athletic,criminal,false,,
+animal,female,0,average,,,platypus,false
+animal,male,14,athletic,,,wallaby,false
+animal,male,14,athletic,,,lion,false
+location:64.3268 S;164.0692 W;trespassing,,,,,,,
+animal,female,7,average,,,dingo,false
+animal,male,2,average,,,lion,false
+animal,male,3,average,,,dog,true
+animal,female,4,athletic,,,wallaby,true
+
+Time: 2023-06-14 07:06:06
+gender,age,bodyType,profession,pregnant,species,isPet
+scenario:earthquake,Simulation,,,,,,
+location:54.6914 N;166.9737 W;legal,,,,,,,
+animal,male,5,average,,,cat,false
+human,female,96,average,NONE,false,,
+animal,male,9,athletic,,,dog,false
+animal,female,0,average,,,lion,true
+human,male,84,athletic,NONE,false,,
+location:71.4630 S;131.7301 W;legal,true,,,,,,
+animal,male,4,overweight,,,dog,false
+human,female,76,average,NONE,false,,
+human,male,87,average,NONE,false,,
+human,male,94,athletic,NONE,false,,
+human,male,67,athletic,criminal,false,,
+animal,male,9,athletic,,,koala,true
+location:42.0813 N;1.7421 E;legal,,,,,,,
+human,male,51,average,criminal,false,,
+human,female,49,average,none,false,,
+human,female,62,overweight,ceo,false,,
+human,male,44,athletic,doctor,false,,
+animal,male,10,average,,,dog,false
+location:65.8540 N;148.5998 W;legal,,,,,,,
+animal,female,5,average,,,lion,false
+animal,male,12,athletic,,,dingo,false
+animal,male,4,average,,,wallaby,true
+human,male,49,average,none,false,,
+human,male,92,overweight,NONE,false,,
+animal,male,0,overweight,,,wallaby,false
+animal,female,7,average,,,puppy,false
+

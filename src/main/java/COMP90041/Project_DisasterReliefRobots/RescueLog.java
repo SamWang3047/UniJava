@@ -6,6 +6,16 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class RescueLog {
+    /**
+     * Write comma separated data format into .csv file. The format is similar to the given scenario.csv file.
+     * The difference:
+     * 1. Scenario line second index contains a String "Simulation" or "User" represent
+     *    whether this is decided by user or algorithm
+     * 2. Location line second index contains a true represent whether this location is saved.
+     * @param fileName the file path
+     * @param scenario the given scenario
+     * @param isSimulation define the header of the output statistic
+     */
     public void writeToCSV(String fileName, Scenario scenario, Boolean isSimulation) {
         try {
             FileWriter csvWriter = new FileWriter(fileName, true);

@@ -28,7 +28,7 @@ public class RescueBot {
      * Decides whether to save the passengers or the pedestrians
      *
      * @param scenario : the ethical dilemma
-     * @return Decision: which group to save
+     * @return saved location: which location to save
      */
     public static Location decide(Scenario scenario) {
         // a very simple decision engine
@@ -73,6 +73,15 @@ public class RescueBot {
         return bestLocation;
     }
 
+    /**
+     * Simple function to control the main menu.
+     *
+     * @param scanner           Scanner
+     * @param scenarioService   scenarioService class to control multiple scenarios
+     * @param scenariosFilePath the path to read scenarios
+     * @param userLogFile       the path to store the simulation log file
+     * @param simulationLogFile the path to store the user log file
+     */
     private static void displayMainMenu(Scanner scanner, ScenarioService scenarioService, String scenariosFilePath, String userLogFile, String simulationLogFile) {
         // Load scenarios and display the number of imported scenarios
         if (scenariosFilePath != null) {
@@ -113,7 +122,7 @@ public class RescueBot {
                 case "a":
                     // TODO: Implement audit history
                     scenarioService.setScenarios(new ArrayList<>());//clear current scenarios
-                    scenarioService.audit(scanner, userLogFile);
+                    scenarioService.audit(scanner, userLogFile, simulationLogFile);
                     break;
                 case "quit":
                 case "q":
@@ -158,11 +167,16 @@ public class RescueBot {
         return scenarioCount;
     }
 
+
+    /**
+     * Simulation algorithm, generate specific number of scenarios, and store all scenario information and algorithm
+     * save location information into .csv file
+     */
     private static void simulation(ScenarioService scenarioService, String simulationLogPath) {
         RescueLog rescueLog = new RescueLog();
         for (Scenario scenario : scenarioService.getScenarios()) {
             scenarioService.runSimulation(scenario, decide(scenario));
-            rescueLog.writeToCSV(simulationLogPath, scenario ,true);
+            rescueLog.writeToCSV(simulationLogPath, scenario, true);
         }
         scenarioService.printStatistics(scenarioService.getScenarios().size());
     }
@@ -195,6 +209,9 @@ public class RescueBot {
                 case "-l":
                 case "--log":
                     if (i + 1 < args.length && !args[i + 1].startsWith("-")) {
+                        //if user give log file path, we set user's decision
+                        //and simulation information to store into the same file.
+                        //But by default, we have to different path to store these two.
                         userLogPath = args[i + 1];
                         simulationLogPath = args[i + 1];
                         i++;  // skip next arg

@@ -19,7 +19,11 @@ public class Location {
         this.latitudeDirection = latitudeDirection;
         this.longitudeDirection = longitudeDirection;
         this.isTrespassing = isTrespassing;
-        if (isTrespassing) {status = "trespassing";} else {status = "legal";}
+        if (isTrespassing) {
+            status = "trespassing";
+        } else {
+            status = "legal";
+        }
         residents = new ArrayList<>();
         isSaved = false;
     }
@@ -30,10 +34,20 @@ public class Location {
         this.latitudeDirection = latitudeDirection;
         this.longitudeDirection = longitudeDirection;
         this.isTrespassing = isTrespassing;
-        if (isTrespassing) {status = "trespassing";} else {status = "legal";}
+        if (isTrespassing) {
+            status = "trespassing";
+        } else {
+            status = "legal";
+        }
         this.residents = residents;
         isSaved = false;
     }
+
+    /**
+     * Build a string contains all information about this location and its resident information
+     *
+     * @return string
+     */
     public String getLocationInfo() {
         StringBuilder info = new StringBuilder("Location: "
                 + latitude + " "
@@ -48,6 +62,9 @@ public class Location {
         return info.toString();
     }
 
+    /**
+     * @return a string that is formatted in 0.0000 format.
+     */
     public String getCoordinates() {
         return String.format("%.4f", latitude) + " " + latitudeDirection + ";" +
                 String.format("%.4f", longitude) + " " + longitudeDirection + ";";

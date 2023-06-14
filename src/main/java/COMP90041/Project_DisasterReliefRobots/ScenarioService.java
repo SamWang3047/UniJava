@@ -11,14 +11,17 @@ import java.util.*;
 public class ScenarioService {
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
+    private static final String[] LINE_START = {"scenario", "location", "animal", "human"};
     private static final String[] BODYTYPE = {"OVERWEIGHT", "AVERAGE", "ATHLETIC", "UNSPECIFIED"};
     private static final String[] GENDER = {"MALE", "FEMALE", "UNKNOWN"};
     private static final String[] STATUS = {"TRESPASSING", "LEGAL"};
-    //private static final String[] SPECIES = {"UNSPECIFIED"};
     private static final String[] PROFESSION = {"DOCTOR", "CEO", "CRIMINAL", "HOMELESS", "UNEMPLOYED", "ATHLETIC", "STUDENT", "PROFESSOR", "NONE"};
     private static final String[] DISASTER = {"CYCLONE", "FLOOD", "EARTHQUAKE", "BUSHFIRE", "METEORITE"};
     private static final Character[] LATITUDE_DIRECTION = {'N', 'S'};
     private static final Character[] LONGITUDE_DIRECTION = {'E', 'W'};
+
+    private static final Integer DEFAULT_LATITUDE = 45;
+    private static final Integer DEFAULT_LONGITUDE = 90;
     private ArrayList<Scenario> scenarios;
     private HashMap<String, int[]> attributes;
     private boolean consent;
@@ -31,7 +34,6 @@ public class ScenarioService {
         attributes = new HashMap<>();
         savedHumanAge = new ArrayList<>();
         this.userLogPath = Objects.requireNonNullElse(userLogPath, "userRescueBot.csv");
-
         df.setRoundingMode(RoundingMode.UP);
     }
 
@@ -39,20 +41,29 @@ public class ScenarioService {
         loadScenarios(scenariosFilePath, scenarios);
     }
 
+    /**
+     * Load scenario from file path, and store them into scenario list.
+     * Since the occurrence sequence is always scenario -> location -> resident(human or animal).
+     * When we first meet a new scenario, we set this to the current scenario and add location into it.
+     * Same for the location and resident.
+     */
     private void loadScenarios(String scenariosFilePath, ArrayList<Scenario> scenarios) {
         Scenario currentScenario = null;
         Location currentLocation = null;
         try (BufferedReader reader = new BufferedReader(new FileReader(scenariosFilePath))) {
             String line;
             int lineNumber = 0;
+            // outerLoop while loop
             while ((line = reader.readLine()) != null) {
                 lineNumber++;
                 if (lineNumber == 1) {
                     continue; // Skip headers
                 }
+                //Only if the line start with these can be processed, otherwise just skip.
                 if (!line.startsWith("s") && !line.startsWith("l") && !line.startsWith("a") && !line.startsWith("h")) {
                     continue;
                 }
+                //execute the file to obtain the information from it
                 Object object = parseLine(line, lineNumber);
                 // Append object to relevant scenario or location
                 if (object instanceof Scenario) {
@@ -68,7 +79,11 @@ public class ScenarioService {
         }
     }
 
-
+    /**
+     * Get location or resident, if is location, we return it,
+     * if is resident then add resident into the current location.
+     * @return location
+     */
     public Location getLocationOrResident(Scenario currentScenario, Location currentLocation, Object object) {
         if (object instanceof Location) {
             currentLocation = (Location) object;
@@ -87,6 +102,11 @@ public class ScenarioService {
         }
         return currentLocation;
     }
+
+    /**
+     * Decide what this line's about
+     * @return an object, can be Scenario, Location or Resident
+     */
 
     public Object parseLine(String line, int lineNumber) {
         String[] data = line.split(",", -1);
@@ -107,6 +127,10 @@ public class ScenarioService {
         }
     }
 
+    /**
+     * Executing this line to get Scenario data abd do the error handing
+     * @return Scenario object
+     */
     private Scenario parseScenario(String[] data, int lineNumber) {
         // Parse scenario
         //start from the 9th character e.g. scenario:flood,,,,,,,
@@ -127,6 +151,10 @@ public class ScenarioService {
         return scenario;
     }
 
+    /**
+     * Executing this line to get Location data abd do the error handing
+     * @return Location object
+     */
     private Location parseLocation(String[] data, int lineNumber) {
         // Parse location
         String[] locationInfo = data[0].split(";");//split location information e.g. location:13.7154 N;150.9094 W;trespassing,,,,,,,
@@ -147,14 +175,14 @@ public class ScenarioService {
             locationLatitude = Double.parseDouble(latitude[0]);
         } catch (NumberFormatException e) {
             System.out.println("WARNING: invalid number format in line " + lineNumber);
-            locationLatitude = 45;
+            locationLatitude = DEFAULT_LATITUDE;
         }
 
         try {
             locationLongitude = Double.parseDouble(longitude[0]);
         } catch (NumberFormatException e) {
             System.out.println("WARNING: invalid number format in line " + lineNumber);
-            locationLatitude = 90;
+            locationLatitude = DEFAULT_LONGITUDE;
         }
 
         char locationLatitudeDirection = latitude[1].charAt(0);
@@ -165,14 +193,14 @@ public class ScenarioService {
                 throw new InvalidCharacteristicException(lineNumber);
             }
         } catch (InvalidCharacteristicException e) {
-            locationLatitudeDirection = 'N';
+            locationLatitudeDirection = LATITUDE_DIRECTION[0];
         }
         try { //Longitude direction validation
             if (!Arrays.stream(LONGITUDE_DIRECTION).toList().contains(locationLongitudeDirection)) {
                 throw new InvalidCharacteristicException(lineNumber);
             }
         } catch (InvalidCharacteristicException e) {
-            locationLongitudeDirection = 'E';
+            locationLongitudeDirection = LONGITUDE_DIRECTION[0];
         }
 
         //status - trespassing or legal
@@ -195,6 +223,10 @@ public class ScenarioService {
         return location;
     }
 
+    /**
+     * Executing this line to get Resident data abd do the error handing
+     * @return Resident object
+     */
     private Resident parseCharacter(String[] data, int lineNumber) {
         //Parse Resident
         String resident = data[0];
@@ -312,6 +344,9 @@ public class ScenarioService {
         }
     }
 
+    /**
+     * Let user judge which location to save. Every 3 times ask user to continue or not
+     */
     public void presentScenarios(Scanner scanner) {
         int scenarioNum = 1;
         RescueLog rescueLog = new RescueLog();
@@ -346,6 +381,11 @@ public class ScenarioService {
         scanner.nextLine();  // Wait for the user to press Enter
     }
 
+    /**
+     * Deploy rescue bot to this scenario, and save one location's resident.
+     * @param scenario
+     */
+
     private void deployRescueBot(Scanner scanner, Scenario scenario) {
         // Load current scenario's residents' all attributes
         for (Location location : scenario.getLocations()) {
@@ -362,7 +402,7 @@ public class ScenarioService {
                 if (choice >= 0 && choice < scenario.getLocations().size()) {
                     scenario.getLocations().get(choice).setSaved(true); // set this location to saved
                     for (Resident resident : scenario.getLocations().get(choice).getResidents()) {
-                        addSavedResidentAttributes(resident); //Load this location's residents' attributes
+                        addSavedResidentAttributes(resident); //Load this saved location's residents' attributes
                         if (resident instanceof Human) {
                             savedHumanAge.add(resident.age);
                         }
@@ -393,6 +433,11 @@ public class ScenarioService {
             }
         }
     }
+
+    /**
+     * Print saving statistics into the console.
+     * @param runNumber
+     */
 
     public void printStatistics(int runNumber) {
         // Create a list to hold the survival ratio of each attribute
@@ -431,6 +476,13 @@ public class ScenarioService {
         System.out.println();
     }
 
+    /**
+     * Print saving statistics into the console. This overload is for audit using
+     * @param runNumber total number of run
+     * @param isSimulation method to define the header of the statistic
+     * @param attributes the attribute hashtable to store all the attributes that occurs in the scenario
+     * @param savedHumanAge the list contains all saved human age
+     */
     public void printStatistics(int runNumber, boolean isSimulation, HashMap<String, int[]> attributes, ArrayList<Integer> savedHumanAge) {
         // Create a list to hold the survival ratio of each attribute
         List<AttributeSurvivalRatio> survivalRatios = new ArrayList<>();
@@ -471,11 +523,15 @@ public class ScenarioService {
         System.out.printf("average age: %.2f", getAvgAge(savedHumanAge));
     }
 
-    public void audit(Scanner scanner, String userLogPath) {
+    public void audit(Scanner scanner, String userLogPath, String simulationLogFile) {
         Audit audit = new Audit(userLogPath);
-        audit.audit(scanner, userLogPath);
+        audit.audit(scanner, userLogPath, simulationLogFile);
     }
 
+    /**
+     * Add attribute into hashmap.
+     * @param resident the resident's all attribute to be added
+     */
     private void addResidentAttributes(Resident resident) {
         if (resident.getTrespassing()) { //trespassing
             addAttribute("trespassing");
@@ -502,6 +558,10 @@ public class ScenarioService {
         }
     }
 
+    /**
+     * Add saved attribute into hashmap.
+     * @param resident the resident's all attribute to be added
+     */
     private void addSavedResidentAttributes(Resident resident) {
         if (resident.getTrespassing()) { //trespassing
             addSavedAttribute("trespassing");

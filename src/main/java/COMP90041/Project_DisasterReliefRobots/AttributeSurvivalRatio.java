@@ -1,6 +1,10 @@
 package COMP90041.Project_DisasterReliefRobots;
 
 public class AttributeSurvivalRatio implements Comparable<AttributeSurvivalRatio> {
+    /**
+     * This class is design for sorting hash map.
+     * Override the compareTo method to let Collections.sort() method to sort this hash map
+     */
     private String attributeName;
     private double survivalRatio;
 

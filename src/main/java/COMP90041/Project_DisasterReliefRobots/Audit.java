@@ -13,14 +13,26 @@ public class Audit extends ScenarioService{
         super(userLogPath);
     }
 
-    public void audit(Scanner scanner, String scenariosFilePath) {
+    /**
+     * Get data from file, if user provide a log file, gather information from that file;
+     * If not, gather from the default file path. Then load simulation scenario's residents' all attributes.
+     * Finally print all statistics.
+     * @param scanner the only one scanner
+     * @param userLogPath the file path store user decision.
+     * @param simulationLogPath the file path store simulation information.
+     */
+    public void audit(Scanner scanner, String userLogPath, String simulationLogPath) {
         ArrayList<Scenario> simulationScenarios = new ArrayList<>();
         ArrayList<Scenario> userScenarios = new ArrayList<>();
         ArrayList<Integer> simulationSavedHumanAge = new ArrayList<>();
         ArrayList<Integer> userSavedHumanAge = new ArrayList<>();
         // load file into two different scenario lists, representing the User and Simulation
-        loadScenarios(scenariosFilePath, simulationScenarios, userScenarios);
-
+        if (userLogPath.equals(simulationLogPath)) {// if user provide the log path
+            loadScenarios(userLogPath, simulationScenarios, userScenarios);
+        } else {
+            loadScenarios(userLogPath, simulationScenarios, userScenarios);
+            loadScenarios(simulationLogPath, simulationScenarios, userScenarios);
+        }
         // Load simulation scenario's residents' all attributes
         HashMap<String, int[]> simulationAttributes = new HashMap<>();
         HashMap<String, int[]> userAttributes = new HashMap<>();

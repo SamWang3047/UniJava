@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class RandomScenario {
+    /**
+     * This class is for random generate different scenario
+     *
+     */
     private static final String[] AUTO_GENERATED_BODYTYPE = {"OVERWEIGHT", "AVERAGE", "ATHLETIC"};
     private static final String[] AUTO_GENERATED_GENDER = {"MALE", "FEMALE"};
     private static final String[] AUTO_GENERATED_SPECIES = {"PUPPY", "DINGO", "CAT", "KOALA", "WALLABY", "SNAKE", "LION", "DOG", "PLATYPUS"};
@@ -14,13 +18,11 @@ public class RandomScenario {
 
     public void randomScenarioGeneration(ArrayList<Scenario> scenarios) {
         Random r = new Random();
-        String disaster;
         int scenarioNum = r.nextInt(7) + 3; // Number of scenarios [3, 10]
         randomScenario(scenarios, r, scenarioNum);
     }
     public void randomScenarioGeneration(ArrayList<Scenario> scenarios, int randomScenarioNumber) {
         Random r = new Random();
-        String disaster;
         randomScenario(scenarios, r, randomScenarioNumber);
     }
 
