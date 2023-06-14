@@ -217,7 +217,7 @@ public class RescueBot {
             simulationLogPath = SIMULATION_LOG_PATH;
         }
 
-        ScenarioService scenarioService = new ScenarioService(userLogPath, simulationLogPath);
+        ScenarioService scenarioService = new ScenarioService(userLogPath);
         // Display the welcome message
         try {
             Path filePath = Paths.get("welcome.ascii");

@@ -24,15 +24,14 @@ public class ScenarioService {
     private boolean consent;
     private ArrayList<Integer> savedHumanAge;
     private String userLogPath;
-    private String simulationLogPath;
 
-    public ScenarioService(String userLogPath, String simulationLogPath) {
+    public ScenarioService(String userLogPath) {
         scenarios = new ArrayList<>();
         consent = false;
         attributes = new HashMap<>();
         savedHumanAge = new ArrayList<>();
         this.userLogPath = Objects.requireNonNullElse(userLogPath, "userRescueBot.csv");
-        this.simulationLogPath = Objects.requireNonNullElse(simulationLogPath, "simulationRescueBot.csv");
+
         df.setRoundingMode(RoundingMode.UP);
     }
 
@@ -51,6 +50,9 @@ public class ScenarioService {
                 if (lineNumber == 1) {
                     continue; // Skip headers
                 }
+                if (!line.startsWith("s") && !line.startsWith("l") && !line.startsWith("a") && !line.startsWith("h")) {
+                    continue;
+                }
                 Object object = parseLine(line, lineNumber);
                 // Append object to relevant scenario or location
                 if (object instanceof Scenario) {
@@ -66,39 +68,8 @@ public class ScenarioService {
         }
     }
 
-    private void loadScenarios(String scenariosFilePath, ArrayList<Scenario> simulationScenarios, ArrayList<Scenario> userScenarios) {
-        Scenario currentScenario = null;
-        Location currentLocation = null;
-        try (BufferedReader reader = new BufferedReader(new FileReader(scenariosFilePath))) {
-            String line;
-            int lineNumber = 0;
-            while ((line = reader.readLine()) != null) {
-                lineNumber++;
-                if (lineNumber == 1) {
-                    continue; // Skip headers
-                }
-                Object object = parseLine(line, lineNumber);
-                // Append object to relevant scenario or location
-                if (object instanceof Scenario) {
-                    currentScenario = (Scenario) object;
-                    if (currentScenario.isSimulation()) {
-                        simulationScenarios.add(currentScenario);
-                    } else {
-                        userScenarios.add(currentScenario);
-                    }
-                } else {
-                    currentLocation = getLocationOrResident(currentScenario, currentLocation, object);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("java.io.FileNotFoundException: could not find scenarios file.");
-            System.exit(1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    private Location getLocationOrResident(Scenario currentScenario, Location currentLocation, Object object) {
+    public Location getLocationOrResident(Scenario currentScenario, Location currentLocation, Object object) {
         if (object instanceof Location) {
             currentLocation = (Location) object;
             if (currentScenario != null) {
@@ -117,7 +88,7 @@ public class ScenarioService {
         return currentLocation;
     }
 
-    private Object parseLine(String line, int lineNumber) {
+    public Object parseLine(String line, int lineNumber) {
         String[] data = line.split(",", -1);
         // Check for invalid data format
         try {
@@ -188,21 +159,6 @@ public class ScenarioService {
 
         char locationLatitudeDirection = latitude[1].charAt(0);
         char locationLongitudeDirection = longitude[1].charAt(0);
-//        //Validation
-//        try { //Latitude field validation
-//            if (locationLatitude < 0 || locationLatitude > 90) {
-//                throw new InvalidCharacteristicException(lineNumber);
-//            }
-//        } catch (InvalidCharacteristicException e) {
-//            locationLatitude = 45; //Default latitude
-//        }
-//        try { //Longitude field validation
-//            if (locationLongitude < 0 || locationLongitude > 180) {
-//                throw new InvalidCharacteristicException(lineNumber);
-//            }
-//        } catch (InvalidCharacteristicException e) {
-//            locationLongitude = 90; //Default latitude
-//        }
 
         try { //Latitude direction validation
             if (!Arrays.stream(LATITUDE_DIRECTION).toList().contains(locationLatitudeDirection)) {
@@ -279,13 +235,6 @@ public class ScenarioService {
         String species = data[6];
         boolean isPet = false;
         if (resident.equalsIgnoreCase("animal")) {
-//            try {
-//                if (!Arrays.stream(SPECIES).toList().contains(species.toUpperCase())) {
-//                    throw new InvalidCharacteristicException(lineNumber);
-//                }
-//            } catch (InvalidCharacteristicException e) {
-//                species = SPECIES[SPECIES.length - 1].toLowerCase(); //NONE
-//            }
             isPet = Boolean.parseBoolean(data[7]);
         }
         String profession = "NONE";
@@ -482,7 +431,7 @@ public class ScenarioService {
         System.out.println();
     }
 
-    public void printStatistics(int runNumber, boolean isSimulation, HashMap<String, int[]> attributes) {
+    public void printStatistics(int runNumber, boolean isSimulation, HashMap<String, int[]> attributes, ArrayList<Integer> savedHumanAge) {
         // Create a list to hold the survival ratio of each attribute
         List<AttributeSurvivalRatio> survivalRatios = new ArrayList<>();
 
@@ -522,41 +471,9 @@ public class ScenarioService {
         System.out.printf("average age: %.2f", getAvgAge(savedHumanAge));
     }
 
-    public void audit(Scanner scanner, String scenariosFilePath) {
-        ArrayList<Scenario> simulationScenarios = new ArrayList<>();
-        ArrayList<Scenario> userScenarios = new ArrayList<>();
-        // load file into two different scenario lists, representing the User and Simulation
-        loadScenarios(scenariosFilePath, simulationScenarios, userScenarios);
-
-        // Load simulation scenario's residents' all attributes
-        HashMap<String, int[]> simulationAttributes = new HashMap<>();
-        HashMap<String, int[]> userAttributes = new HashMap<>();
-        for (Scenario scenario : simulationScenarios) {
-            for (Location location : scenario.getLocations()) {
-                for (Resident resident : location.getResidents()) {
-                    addResidentAttributes(resident, simulationAttributes);
-                    if (location.isSaved()) {
-                        addSavedResidentAttributes(resident, simulationAttributes);
-                    }
-                }
-            }
-        }
-        for (Scenario scenario : userScenarios) {
-            for (Location location : scenario.getLocations()) {
-                for (Resident resident : location.getResidents()) {
-                    addResidentAttributes(resident, userAttributes);
-                    if (location.isSaved()) {
-                        addSavedResidentAttributes(resident, userAttributes);
-                    }
-                }
-            }
-        }
-        printStatistics(simulationAttributes.size(), true, simulationAttributes);
-        System.out.println();
-        printStatistics(userAttributes.size(), false, userAttributes);
-        System.out.println("That's all. Press Enter to return to main menu.");
-        System.out.print("> ");
-        scanner.nextLine();  // Wait for the user to press Enter
+    public void audit(Scanner scanner, String userLogPath) {
+        Audit audit = new Audit(userLogPath);
+        audit.audit(scanner, userLogPath);
     }
 
     private void addResidentAttributes(Resident resident) {
@@ -584,31 +501,7 @@ public class ScenarioService {
             }
         }
     }
-    private void addResidentAttributes(Resident resident, HashMap<String, int[]> attributes) {
-        if (resident.getTrespassing()) { //trespassing
-            addAttribute("trespassing");
-        } else {
-            addAttribute("legal");
-        }
-        if (resident instanceof Human) {
-            addAttribute(resident.getClass().getSimpleName().toLowerCase(), attributes);//human class type (human or animal)
-            addAttribute(((Human) resident).getAgeCategory(), attributes); //age category
-            addAttribute(resident.getGender(), attributes); //gender
-            addAttribute(resident.getBodyType(), attributes); //body type
-            if (!((Human) resident).getProfession().equalsIgnoreCase("none")) {
-                addAttribute(((Human) resident).getProfession().toLowerCase(), attributes); //profession
-            }
-            if (((Human) resident).getPregnant()) {
-                addAttribute("pregnant", attributes); //pregnancy
-            }
-        } else {
-            addAttribute(resident.getClass().getSimpleName().toLowerCase(),attributes); //animal class type (human or animal)
-            addAttribute(((Animal) resident).getSpecies(),attributes); //species
-            if (((Animal) resident).getPet()) {
-                addAttribute("pet",attributes); //pets
-            }
-        }
-    }
+
     private void addSavedResidentAttributes(Resident resident) {
         if (resident.getTrespassing()) { //trespassing
             addSavedAttribute("trespassing");
@@ -634,36 +527,7 @@ public class ScenarioService {
             }
         }
     }
-    private void addSavedResidentAttributes(Resident resident, HashMap<String, int[]> attributes) {
-        if (resident.getTrespassing()) { //trespassing
-            addSavedAttribute("trespassing");
-        } else {
-            addSavedAttribute("legal");
-        }
-        if (resident instanceof Human) {
-            addSavedAttribute(resident.getClass().getSimpleName().toLowerCase(), attributes);//human class type (human or animal)
-            addSavedAttribute(((Human) resident).getAgeCategory(), attributes); //age category
-            addSavedAttribute(resident.getGender(), attributes); //gender
-            addSavedAttribute(resident.getBodyType(), attributes); //body type
-            if (!((Human) resident).getProfession().equalsIgnoreCase("none")) {
-                addSavedAttribute(((Human) resident).getProfession().toLowerCase(), attributes); //profession
-            }
-            if (((Human) resident).getPregnant()) {
-                addSavedAttribute("pregnant", attributes); //pregnancy
-            }
-        } else {
-            addSavedAttribute(resident.getClass().getSimpleName().toLowerCase(), attributes); //animal class type (human or animal)
-            addSavedAttribute(((Animal) resident).getSpecies(), attributes); //species
-            if (((Animal) resident).getPet()) {
-                addSavedAttribute("pet", attributes); //pets
-            }
-            if (((Animal) resident).getTrespassing()) { //trespassing
-                addSavedAttribute("trespassing", attributes);
-            } else {
-                addSavedAttribute("legal", attributes);
-            }
-        }
-    }
+
     private void addAttribute(String attribute) {
         if (attributes.containsKey(attribute)) {
             attributes.get(attribute)[0]++; //total number
@@ -672,18 +536,8 @@ public class ScenarioService {
             attributes.put(attribute, value);
         }
     }
-    private void addAttribute(String attribute, HashMap<String, int[]> attributes) {
-        if (attributes.containsKey(attribute)) {
-            attributes.get(attribute)[0]++; //total number
-        } else {
-            int[] value = new int[]{1, 0}; //total number
-            attributes.put(attribute, value);
-        }
-    }
+
     private void addSavedAttribute(String attribute) {
-        attributes.get(attribute)[1]++; //saved number
-    }
-    private void addSavedAttribute(String attribute, HashMap<String, int[]> attributes) {
         attributes.get(attribute)[1]++; //saved number
     }
 

@@ -44,7 +44,7 @@ public class RandomScenario {
         if (lat < 0) latDirect = LATITUDE_DIRECTION[1];
         double lon = r.nextDouble() * 360 - 180;  // longitude [-180, 180]
         char lonDirect = LONGITUDE_DIRECTION[0];
-        if (lon < 0) latDirect = LONGITUDE_DIRECTION[1];
+        if (lon < 0) lonDirect = LONGITUDE_DIRECTION[1];
         boolean isTrespassing = r.nextBoolean();
 
         int numCharacters = r.nextInt(7) + 1;  // Number of characters [1, 8]
@@ -62,9 +62,13 @@ public class RandomScenario {
         if (r.nextBoolean()) {
             // Generate a human
             int age = r.nextInt(100);
+
             String gender = AUTO_GENERATED_GENDER[r.nextInt(AUTO_GENERATED_GENDER.length)].toLowerCase();
             String bodyType = AUTO_GENERATED_BODYTYPE[r.nextInt(AUTO_GENERATED_BODYTYPE.length)].toLowerCase();
-            String profession = AUTO_GENERATED_PROFESSION[r.nextInt(AUTO_GENERATED_PROFESSION.length)].toLowerCase();
+            String profession = AUTO_GENERATED_PROFESSION[AUTO_GENERATED_PROFESSION.length - 1];
+            if (age >= 17 && age <= 68) {
+                profession = AUTO_GENERATED_PROFESSION[r.nextInt(AUTO_GENERATED_PROFESSION.length)].toLowerCase();
+            }
             boolean isPregnant = false;
             //Only female can get pregnant
             if (gender.equals(AUTO_GENERATED_GENDER[1])) {
