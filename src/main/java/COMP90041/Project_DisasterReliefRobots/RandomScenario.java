@@ -8,7 +8,7 @@ public class RandomScenario {
      * This class is for random generate different scenario
      *
      */
-    private static final String[] AUTO_GENERATED_BODYTYPE = {"OVERWEIGHT", "AVERAGE", "ATHLETIC"};
+    private static final String[] AUTO_GENERATED_BODY_TYPE = {"OVERWEIGHT", "AVERAGE", "ATHLETIC"};
     private static final String[] AUTO_GENERATED_GENDER = {"MALE", "FEMALE"};
     private static final String[] AUTO_GENERATED_SPECIES = {"PUPPY", "DINGO", "CAT", "KOALA", "WALLABY", "SNAKE", "LION", "DOG", "PLATYPUS"};
     private static final String[] AUTO_GENERATED_PROFESSION = {"DOCTOR", "CEO", "CRIMINAL", "HOMELESS", "UNEMPLOYED", "ATHLETIC", "STUDENT", "PROFESSOR", "NONE"};
@@ -66,7 +66,7 @@ public class RandomScenario {
             int age = r.nextInt(100);
 
             String gender = AUTO_GENERATED_GENDER[r.nextInt(AUTO_GENERATED_GENDER.length)].toLowerCase();
-            String bodyType = AUTO_GENERATED_BODYTYPE[r.nextInt(AUTO_GENERATED_BODYTYPE.length)].toLowerCase();
+            String bodyType = AUTO_GENERATED_BODY_TYPE[r.nextInt(AUTO_GENERATED_BODY_TYPE.length)].toLowerCase();
             String profession = AUTO_GENERATED_PROFESSION[AUTO_GENERATED_PROFESSION.length - 1];
             if (age >= 17 && age <= 68) {
                 profession = AUTO_GENERATED_PROFESSION[r.nextInt(AUTO_GENERATED_PROFESSION.length)].toLowerCase();
@@ -81,7 +81,7 @@ public class RandomScenario {
             // Generate an animal
             int age = r.nextInt(15);
             String gender = AUTO_GENERATED_GENDER[r.nextInt(AUTO_GENERATED_GENDER.length)].toLowerCase();
-            String bodyType = AUTO_GENERATED_BODYTYPE[r.nextInt(AUTO_GENERATED_BODYTYPE.length)].toLowerCase();
+            String bodyType = AUTO_GENERATED_BODY_TYPE[r.nextInt(AUTO_GENERATED_BODY_TYPE.length)].toLowerCase();
             String species = AUTO_GENERATED_SPECIES[r.nextInt(AUTO_GENERATED_SPECIES.length)].toLowerCase();
             boolean isPet = r.nextBoolean();
             return new Animal(gender, age, bodyType, species, isPet);

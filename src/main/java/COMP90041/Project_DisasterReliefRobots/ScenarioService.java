@@ -12,11 +12,13 @@ public class ScenarioService {
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
     private static final String[] LINE_START = {"scenario", "location", "animal", "human"};
-    private static final String[] BODYTYPE = {"OVERWEIGHT", "AVERAGE", "ATHLETIC", "UNSPECIFIED"};
+    private static final String PREGNANT = "pregnant";
+    private static final String PET = "pet";
+    private static final String[] BODY_TYPE = {"OVERWEIGHT", "AVERAGE", "ATHLETIC", "UNSPECIFIED"};
     private static final String[] GENDER = {"MALE", "FEMALE", "UNKNOWN"};
     private static final String[] STATUS = {"TRESPASSING", "LEGAL"};
     private static final String[] PROFESSION = {"DOCTOR", "CEO", "CRIMINAL", "HOMELESS", "UNEMPLOYED", "ATHLETIC", "STUDENT", "PROFESSOR", "NONE"};
-    private static final String[] DISASTER = {"CYCLONE", "FLOOD", "EARTHQUAKE", "BUSHFIRE", "METEORITE"};
+    private static final String[] DISASTER = {"CYCLONE", "EARTHQUAKE", "BUSHFIRE", "METEORITE", "FLOOD"};
     private static final Character[] LATITUDE_DIRECTION = {'N', 'S'};
     private static final Character[] LONGITUDE_DIRECTION = {'E', 'W'};
 
@@ -141,7 +143,7 @@ public class ScenarioService {
                 throw new InvalidCharacteristicException(lineNumber);
             }
         } catch (InvalidCharacteristicException e) {
-            disaster = "flood";//Default disaster
+            disaster = DISASTER[DISASTER.length - 1];//Default disaster
             scenario.setDisaster(disaster);
         }
         // For auditing
@@ -212,9 +214,9 @@ public class ScenarioService {
                 throw new InvalidCharacteristicException(lineNumber);
             }
         } catch (InvalidCharacteristicException e) {
-            status = "trespassing";
+            status = STATUS[0].toLowerCase();//trespassing
         }
-        boolean isTrespassing = status.equals("trespassing");
+        boolean isTrespassing = status.equals(STATUS[0].toLowerCase());//trespassing
         Location location = new Location(locationLatitude, locationLongitude, locationLatitudeDirection, locationLongitudeDirection, isTrespassing);
         //For auditing
         if (data[1].equals("true")) {
@@ -256,11 +258,11 @@ public class ScenarioService {
         String bodyType = data[3];
 
         try { // Validate bodyType
-            if (!Arrays.stream(BODYTYPE).toList().contains(bodyType.toUpperCase())) {
+            if (!Arrays.stream(BODY_TYPE).toList().contains(bodyType.toUpperCase())) {
                 throw new InvalidCharacteristicException(lineNumber);
             }
         } catch (InvalidCharacteristicException e) {
-            bodyType = BODYTYPE[BODYTYPE.length - 1]; // default value
+            bodyType = BODY_TYPE[BODY_TYPE.length - 1]; // default value
         }
 
         // species validation
@@ -269,7 +271,7 @@ public class ScenarioService {
         if (resident.equalsIgnoreCase("animal")) {
             isPet = Boolean.parseBoolean(data[7]);
         }
-        String profession = "NONE";
+        String profession = PROFESSION[PROFESSION.length - 1];
         boolean isPregnant = false;
 
         // Validate profession for human
@@ -286,15 +288,15 @@ public class ScenarioService {
 
             isPregnant = Boolean.parseBoolean(data[5]);
             try { // Validate profession
-                if ((age < 17 || age > 68) && !profession.equalsIgnoreCase("NONE")) {
+                if ((age < 17 || age > 68) && !profession.equalsIgnoreCase(PROFESSION[PROFESSION.length - 1])) {
                     throw new InvalidCharacteristicException(lineNumber);
                 }
             } catch (InvalidCharacteristicException e) {
-                profession = "NONE"; // default value
+                profession = PROFESSION[PROFESSION.length - 1]; // default value
             }
 
             try { // Validate pregnant
-                if (gender.equalsIgnoreCase("MALE") && isPregnant) {
+                if (gender.equalsIgnoreCase(GENDER[0]) && isPregnant) {
                     throw new InvalidCharacteristicException(lineNumber);
                 }
             } catch (InvalidCharacteristicException e) {
@@ -436,7 +438,7 @@ public class ScenarioService {
 
     /**
      * Print saving statistics into the console.
-     * @param runNumber
+     * @param runNumber the run number
      */
 
     public void printStatistics(int runNumber) {
@@ -533,27 +535,27 @@ public class ScenarioService {
      * @param resident the resident's all attribute to be added
      */
     private void addResidentAttributes(Resident resident) {
-        if (resident.getTrespassing()) { //trespassing
-            addAttribute("trespassing");
+        if (resident.getTrespassing()) {
+            addAttribute(STATUS[0].toLowerCase());//trespassing
         } else {
-            addAttribute("legal");
+            addAttribute(STATUS[1].toLowerCase());//legal
         }
         if (resident instanceof Human) {
             addAttribute(resident.getClass().getSimpleName().toLowerCase());//human class type (human or animal)
             addAttribute(((Human) resident).getAgeCategory()); //age category
             addAttribute(resident.getGender()); //gender
             addAttribute(resident.getBodyType()); //body type
-            if (!((Human) resident).getProfession().equalsIgnoreCase("none")) {
+            if (!((Human) resident).getProfession().equalsIgnoreCase(PROFESSION[PROFESSION.length - 1])) {
                 addAttribute(((Human) resident).getProfession().toLowerCase()); //profession
             }
             if (((Human) resident).getPregnant()) {
-                addAttribute("pregnant"); //pregnancy
+                addAttribute(PREGNANT); //pregnancy
             }
         } else {
             addAttribute(resident.getClass().getSimpleName().toLowerCase()); //animal class type (human or animal)
             addAttribute(((Animal) resident).getSpecies()); //species
             if (((Animal) resident).getPet()) {
-                addAttribute("pet"); //pets
+                addAttribute(PET); //pets
             }
         }
     }
@@ -564,26 +566,26 @@ public class ScenarioService {
      */
     private void addSavedResidentAttributes(Resident resident) {
         if (resident.getTrespassing()) { //trespassing
-            addSavedAttribute("trespassing");
+            addSavedAttribute(STATUS[0].toLowerCase());//trespassing
         } else {
-            addSavedAttribute("legal");
+            addSavedAttribute(STATUS[1].toLowerCase());//legal
         }
         if (resident instanceof Human) {
             addSavedAttribute(resident.getClass().getSimpleName().toLowerCase());//human class type (human or animal)
             addSavedAttribute(((Human) resident).getAgeCategory()); //age category
             addSavedAttribute(resident.getGender()); //gender
             addSavedAttribute(resident.getBodyType()); //body type
-            if (!((Human) resident).getProfession().equalsIgnoreCase("none")) {
+            if (!((Human) resident).getProfession().equalsIgnoreCase(PROFESSION[PROFESSION.length - 1])) {
                 addSavedAttribute(((Human) resident).getProfession().toLowerCase()); //profession
             }
             if (((Human) resident).getPregnant()) {
-                addSavedAttribute("pregnant"); //pregnancy
+                addSavedAttribute(PREGNANT); //pregnancy
             }
         } else {
             addSavedAttribute(resident.getClass().getSimpleName().toLowerCase()); //animal class type (human or animal)
             addSavedAttribute(((Animal) resident).getSpecies()); //species
             if (((Animal) resident).getPet()) {
-                addSavedAttribute("pet"); //pets
+                addSavedAttribute(PET); //pets
             }
         }
     }
