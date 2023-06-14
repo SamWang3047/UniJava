@@ -14,7 +14,7 @@ public class InvalidDataFormatException extends Exception{
 
     public InvalidDataFormatException(int lineNumber) {
         super("invalid data format");
-        System.out.println("WARNING: invalid data format in line " + lineNumber);
+        System.out.println("WARNING: invalid data format in scenarios file in line " + lineNumber);
     }
 
     public InvalidDataFormatException(Scenario scenario) {

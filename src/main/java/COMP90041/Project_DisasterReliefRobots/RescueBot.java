@@ -1,5 +1,6 @@
 package COMP90041.Project_DisasterReliefRobots;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,6 +12,7 @@ import java.util.Scanner;
  * COMP90041, Sem1, 2023: Final Project
  *
  * @author: student id: 1406985
+ * @author: Zhiyuan Wang
  * student email: zhiyuanw6@student.unimelb.edu.au
  * personal website: www.hellosam.top
  */
@@ -131,10 +133,9 @@ public class RescueBot {
         System.out.println("Usage: java RescueBot [arguments]");
         System.out.println();
         System.out.println("Arguments:");
-        System.out.println("-s or --scenarios    Optional: path to scenario file");
-        System.out.println("-h or --help         Optional: Print Help (this message) and exit");
-        System.out.println("-l or --log          Optional: path to data log file");
-        System.out.println();
+        System.out.println("-s or --scenarios\tOptional: path to scenario file\n" +
+                "-h or --help\t\tOptional: Print Help (this message) and exit\n" +
+                "-l or --log\t\tOptional: path to data log file");
         System.exit(0);
     }
 
@@ -181,6 +182,11 @@ public class RescueBot {
                 case "--scenarios":
                     if (i + 1 < args.length && !args[i + 1].startsWith("-")) {
                         scenariosFilePath = args[i + 1];
+                        File file = new File(scenariosFilePath);
+                        if (!file.exists()) {
+                            System.out.println("java.io.FileNotFoundException: could not find scenarios file.");
+                            printHelpAndExit();
+                        }
                         i++;  // skip next arg
                     } else {
                         scenariosFilePath = null;
@@ -212,7 +218,6 @@ public class RescueBot {
         }
 
         ScenarioService scenarioService = new ScenarioService(userLogPath, simulationLogPath);
-
         // Display the welcome message
         try {
             Path filePath = Paths.get("welcome.ascii");

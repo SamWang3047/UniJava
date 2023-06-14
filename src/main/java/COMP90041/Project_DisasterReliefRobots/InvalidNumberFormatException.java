@@ -15,7 +15,7 @@ public class InvalidNumberFormatException extends NumberFormatException {
 
     public InvalidNumberFormatException(int lineNumber) {
         super("invalid number format");
-        System.out.println("WARNING: invalid number format in line " + lineNumber);
+        System.out.println("WARNING: invalid number format in scenarios file in line " + lineNumber);
     }
 
     public InvalidNumberFormatException(Scenario scenario) {

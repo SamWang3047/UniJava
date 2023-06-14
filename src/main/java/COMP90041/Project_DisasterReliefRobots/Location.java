@@ -36,12 +36,12 @@ public class Location {
     }
     public String getLocationInfo() {
         StringBuilder info = new StringBuilder("Location: "
-                + String.format("%.2f",latitude) + " "
+                + latitude + " "
                 + latitudeDirection + ", "
-                + String.format("%.2f",longitude) + " "
+                + longitude + " "
                 + longitudeDirection + "\nTrespassing: "
                 + (status.equals("trespassing") ? "yes" : "no") + "\n");
-        info.append(residents.size()).append(" Characters:\n");
+        info.append(residents.size()).append(" Characters: \n");
         for (Resident resident : residents) {
             info.append("- ").append(resident.getDescription()).append("\n");
         }
@@ -49,8 +49,8 @@ public class Location {
     }
 
     public String getCoordinates() {
-        return String.format("%.2f", latitude) + " " + latitudeDirection + ";" +
-                String.format("%.2f", longitude) + " " + longitudeDirection + ";";
+        return String.format("%.4f", latitude) + " " + latitudeDirection + ";" +
+                String.format("%.4f", longitude) + " " + longitudeDirection + ";";
     }
 
     public double getLatitude() {

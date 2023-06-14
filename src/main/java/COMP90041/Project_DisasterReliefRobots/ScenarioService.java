@@ -10,7 +10,7 @@ public class ScenarioService {
     private static final String[] BODYTYPE = {"OVERWEIGHT", "AVERAGE", "ATHLETIC", "UNSPECIFIED"};
     private static final String[] GENDER = {"MALE", "FEMALE", "UNKNOWN"};
     private static final String[] STATUS = {"TRESPASSING", "LEGAL"};
-    private static final String[] SPECIES = {"PUPPY", "DINGO", "CAT", "KOALA", "WALLABY", "SNAKE", "LION", "DOG", "PLATYPUS", "UNSPECIFIED"};
+    //private static final String[] SPECIES = {"UNSPECIFIED"};
     private static final String[] PROFESSION = {"DOCTOR", "CEO", "CRIMINAL", "HOMELESS", "UNEMPLOYED", "ATHLETIC", "STUDENT", "PROFESSOR", "NONE"};
     private static final String[] DISASTER = {"CYCLONE", "FLOOD", "EARTHQUAKE", "BUSHFIRE", "METEORITE"};
     private static final Character[] LATITUDE_DIRECTION = {'N', 'S'};
@@ -139,7 +139,7 @@ public class ScenarioService {
         String disaster = data[0].substring(9);
         Scenario scenario = new Scenario(disaster);
         try {
-            if (!Arrays.stream(DISASTER).toList().contains(disaster)) {
+            if (!Arrays.stream(DISASTER).toList().contains(disaster.toUpperCase())) {
                 throw new InvalidCharacteristicException(lineNumber);
             }
         } catch (InvalidCharacteristicException e) {
@@ -185,21 +185,21 @@ public class ScenarioService {
 
         char locationLatitudeDirection = latitude[1].charAt(0);
         char locationLongitudeDirection = longitude[1].charAt(0);
-        //Validation
-        try { //Latitude field validation
-            if (locationLatitude < 0 || locationLatitude > 90) {
-                throw new InvalidCharacteristicException(lineNumber);
-            }
-        } catch (InvalidCharacteristicException e) {
-            locationLatitude = 45; //Default latitude
-        }
-        try { //Longitude field validation
-            if (locationLongitude < 0 || locationLongitude > 180) {
-                throw new InvalidCharacteristicException(lineNumber);
-            }
-        } catch (InvalidCharacteristicException e) {
-            locationLongitude = 90; //Default latitude
-        }
+//        //Validation
+//        try { //Latitude field validation
+//            if (locationLatitude < 0 || locationLatitude > 90) {
+//                throw new InvalidCharacteristicException(lineNumber);
+//            }
+//        } catch (InvalidCharacteristicException e) {
+//            locationLatitude = 45; //Default latitude
+//        }
+//        try { //Longitude field validation
+//            if (locationLongitude < 0 || locationLongitude > 180) {
+//                throw new InvalidCharacteristicException(lineNumber);
+//            }
+//        } catch (InvalidCharacteristicException e) {
+//            locationLongitude = 90; //Default latitude
+//        }
 
         try { //Latitude direction validation
             if (!Arrays.stream(LATITUDE_DIRECTION).toList().contains(locationLatitudeDirection)) {
@@ -239,6 +239,7 @@ public class ScenarioService {
     private Resident parseCharacter(String[] data, int lineNumber) {
         //Parse Resident
         String resident = data[0];
+
         String gender = data[1];
         try { //Gender validation
             if (!Arrays.stream(GENDER).toList().contains(gender.toUpperCase())) { //Gender validation
@@ -248,37 +249,20 @@ public class ScenarioService {
             gender = GENDER[GENDER.length - 1]; // default value
         }
 
-        int age;
+        int age = 18;
         try {
             age = Integer.parseInt(data[2]);
+            if (age < 0) {
+                throw new InvalidCharacteristicException(lineNumber);
+            }
         } catch (NumberFormatException e) {
             System.out.println("WARNING: invalid number format in line " + lineNumber);
             age = 18;
-        }
-        String bodyType = data[3];
-        // profession validation
-        String profession;
-        try {
-            profession = data[4];
-            if (!Arrays.stream(PROFESSION).toList().contains(profession)) {
-                throw new InvalidCharacteristicException(lineNumber);
-            }
         } catch (InvalidCharacteristicException e) {
-            profession = PROFESSION[PROFESSION.length - 1].toLowerCase(); //NONE
-        }
-        boolean isPregnant = Boolean.parseBoolean(data[5]);
-        // species validation
-        String species;
-        try {
-            species = data[6];
-            if (!Arrays.stream(SPECIES).toList().contains(species)) {
-                throw new InvalidCharacteristicException(lineNumber);
-            }
-        } catch (InvalidCharacteristicException e) {
-            species = SPECIES[SPECIES.length - 1].toLowerCase(); //NONE
+            age = 18; // default value
         }
 
-        boolean isPet = Boolean.parseBoolean(data[7]);
+        String bodyType = data[3];
 
         try { // Validate bodyType
             if (!Arrays.stream(BODYTYPE).toList().contains(bodyType.toUpperCase())) {
@@ -288,19 +272,37 @@ public class ScenarioService {
             bodyType = BODYTYPE[BODYTYPE.length - 1]; // default value
         }
 
+        // species validation
+        String species = data[6];
+        boolean isPet = false;
+        if (resident.equalsIgnoreCase("animal")) {
+//            try {
+//                if (!Arrays.stream(SPECIES).toList().contains(species.toUpperCase())) {
+//                    throw new InvalidCharacteristicException(lineNumber);
+//                }
+//            } catch (InvalidCharacteristicException e) {
+//                species = SPECIES[SPECIES.length - 1].toLowerCase(); //NONE
+//            }
+            isPet = Boolean.parseBoolean(data[7]);
+        }
+        String profession = "NONE";
+        boolean isPregnant = false;
 
         // Validate profession for human
         if (resident.equalsIgnoreCase("human")) {
-            try { // Validate age
-                if (age < 0) {
+            // profession validation
+            try {
+                profession = data[4];
+                if (!Arrays.stream(PROFESSION).toList().contains(profession.toUpperCase())) {
                     throw new InvalidCharacteristicException(lineNumber);
                 }
             } catch (InvalidCharacteristicException e) {
-                age = 18; // default value
+                profession = PROFESSION[PROFESSION.length - 1].toLowerCase(); //NONE
             }
 
+            isPregnant = Boolean.parseBoolean(data[5]);
             try { // Validate profession
-                if ((age < 17 || age > 68) && !profession.toUpperCase().equals("NONE")) {
+                if ((age < 17 || age > 68) && !profession.equalsIgnoreCase("NONE")) {
                     throw new InvalidCharacteristicException(lineNumber);
                 }
             } catch (InvalidCharacteristicException e) {
@@ -308,7 +310,7 @@ public class ScenarioService {
             }
 
             try { // Validate pregnant
-                if (gender.toUpperCase().equals("MALE") && isPregnant) {
+                if (gender.equalsIgnoreCase("MALE") && isPregnant) {
                     throw new InvalidCharacteristicException(lineNumber);
                 }
             } catch (InvalidCharacteristicException e) {
@@ -318,7 +320,6 @@ public class ScenarioService {
 
         // Create Human or Animal Resident based on 'resident' field
         if (resident.equalsIgnoreCase("human")) {
-
             return new Human(gender, age, bodyType, profession, isPregnant);
         } else {
             return new Animal(gender, age, bodyType, species, isPet);

@@ -14,7 +14,7 @@ public class InvalidCharacteristicException extends Exception{
     }
     public InvalidCharacteristicException(int lineNumber) {
         super("invalid characteristic");
-        System.out.println("WARNING: invalid characteristic in line " + lineNumber);
+        System.out.println("WARNING: invalid characteristic in scenarios file in line " + lineNumber);
     }
     public InvalidCharacteristicException(Scenario scenario) {
         super("invalid characteristic");
