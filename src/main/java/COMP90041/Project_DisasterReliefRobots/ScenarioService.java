@@ -570,8 +570,9 @@ public class ScenarioService {
         } else {
             addSavedAttribute(STATUS[1].toLowerCase());//legal
         }
+        addSavedAttribute(resident.getClass().getSimpleName().toLowerCase());//animal class type (human or animal)
         if (resident instanceof Human) {
-            addSavedAttribute(resident.getClass().getSimpleName().toLowerCase());//human class type (human or animal)
+             //human class type (human or animal)
             addSavedAttribute(((Human) resident).getAgeCategory()); //age category
             addSavedAttribute(resident.getGender()); //gender
             addSavedAttribute(resident.getBodyType()); //body type
@@ -582,7 +583,6 @@ public class ScenarioService {
                 addSavedAttribute(PREGNANT); //pregnancy
             }
         } else {
-            addSavedAttribute(resident.getClass().getSimpleName().toLowerCase()); //animal class type (human or animal)
             addSavedAttribute(((Animal) resident).getSpecies()); //species
             if (((Animal) resident).getPet()) {
                 addSavedAttribute(PET); //pets

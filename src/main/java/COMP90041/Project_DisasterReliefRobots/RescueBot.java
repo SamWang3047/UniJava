@@ -115,7 +115,11 @@ public class RescueBot {
                 case "r":
                     // TODO: Implement running simulations
                     scenarioService.setScenarios(new ArrayList<>()); //clear current scenarios
-                    scenarioService.randomScenarioGeneration(getScenarioCount(scanner));
+                    if (scenariosFilePath == null) {
+                        scenarioService.randomScenarioGeneration(getScenarioCount(scanner));
+                    } else {
+                        scenarioService.loadScenariosFromFile(scenariosFilePath);
+                    }
                     simulation(scenarioService, simulationLogFile);
                     break;
                 case "audit":
